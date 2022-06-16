@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-
-    <event name="email_invoice_set_template_vars_before">
-        <observer name="omnyfy_custom_hide_invoice_id" instance="OmnyfyCustomzation\EmailTemplate\Observer\InvoiceOrder" />
-    </event>
-</config>

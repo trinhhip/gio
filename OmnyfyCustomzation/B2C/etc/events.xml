@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="customer_register_success">
-        <observer name="update_b2c_approve_status" instance="OmnyfyCustomzation\B2C\Observer\UpdateStatus" />
-    </event>
-</config>

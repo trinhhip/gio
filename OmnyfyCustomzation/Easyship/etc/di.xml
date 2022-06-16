@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Omnyfy\Easyship\Model\Carrier\EasyShipping">
-        <plugin name="omnyfycustomzation_easyship_omnyfy_easyship_model_carrier_easyshipping" type="OmnyfyCustomzation\Easyship\Plugin\Omnyfy\Easyship\Model\Carrier\EasyShipping"/>
-    </type>
-</config>

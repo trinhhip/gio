@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Amasty_AltTagGenerator::alt_tag" title="Amasty AltTagGenerator" module="Amasty_AltTagGenerator" parent="Magento_Backend::marketing" sortOrder="150" resource="Amasty_AltTagGenerator::alt_tag" />
-        <add id="Amasty_AltTagGenerator::template" title="Alt Tag Rules (Products)" sortOrder="10" module="Amasty_AltTagGenerator" parent="Amasty_AltTagGenerator::alt_tag" action="amasty_alt/template/" resource="Amasty_AltTagGenerator::template" />
-    </menu>
-</config>

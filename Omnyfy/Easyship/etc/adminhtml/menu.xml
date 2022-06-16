@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Omnyfy_Easyship::easyshipaccount" dependsOnConfig="carriers/easyship/active" title="Easyship Accounts" translate="title" module="Omnyfy_Easyship" parent="Magento_Sales::sales_operation" sortOrder="100" action="omnyfy_easyship/account/index" resource="Omnyfy_Easyship::easyshipaccount"/>
-        <add id="Omnyfy_Easyship::bookpickup" dependsOnConfig="carriers/easyship/active" title="Easyship Booking Management" translate="title" module="Omnyfy_Easyship" parent="Magento_Sales::sales_operation" sortOrder="110" action="omnyfy_easyship/bookpickup/index" resource="Omnyfy_Easyship::bookpickup"/>
-    </menu>
-</config>

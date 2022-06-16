@@ -1,8 +1,0 @@
-<?php
-$helper = $this->helper('Omnyfy\VendorReview\Helper\Data');
-$vendorHelper = $this->helper('Omnyfy\VendorReview\Helper\Vendor');
-?>
-<?php if(!$helper->isDisplayProductReviewOnOrder() || !$vendorHelper->isVendorReviewEnabled()): ?>
-	<?= $block->getChildHtml() ?>
-<?php endif; ?>
-

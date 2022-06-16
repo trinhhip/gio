@@ -1,9 +1,0 @@
-<?php
-
-/** @var \OmnyfyCustomzation\BuyerApproval\Block\Adminhtml\Edit\Tab\View $block */
-if ($block->isEnabled()):?>
-    <tr>
-        <th><?= $block->escapeHtml(__('Approval Status:')) ?></th>
-        <td><?= $block->escapeHtml($block->getApprovedLabel()) ?></td>
-    </tr>
-<?php endif; ?>
