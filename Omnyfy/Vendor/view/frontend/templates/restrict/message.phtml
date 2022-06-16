@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<div data-block="message-cart-checkout">
+<div data-bind="scope: 'message-cart-checkout'">
+    <p class="message warning" data-bind="visible: !isHasCityPostcode()" style="display: none">
+        <!-- ko text: $t('Please enter your post code and city to get shipping rates.')--><!-- /ko -->
+    </p>
+    <div data-bind="visible: isHasCityPostcode()">
+        <div class="message warning" data-bind="visible: isRateVisible()" style="display: none">
+            <span class="heading" data-bind="text: msgHeading()"></span>
+            <span class="mess" data-bind="text: msgContent()"></span>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/x-magento-init">
+{
+    "[data-block='message-cart-checkout']": {
+        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+    }
+}
+</script>

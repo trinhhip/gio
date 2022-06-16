@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_Gdpr
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\Gdpr\Api\Data\DeleteRequestInterface" type="Amasty\Gdpr\Model\DeleteRequest" />
+    <preference for="Amasty\Gdpr\Api\DeleteRequestRepositoryInterface" type="Amasty\Gdpr\Model\DeleteRequestRepository" />
+    <preference for="Amasty\Gdpr\Api\ConsentRepositoryInterface" type="Amasty\Gdpr\Model\Consent\Repository" />
+
+    <preference for="Amasty\Gdpr\Api\Data\WithConsentInterface" type="Amasty\Gdpr\Model\WithConsent" />
+    <preference for="Amasty\Gdpr\Api\WithConsentRepositoryInterface" type="Amasty\Gdpr\Model\Repository\WithConsentRepository" />
+
+    <preference for="Amasty\Gdpr\Api\Data\PolicyInterface" type="Amasty\Gdpr\Model\Policy" />
+    <preference for="Amasty\Gdpr\Api\PolicyRepositoryInterface" type="Amasty\Gdpr\Model\PolicyRepository" />
+
+    <preference for="Amasty\Gdpr\Api\Data\ConsentQueueInterface" type="Amasty\Gdpr\Model\ConsentQueue" />
+    <preference for="Amasty\Gdpr\Api\ConsentQueueRepositoryInterface" type="Amasty\Gdpr\Model\Repository\ConsentQueueRepository" />
+
+    <preference for="Amasty\Gdpr\Api\Data\ActionLogInterface" type="Amasty\Gdpr\Model\ActionLog" />
+    <preference for="Amasty\Gdpr\Api\ActionLogRepositoryInterface" type="Amasty\Gdpr\Model\ActionLogRepository" />
+
+    <preference for="Amasty\Gdpr\Api\RequestInterface" type="Amasty\Gdpr\Model\Anonymizer" />
+    <preference for="Amasty\Gdpr\Api\Data\ConsentInterface" type="Amasty\Gdpr\Model\Consent\Consent" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="amasty_gdpr_actionlog_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\ActionLog\Grid\Collection</item>
+                <item name="amasty_gdpr_withconsent_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\WithConsent\Grid\Collection</item>
+                <item name="amasty_gdpr_withoutconsent_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\WithoutConsent\Grid\Collection</item>
+                <item name="amasty_gdpr_consentqueue_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\ConsentQueue\Grid\Collection</item>
+                <item name="amasty_gdpr_request_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\DeleteRequest\Grid\Collection</item>
+                <item name="amasty_gdpr_policy_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\Policy\Grid\Collection</item>
+                <item name="amasty_gdpr_consents_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\Consent\Grid\Collection</item>
+                <item name="amasty_gdpr_consentlog_listing_data_source" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\WithConsent\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Gdpr\Model\ResourceModel\ActionLog\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_action_log</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\ActionLog</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Gdpr\Model\ResourceModel\WithConsent\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_consent_log</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\WithConsent</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Gdpr\Model\ResourceModel\WithoutConsent\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">customer_entity</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Customer\Model\ResourceModel\Customer</argument>
+        </arguments>
+        <plugin name="amastyWithoutConsentCollection" type="Amasty\Gdpr\Plugin\WithoutConsent\Grid\Collection" />
+    </type>
+    <type name="Amasty\Gdpr\Model\ResourceModel\DeleteRequest\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_delete_request</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\DeleteRequest</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Gdpr\Model\ResourceModel\Policy\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_privacy_policy</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\Policy</argument>
+        </arguments>
+    </type>
+    <virtualType name="Amasty\Gdpr\Model\ResourceModel\ConsentQueue\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_consent_queue</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\ResourceModel\ConsentQueue</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Customer\Model\Address\AbstractAddress">
+        <plugin name="AmastyGdprAdressAnonymization" type="Amasty\Gdpr\Plugin\Customer\Model\Address\AbstractAddressPlugin" />
+    </type>
+    <type name="Magento\Directory\Model\ResourceModel\Country">
+        <plugin name="AmastyGdprAnonymizatedAddressLoad" type="Amasty\Gdpr\Plugin\Directory\Model\ResourceModel\CountryPlugin" />
+    </type>
+
+    <type name="Amasty\Gdpr\Model\ResourceModel\Consent\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amasty_gdpr_consents</argument>
+            <argument name="resourceModel" xsi:type="string">Amasty\Gdpr\Model\Consent\ResourceModel\Consent</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Controller\ResultFactory">
+        <arguments>
+            <argument name="typeMap" xsi:type="array">
+                <item name="csv" xsi:type="array">
+                    <item name="type" xsi:type="const">Amasty\Gdpr\Controller\Result\Csv::CSV</item>
+                    <item name="class" xsi:type="string">Amasty\Gdpr\Controller\Result\Csv</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\Gdpr\Model\Source\CheckboxLocationCombine">
+        <arguments>
+            <argument name="optionGroups" xsi:type="array">
+                <item name="default" xsi:type="array">
+                    <item name="name" xsi:type="string" translatable="true">Default Magento Forms</item>
+                    <item name="optionSources" xsi:type="array">
+                        <item name="basic" xsi:type="object">Amasty\Gdpr\Model\Source\CheckboxLocation</item>
+                    </item>
+                </item>
+                <item name="amasty" xsi:type="array">
+                    <item name="name" xsi:type="string" translatable="true">Amasty Extension Forms</item>
+                    <item name="optionSources" xsi:type="array">
+                        <!-- Amasty extensions should place checkbox places here -->
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Setup Operations Start -->
+    <type name="Amasty\Gdpr\Setup\UpgradeData">
+        <arguments>
+            <argument name="resourceConfig" xsi:type="object">Magento\Framework\App\Config\ConfigResource\ConfigInterface\Proxy</argument>
+            <argument name="policySampleInstaller" xsi:type="object">Amasty\Gdpr\Model\SampleData\Policy\Installer\Proxy</argument>
+            <argument name="movePrivacyCheckboxConfigToCheckboxes" xsi:type="object">Amasty\Gdpr\Setup\Operation\MovePrivacyCheckboxConfigToCheckboxes\Proxy</argument>
+        </arguments>
+    </type>
+    <!-- Setup Operations End -->
+
+    <type name="Magento\Checkout\Api\GuestPaymentInformationManagementInterface">
+        <plugin name="amasty-gdpr-validate-guest-checkout-consent" type="Amasty\Gdpr\Plugin\ConsentValidation\Checkout\Api\GuestPaymentInformationManagementInterfacePlugin"/>
+    </type>
+
+    <type name="Magento\Checkout\Api\PaymentInformationManagementInterface">
+        <plugin name="amasty-gdpr-validate-checkout-consent" type="Amasty\Gdpr\Plugin\ConsentValidation\Checkout\Api\PaymentInformationManagementInterfacePlugin"/>
+    </type>
+</config>

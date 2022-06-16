@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirasvit\RewardsBehavior\Block\Buttons">
+        <plugin name="omnyfycustomzation_pinterest_pin_button"
+                type="OmnyfyCustomzation\Catalog\Plugin\Mirasvit\RewardsBehavior\Block\Buttons"/>
+    </type>
+    <preference for="Magento\ConfigurableProduct\Plugin\SalesRule\Model\Rule\Condition\Product" type="OmnyfyCustomzation\Catalog\Plugin\SalesRule\Model\Rule\Condition\ConfigurableProduct"/>
+    <type name="Mirasvit\SearchAutocomplete\Model\Result">
+        <plugin name="custom_no_result_text"
+                type="OmnyfyCustomzation\Catalog\Plugin\SearchAutocomplete\Model\Result"/>
+    </type>
+    <type name="Magento\CatalogSearch\Block\Result">
+        <plugin name="custom_no_result_text"
+                type="OmnyfyCustomzation\Catalog\Plugin\CatalogSearch\Block\Result"/>
+    </type>
+<!--    <preference for="Mirasvit\Search\Model\AutocompleteProvider" type="OmnyfyCustomzation\Catalog\Model\AutocompleteProvider"/>-->
+</config>

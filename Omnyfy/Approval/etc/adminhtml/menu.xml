@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Omnyfy_Approval::base" title="Products Approval" translate="title" module="Omnyfy_Approval" parent="Omnyfy_Vendor::base" sortOrder="100" resource="Omnyfy_Approval::base"/>
+        <add id="Omnyfy_Approval::product" title="Vendor Products Approval" translate="title" module="Omnyfy_Approval" parent="Omnyfy_Approval::base" sortOrder="10" dependsOnModule="Omnyfy_Approval" action="omnyfy_approval/product" resource="Omnyfy_Approval::product"/>
+    </menu>
+</config>

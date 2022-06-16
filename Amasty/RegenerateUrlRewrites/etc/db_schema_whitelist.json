@@ -1,0 +1,16 @@
+{
+    "amasty_regenerate_url_rewrites_process": {
+        "column": {
+            "id": true,
+            "identity": true,
+            "pid": true,
+            "status": true,
+            "finished": true,
+            "command_result": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_REGENERATE_URL_REWRITES_PROCESS_IDENTITY": true
+        }
+    }
+}

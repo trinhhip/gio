@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="webhook" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label">
+			<label>Webhook</label>
+			<tab>omnyfy</tab>
+			<resource>Omnyfy_Webhook::config</resource>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>General</label>
+				<field id="is_enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Is Enable</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="is_enable_schedule" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+					<label>Enable Scheduled Delivery</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="event_history_rotation" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+					<label>Event History Rotation</label>
+					<backend_model>Omnyfy\Webhook\Model\Config\Backend\RotationDay</backend_model>
+					<validate>validate-number validate-greater-than-zero</validate>
+					<comment>Define from a value 1 – 60 (day). If the number greater than 60, 60 will be saved in this field.</comment>
+				</field>
+			</group>
+			<group id="authentication" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<label>Authentication</label>
+				<field id="type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label>Authentication Type</label>
+					<source_model>Omnyfy\Webhook\Model\Config\Source\AuthenticationType</source_model>
+					<validate>required-entry</validate>
+				</field>
+				<field id="username" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Basic Http Authentication Username</label>
+					<depends>
+						<field id="webhook/authentication/type">basic</field>
+					</depends>
+				</field>
+				<field id="password" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="obscure">
+					<label>Basic Http Authentication Password</label>
+					<depends>
+						<field id="webhook/authentication/type">basic</field>
+					</depends>
+				</field>
+				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="obscure">
+					<label>Authentication Token (Bearer Token)</label>
+					<depends>
+						<field id="webhook/authentication/type">bearer</field>
+					</depends>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

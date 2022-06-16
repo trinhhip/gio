@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+//phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+?>
+<?php /** @var $block \Magento\Shipping\Block\Adminhtml\View */ ?>
+<?php $order = $block->getOrder() ?>
+<?php if ($order->getIsVirtual()) :
+    return '';
+endif; ?>
+
+<?php /* Shipping Method */ ?>
+<div class="admin__page-section-item order-shipping-method">
+    <div class="admin__page-section-item-title">
+        <span class="title"><?= $block->escapeHtml(__('Shipping &amp; Handling Information')) ?></span>
+    </div>
+    <div class="admin__page-section-item-content">
+        <?php  if ($order->getTracksCollection()->count()) : ?>
+            <p><a href="#" id="linkId" onclick="popWin('<?= $block->escapeJs($block->escapeUrl($this->helper(Magento\Shipping\Helper\Data::class)->getTrackingPopupUrlBySalesModel($order))) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?= $block->escapeHtmlAttr(__('Track Order')) ?>"><?= $block->escapeHtml(__('Track Order')) ?></a></p>
+        <?php endif; ?>
+        <?php if ($order->getShippingDescription()) : ?>
+            <strong><?= $block->escapeHtml($order->getShippingDescription()) ?></strong>
+            <?php
+
+            $objManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $vendorResource = $objManager->get(\Omnyfy\Vendor\Model\Resource\Vendor::class);
+            $payout = $objManager->get(\Omnyfy\Mcm\Helper\Payout::class);
+            $session = $objManager->get('Magento\Backend\Model\Auth\Session');
+            $vendorId = $vendorResource->getVendorIdByUserId($session->getUser()->getId());
+            $vendorOrder = new \Magento\Framework\DataObject();
+            $vendorOrder->setOrderId($order->getId())->setVendorId($vendorId)->setQuoteId($order->getQuoteId());
+
+            $orderShippingFee = $vendorId ? current($payout->getOrderShippingFee($vendorOrder)) : null;
+            $shippingAmount = $orderShippingFee ? @$orderShippingFee['amount'] : null;
+            $shippingFee = $this->helper(\Omnyfy\VendorSubscription\Helper\Data::class)->formatPrice($shippingAmount);
+            ?>
+
+            <?php if ($this->helper(Magento\Tax\Helper\Data::class)->displayShippingPriceIncludingTax()) : ?>
+                <?php $_excl = $block->displayShippingPriceInclTax($order); ?>
+            <?php else : ?>
+                <?php $_excl = $block->displayPriceAttribute('shipping_amount', false, ' '); ?>
+            <?php endif; ?>
+            <?php $_incl = $block->displayShippingPriceInclTax($order); ?>
+
+            <?= /* @noEscape */ $shippingAmount?$shippingFee:$_excl ?>
+            <?php if ($this->helper(Magento\Tax\Helper\Data::class)->displayShippingBothPrices()
+                && $_incl != $_excl) : ?>
+                (<?= $block->escapeHtml(__('Incl. Tax')) ?> <?= /* @noEscape */ $_incl ?>)
+            <?php endif; ?>
+        <?php else : ?>
+            <?= $block->escapeHtml(__('No shipping information available')) ?>
+        <?php endif; ?>
+    </div>
+</div>

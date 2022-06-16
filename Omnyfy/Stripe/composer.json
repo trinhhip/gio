@@ -1,0 +1,18 @@
+{
+    "name": "omnyfy/stripe",
+    "description": "Omnyfy Stripe module",
+    "type": "magento2-module",
+    "version": "4.0.4",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\Stripe\\": ""
+        }
+    }
+}

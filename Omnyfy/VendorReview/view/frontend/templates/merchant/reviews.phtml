@@ -1,0 +1,21 @@
+<?php
+$vendorHelper = $this->helper('Omnyfy\VendorReview\Helper\Vendor');
+
+$helper = $this->helper('Omnyfy\VendorReview\Helper\Data');
+
+if ($vendorHelper->isVendorReviewEnabled()): ?>
+<section class="reviews-section" id="reviews">
+    <div class="container">
+        <div class="flex-columns">
+            <div class="review-main">
+                <?php echo $block->getChildHtml('vendor_review_block_list'); ?>
+            </div>
+            <?php if (!$helper->isDisplayVendorReviewOnOrder()): ?>
+                <div class="review-sidebar">
+                    <?php echo $block->getChildHtml('vendor_review_block_form'); ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

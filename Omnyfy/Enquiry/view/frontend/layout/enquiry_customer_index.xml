@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Enquires</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Omnyfy\Enquiry\Block\Customer\History" cacheable="false" name="enquiries.history" template="Omnyfy_Enquiry::customer/history.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

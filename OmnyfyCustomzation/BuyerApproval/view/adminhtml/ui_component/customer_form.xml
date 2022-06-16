@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="buttons" xsi:type="array">
+            <item name="approve" xsi:type="string">OmnyfyCustomzation\BuyerApproval\Block\Adminhtml\Edit\NotApprove</item>
+            <item name="not_approve" xsi:type="string">OmnyfyCustomzation\BuyerApproval\Block\Adminhtml\Edit\Approve</item>
+        </item>
+    </argument>
+    <fieldset name="customer">
+        <field name="is_approved"  formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">customer</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>true</visible>
+            </settings>
+        </field>
+    </fieldset>
+</form>

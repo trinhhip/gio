@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <general>
+            <validator_data>
+                <input_types>
+                    <document>document</document>
+                </input_types>
+            </validator_data>
+        </general>
+        <omnyfy_vendor>
+            <vendor>
+                <is_sku_sharing>0</is_sku_sharing>
+                <is_admin_see_all_sku>0</is_admin_see_all_sku>
+                <bind_include_warehouse>1</bind_include_warehouse>
+                <invoice_by>1</invoice_by>
+                <invoice_attachment>0</invoice_attachment>
+                <flat_max_index_count>64</flat_max_index_count>
+                <checkout_shipping_message_enable>0</checkout_shipping_message_enable>
+                <display_category_on_vendor_storefront>1</display_category_on_vendor_storefront>
+                <show_location_name_in_cart>0</show_location_name_in_cart>
+            </vendor>
+            <order_notification>
+                <order_status>processing</order_status>
+            </order_notification>
+        </omnyfy_vendor>
+        <omnyfy_vendor_shipping>
+            <vendor>
+                <atc_message_under>Spend [amount remaining] with [vendor name] to get free shipping</atc_message_under>
+                <atc_message_reached>Yay! You've scored free shipping with [vendor name]</atc_message_reached>
+                <sc_message_under>Spend [amount remaining] with [vendor name] to get free shipping</sc_message_under>
+                <sc_message_reached>Yay! You've scored free shipping with [vendor name]</sc_message_reached>
+            </vendor>
+        </omnyfy_vendor_shipping>
+        <omnyfy_vendor_subvendor>
+            <notification>
+                <template>omnyfy_vendor_subvendor_notification_template</template>
+            </notification>
+        </omnyfy_vendor_subvendor>
+    </default>
+</config>

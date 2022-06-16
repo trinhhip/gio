@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <price_to_quote>
+            <general>
+                <email>cs@vermillionlifestyle.com</email>
+                <email_sender>cs@e.vermillionlifestyle.com</email_sender>
+                <label>Price To Be Quoted</label>
+            </general>
+        </price_to_quote>
+    </default>
+</config>

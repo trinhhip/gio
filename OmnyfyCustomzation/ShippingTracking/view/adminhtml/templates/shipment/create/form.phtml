@@ -1,0 +1,209 @@
+<form id="edit_form" method="post" action="<?php echo $block->getSaveUrl() ?>">
+    <?php echo $block->getBlockHtml('formkey') ?>
+
+    <?php $sourceCode = $this->getRequest()->getParam('sourceCode'); ?>
+    <?php $source = $this->helper('Omnyfy\Vendor\Helper\Data')->getSourceObj($sourceCode); ?>
+    <?php $sourceStockId = $this->helper('Omnyfy\Vendor\Helper\Data')->getSourceStockIdBySourceCode($sourceCode); ?>
+
+    <?php if (!empty($source)) { ?>
+        <input name="sourceCode" type="hidden" value="<?php echo $source->getSourceCode(); ?>"/>
+        <input name="vendor_id" id="vendor_id_val" type="hidden" value="<?php echo $source->getVendorId(); ?>"/>
+    <?php } ?>
+    <?php $_order = $block->getShipment()->getOrder() ?>
+    <?php echo $block->getChildHtml('order_info') ?>
+
+    <?php
+    $shipBlock = $block->getLayout()->createBlock('Omnyfy\Easyship\Block\Adminhtml\Order\ShipmentCreate');
+    $orderId = $_order->getId();
+    $method = $shipBlock->getQuoteShipping($_order->getQuoteId(), $sourceCode, $sourceStockId);
+    $selected = $shipBlock->getSelectedCourier($orderId, $sourceStockId);
+    $courierId = null;
+    $courierEntityId = null;
+    if ($selected != null && $selected->getCourierId()) {
+        $courierId = $selected->getCourierId();
+        $courierEntityId = $selected->getEntityId();
+    }
+    $shipmentDetail = $shipBlock->getEasyshipShipmentDetail($orderId, $sourceStockId);
+    $easyShipmentId = null;
+    if ($shipmentDetail != null) {
+        $easyShipmentId = $shipmentDetail->getEasyshipShipmentId();
+    }
+
+    $urlBookShip = $block->getUrl("omnyfy_easyship/shipment/ajaxCreateShipmentBuyLabel");
+    $urlGenerateLabel = $block->getUrl("omnyfy_easyship/shipment/ajaxRegenerateLabel");
+    $urlCancelShipment = $block->getUrl("omnyfy_easyship/shipment/ajaxCancelShipment");
+    $canCancelShipment = $shipBlock->canCancelShipment($orderId, $sourceStockId, $courierEntityId);
+    ?>
+    <div class="admin__page-section">
+        <div class="admin__page-section-title">
+                <span class="title"><?php /* @escapeNotVerified */
+                    echo __('Payment &amp; Shipping Method') ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div class="admin__page-section-item order-payment-method">
+                <?php /* Billing Address */ ?>
+                <div class="admin__page-section-item-title">
+                        <span class="title"><?php /* @escapeNotVerified */
+                            echo __('Payment Information') ?></span>
+                </div>
+                <div class="admin__page-section-item-content">
+                    <div><?php echo $block->getPaymentHtml() ?></div>
+                    <div class="order-payment-currency"><?php /* @escapeNotVerified */
+                        echo __('The order was placed using %1.', $_order->getOrderCurrencyCode()) ?></div>
+                </div>
+            </div>
+            <div class="admin__page-section-item order-shipping-address">
+                <?php /* Shipping Address */ ?>
+                <div class="admin__page-section-item-title">
+                        <span class="title"><?php /* @escapeNotVerified */
+                            echo __('Shipping Information') ?></span>
+                </div>
+                <div class="admin__page-section-item-content shipping-description-wrapper">
+                    <div class="shipping-description-content">
+                        <table class="data-table admin__table-secondary order-subtotal-table">
+                            <tr>
+                                <td><b>Customer Selection Option</b></td>
+                                <td>
+                                    <b><?php echo $block->escapeHtml($method['carrier'] . ' - ' . $method['method_title']) ?>
+                                        :</b>
+                                    <?php echo $shipBlock->addCurrencyToAmount($method['amount']) ?>
+                                </td>
+                            </tr>
+                            <?php if ($selected != null && $method['carrier'] != $selected->getCourierName()): ?>
+                                <tr>
+                                    <td><b>Vendor Booked Option</b></td>
+                                    <td>
+                                        <b><?php echo $block->escapeHtml($selected->getCourierName()) ?>:</b>
+                                        <?php echo $shipBlock->addCurrencyToAmount($selected->getTotalCharge()) ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <?php if ($shipBlock->getLabelUrl($orderId, $sourceStockId) != null): ?>
+                    <a href="<?= $shipBlock->getLabelUrl($orderId, $sourceStockId); ?>" target="_blank"
+                       rel="noopener noreferrer" class="action-default">Download and Print Label</a>
+                    <a href="<?= $block->getUrl('omnyfy_easyship/bookpickup/index'); ?>" class="action-default">Go
+                        to Pickup Management</a>
+                    <?php if ($canCancelShipment) { ?>
+                        <button class="action-default" id="cancelshipment">Cancel Shipment</button>
+                    <?php } ?>
+                    <p>Print and attach the labels for this shipment. Once you are ready to ship you can Book Pickup
+                        of the items with the courier company.</p>
+                <?php elseif ($shipmentDetail && $shipmentDetail->getStatus() != 'cancelled'): ?>
+                    <a href="#" class="action-default" id="generatelabel">Generate Label</a>
+                <?php else: ?>
+                    <?php if ($courierId != null): ?>
+                        <a href="#" class="action-default" id="bookshipment">Book Shipment and Get Label</a>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <div><?php echo $block->getChildHtml('shipment_tracking') ?></div>
+            </div>
+        </div>
+    </div>
+    <div id="ship_items_container">
+        <?php echo $block->getItemsHtml() ?>
+    </div>
+</form>
+<?php echo $block->getChildHtml('shipment_packaging'); ?>
+<script>
+    require([
+        "jquery",
+        "mage/mage",
+        "prototype"
+    ], function (jQuery) {
+        jQuery('#edit_form').mage('form').mage('validation');
+
+        jQuery(document).ready(function () {
+            jQuery('#bookshipment').click(function (e) {
+                e.preventDefault();
+                var vendor_id_val = jQuery('#vendor_id_val').val();
+
+                jQuery.ajax({
+                    method: "POST",
+                    url: "<?= $urlBookShip; ?>",
+                    dataType: "json",
+                    data: {
+                        form_key: window.FORM_KEY,
+                        order_id: <?= $orderId ?>,
+                        vendor_id: vendor_id_val,
+                        location_id: <?= $sourceStockId ?>,
+                        source_code: "<?= $sourceCode ?>",
+                        source_stock_id: <?= $sourceStockId ?>,
+                        courier_id: "<?= $courierId ?>",
+                        courier_entity_id: "<?= $courierEntityId ?>",
+                    },
+                    showLoader: true,
+                    success: function (response) {
+                        // console.log(response);
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Something went wrong. Please try again.');
+                    }
+                });
+            });
+
+            jQuery('#generatelabel').click(function (e) {
+                e.preventDefault();
+                var easy_shipment_id = "<?= $easyShipmentId ?>";
+                if (easy_shipment_id) {
+                    jQuery.ajax({
+                        method: "POST",
+                        url: "<?= $urlGenerateLabel; ?>",
+                        dataType: "json",
+                        data: {
+                            form_key: window.FORM_KEY,
+                            location_id: <?= $sourceStockId ?>,
+                            courier_id: "<?= $courierId ?>",
+                            easyship_shipment_id: easy_shipment_id,
+                        },
+                        showLoader: true,
+                        success: function (response) {
+                            if (response.error && response.message) {
+                                alert(response.message);
+                            } else {
+                                location.reload();
+                            }
+                        },
+                        error: function () {
+                            alert('Something went wrong. Please try again.');
+                        }
+                    });
+                } else {
+                    alert('Shipment hasn\'t been created.');
+                }
+            });
+
+            jQuery('#cancelshipment').click(function (e) {
+                e.preventDefault();
+                var easy_shipment_id = "<?= $easyShipmentId ?>";
+                if (easy_shipment_id) {
+                    jQuery.ajax({
+                        method: "POST",
+                        url: "<?= $urlCancelShipment; ?>",
+                        dataType: "json",
+                        data: {
+                            form_key: window.FORM_KEY,
+                            location_id: <?= $sourceStockId ?>,
+                            easyship_shipment_id: easy_shipment_id,
+                        },
+                        showLoader: true,
+                        success: function (response) {
+                            // console.log(response);
+                            location.reload();
+                        },
+                        error: function () {
+                            alert('Something went wrong. Please try again.');
+                        }
+                    });
+                } else {
+                    alert('Shipment hasn\'t been created.');
+                }
+            });
+        });
+    });
+</script>
+

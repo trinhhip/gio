@@ -1,0 +1,108 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+?>
+<?php
+/** @var Amasty\ShopbyBase\Model\FilterSetting $filterSetting */
+/** @var OmnyfyCustomzation\Navigation\Block\Navigation\Widget\FromTo $block */
+?>
+<?php
+$postfix = '_' . uniqid();
+$filterCode = $block->escapeHtml($filterSetting->getFilterCode());
+$min = $block->escapeHtml($fromToConfig['min']);
+$max = $block->escapeHtml($fromToConfig['max']);
+$from = $fromToConfig['from'];
+$to = $fromToConfig['to'];
+$step = $fromToConfig['step'];
+$fromToType = $block->getWidgetType();
+$currencySymbol = $block->getCurrencySymbol();
+?>
+<div id="am-filter-widget-<?= /* @noEscape */$filterCode . $postfix; ?>" class="am-filter-items-<?= /* @noEscape */$filterCode; ?>"
+     data-am-js="fromto-widget">
+    <form data-amshopby-filter="<?= /* @noEscape */$filterCode; ?>" data-amshopby-filter-request-var="<?= /* @noEscape */$block->getFilter()->getRequestVar(); ?>">
+        <input
+            <?php if ($from && $to): ?>
+                value="<?= /* @noEscape */
+                $from . '-' . $to; ?>"
+            <?php endif; ?>
+                type="hidden"
+                data-amshopby-fromto="value"
+                name="amshopby[<?= $block->escapeHtml($block->getFilter()->getRequestVar()) ?>][]"/>
+        <div class="range am-fromto-widget amshopby_currency_rate" data-rate="<?= /* @noEscape */$fromToConfig['curRate']; ?>">
+            <span class="currency">
+                <label class="symbol"><?= $currencySymbol ?></label>
+                <input class="am-filter-price -from input-text"
+                       data-amshopby-fromto="from" data-validate-data="{'validate-number':true}"
+                       data-input-type="number" type="text" placeholder="<?= $block->escapeHtml(__('From')) ?>"/>
+            </span>
+            <span class="delimiter"> - </span>
+            <span class="currency">
+                <label class="symbol"><?= $currencySymbol ?></label>
+                <input class="am-filter-price -to input-text"
+                       data-amshopby-fromto="to" data-validate-data="{'validate-number':true}"
+                       data-input-type="number" type="text" placeholder="<?= $block->escapeHtml(__('To')) ?>"/>
+            </span>
+        </div>
+        <?php if (!$block->collectFilters()): ?>
+            <button class="am-filter-go"
+                    title="<?= $block->escapeHtml(__('Search >>')); ?>"
+                    data-amshopby-fromto="go">
+                <?= $block->escapeHtml(__('Search >>')) ?>
+            </button>
+        <?php endif; ?>
+    </form>
+</div>
+
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            $('input[data-input-type="number"]').on('keyup', function () {
+                updateTextView($(this));
+            });
+        });
+
+        function updateTextView(_obj) {
+            var num = getNumber(_obj.val());
+            if (num == 0) {
+                _obj.val('');
+            } else {
+                _obj.val(num.toLocaleString());
+            }
+        }
+
+        function getNumber(_str) {
+            var arr = _str.split(''),
+                cnt = 0,
+                out = new Array();
+            for (cnt; cnt < arr.length; cnt++) {
+                if (isNaN(arr[cnt]) == false) {
+                    out.push(arr[cnt]);
+                }
+            }
+            return Number(out.join(''));
+        }
+    });
+</script>
+
+<script type="text/x-magento-init">
+{
+    "#am-filter-widget-<?= /* @noEscape */ $filterCode . $postfix;?>": {
+        "amShopbyFilterFromTo": {
+                "enabled": <?= /* @noEscape */ ($filterSetting->getAddFromToWidget() ? '1' : '0')?>,
+                "collectFilters": <?= /* @noEscape */ $block->collectFilters();?>,
+                "from":"<?= /* @noEscape */ $from;?>",
+                "to":"<?= /* @noEscape */ $to;?>",
+                "min":"<?= /* @noEscape */ $min;?>",
+                "max":"<?= /* @noEscape */ $max;?>",
+                "code":"<?= $block->escapeHtml($filterSetting->getAttributeModel()->getAttributeCode()); ?>",
+                "isSlider": <?= /* @noEscape */ ($fromToType == 'slider' ? '1' : '0')?>,
+                "isDropdown": <?= /* @noEscape */ ($fromToType == 'dropdown' ? '1' : '0')?>,
+                "url": "<?= /* @noEscape */ $block->getSliderUrlTemplate(); ?>",
+                "step":<?= /* @noEscape */ ($fromToType == 'slider' ? $block->escapeHtml((float)($step)): '0') ?>
+        }
+    }
+}
+</script>

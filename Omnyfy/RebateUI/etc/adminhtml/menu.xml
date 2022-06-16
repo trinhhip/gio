@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+		<add id="Omnyfy_RebateUI::base" title="Rebates Management" translate="title" module="Omnyfy_RebateUI" parent="Omnyfy_Vendor::base" sortOrder="20" dependsOnModule="Omnyfy_Vendor" resource="Omnyfy_RebateUI::base" dependsOnConfig="omnyfy_rebate_core/general/enable"/>
+        <add id="Omnyfy_RebateUI::rebate_ui" title="Configure Rebates" translate="title" module="Omnyfy_RebateUI" parent="Omnyfy_RebateUI::base" sortOrder="30" action="rebate_ui/index/index" resource="Omnyfy_RebateUI::rebate_ui" dependsOnConfig="omnyfy_rebate_core/general/enable"/>
+        <add id="Omnyfy_RebateUI::rebate_report" title="Vendor Rebate Report Table" translate="title" module="Omnyfy_RebateUI" parent="Omnyfy_RebateUI::base" sortOrder="30" action="rebate_ui/table/index" resource="Omnyfy_RebateUI::rebate_report" dependsOnConfig="omnyfy_rebate_core/general/enable"/>
+	</menu>
+</config>

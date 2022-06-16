@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<carriers>
+			<calculateweight>
+				<model>OmnyfyCustomzation\ShippingCalculatedWeight\Model\Carrier\CalculateWeight</model>
+				<active>0</active>
+				<title>Calculated Weight</title>
+				<name>Calculated Weight</name>
+				<specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+				<dimension_multiplier>1.4</dimension_multiplier>
+				<weight_multiplier>1.2</weight_multiplier>
+			</calculateweight>
+		</carriers>
+	</default>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_GroupAssign
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Amasty\GroupAssign\Cron\GroupsUpdate" method="execute" name="amasty_groupassign_update">
+            <config_path>amasty_groupassign/general/cron_expr</config_path>
+        </job>
+    </group>
+</config>

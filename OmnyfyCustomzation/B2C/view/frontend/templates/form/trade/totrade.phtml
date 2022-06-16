@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \OmnyfyCustomzation\B2C\Block\Trade\Register $block */
+$email = $block->getCustomerEmail();
+$buttonText = $email ? __('Sign In') : __('Sign Up')
+?>
+<form class="form create account form-create-account" action="<?= $block->getPostActionToTrade() ?>" method="post" id="form-validate"
+      enctype="multipart/form-data" autocomplete="off">
+    <?= /* @noEscape */
+    $block->getBlockHtml('formkey'); ?>
+    <fieldset class="fieldset create info">
+        <div class="field required">
+            <label for="email_address" class="label"><span><?= $block->escapeHtml(__('Email Address')) ?></span></label>
+            <div class="control">
+                <input type="email" name="<?= $email ? 'login[username]' : 'email' ?>" autocomplete="email"
+                       id="email_address"
+                       value="<?= $email ? $email : '' ?>"
+                       title="<?= __('Email') ?>" class="input-text"
+                       placeholder="<?= $block->escapeHtml(__('Your email here')) ?>"
+                       data-validate="{required:true, 'validate-email':true}">
+            </div>
+        </div>
+        <?php if ($email): ?>
+            <div class="field password required">
+                <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                <div class="control">
+                    <input name="login[password]" type="password" class="input-text" id="pass"
+                           placeholder="<?= $block->escapeHtml(__('Password')) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}">
+                </div>
+            </div>
+        <?php endif; ?>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary"
+                    title="<?= $block->escapeHtmlAttr($buttonText) ?>">
+                <span><?= $block->escapeHtml($buttonText) ?></span></button>
+        </div>
+    </div>
+</form>

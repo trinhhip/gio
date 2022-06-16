@@ -1,0 +1,266 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magento\Sales\Block\Adminhtml\Order\AbstractOrder
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+
+/** @var \Magento\Shipping\Helper\Data $shippingHelper */
+$shippingHelper = $block->getData('shippingHelper');
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+$taxHelper = $block->getData('taxHelper');
+?>
+<?php $order = $block->getOrder() ?>
+<?php if ($order->getIsVirtual()):
+    return '';
+endif; ?>
+<?php
+$shippingBlock = $block->getLayout()->createBlock('Omnyfy\Vendor\Block\Adminhtml\Order\OrderView');
+$shippingInfo = $shippingBlock->getShippingInfo($order->getId());
+$easyBlock = $block->getLayout()->createBlock('Omnyfy\Easyship\Block\Adminhtml\Order\OrderView');
+$urlGetRates = $block->getUrl("omnyfy_easyship/order/ajaxGetRates");
+$urlSelectCourier = $block->getUrl("omnyfy_easyship/order/ajaxSelectCourier");
+$orderId = $order->getId();
+$country = $order->getShippingAddress()->getCountryId();
+$postal = $order->getShippingAddress()->getPostCode();
+$city = $order->getShippingAddress()->getCity();
+$locationCouriers = $easyBlock->getVendorLocations($orderId);
+// separate shipping methods and rate, other than easyship on top the table
+$shippingMethodSelected = json_decode($order->getShippingMethod());
+$idxEx = [];
+$index = 0;
+$exEasyship = [];
+foreach($shippingMethodSelected as $value){
+    if(!preg_match("/easyship/i", $value)){
+        $idxEx[] = $index;
+    }
+    $index++;
+}
+$totalChargeEasyship = 0;
+$shippingEasyship = [];
+if(count($locationCouriers['courier'])){
+    foreach($locationCouriers['courier'] as $value){
+        $totalChargeEasyship += $value['customer_paid'];
+    }
+}
+if(count($locationCouriers['location'])){
+    foreach($locationCouriers['location'] as $value){
+        $totalChargeEasyship += $value['customer_paid'];
+    }
+}
+$allShipping = $order->getShippingDescription();
+$shippingArr = explode("\n", $allShipping);
+foreach($shippingArr as $idx => $shipping){
+    foreach($idxEx as $indx){
+        if($idx == $indx){
+            $exEasyship[]=$shipping;
+        }
+    }
+}
+$exRate = $order->getShippingAmount() - $totalChargeEasyship;
+$exRateEasyship = $easyBlock->getConvertRate($exRate);
+?>
+<?php /* Shipping Method */ ?>
+<div class="admin__page-section-item order-shipping-method">
+    <div class="admin__page-section-item-title">
+        <span class="title"><?= $block->escapeHtml(__('Shipping &amp; Handling Information')) ?></span>
+    </div>
+    <div class="admin__page-section-item-content">
+        <?php if ($order->getTracksCollection()->count()): ?>
+            <p>
+                <a href="#" id="linkId" title="<?= $block->escapeHtmlAttr(__('Track Order')) ?>">
+                    <?= $block->escapeHtml(__('Track Order')) ?>
+                </a>
+            </p>
+            <?= /* @noEscape */
+            $secureRenderer->renderEventListenerAsTag(
+                'onclick',
+                "popWin('" . $block->escapeJs($shippingHelper->getTrackingPopupUrlBySalesModel($order)) .
+                "','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')",
+                'a#linkId'
+            ) ?>
+        <?php endif; ?>
+        <?php if ((int)$order->getTotalItemCount() > 0) : ?>
+            <table class="data-table admin__table-secondary order-subtotal-table">
+                <thead>
+                <td><b><?= __('Vendor Name') ?></b></td>
+                <td><b><?= __('Source') ?></b></td>
+                <td><b><?= __('Shipping Method') ?></b></td>
+                <td><b><?= __('Price') ?></b></td>
+                <?php if(count($locationCouriers['courier']) || count($locationCouriers['location'])) : ?>
+                <td><b><?= __('Courier Rate') ?></b></td>
+                <?php endif; ?>
+                </thead>
+                <tbody>
+                <?php foreach ($shippingInfo as $data) : ?>
+                    <?php $courierRates = ''; ?>
+                    <tr>
+                        <td><?= $data['vendor_name'] ?></td>
+                        <td><?= $data['source_name'] ?></td>
+                        <?php if(strtolower($data['shipping_method']) != 'easyship') : ?>
+                            <td><?= $data['shipping_method'] ?></td>
+                        <?php else : ?>
+                            <td>
+                            <?php if(count($locationCouriers['courier'])) : ?>
+                                <?php foreach ($locationCouriers['courier'] as $value) : ?>
+                                    <?php if($data['vendor_name'] == $value['vendor_name']) : ?>
+                                        <?= $value['courier_name'] ?>
+                                        <?php $courierRates = $value['total_charge']; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <?php if(count($locationCouriers['location'])) : ?>
+                                <?php foreach ($locationCouriers['location'] as $value) : ?>
+                                    <?php if($data['vendor_name'] == $value['vendor_name']) : ?>
+                                        <?= $block->escapeHtml(__('Flat Shipping selected by Customer')) ?>
+                                        <div class="choosecourier" style="padding-top:10px;">
+                                            <button class="primary" data-vendorname="<?= $value['vendor_name']?>" data-locationid="<?= $value['source_stock_id']?>" data-locationname="<?= $value['location_name']?>">
+                                                <?= $block->escapeHtml(__('Book Carrier')) ?>
+                                            </button>
+                                        </div>
+                                        <?php $courierRates = $block->escapeHtml(__('Pending Booking')); ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
+                        <td><?= $data['price'] ?></td>
+                        <?php if(count($locationCouriers['courier']) || count($locationCouriers['location'])) : ?>
+                            <td><?= $courierRates ?></td>
+                        <?php endif; ?>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+        <div id="courierpopup">
+            <h3 id="title_vendorname">Vendor: </h3>
+            <p id="title_locationname">Location: </p>
+            <table class="data-table admin__table-secondary order-subtotal-table">
+                <thead>
+                <tr>
+                    <td><b>Select</b></td>
+                    <td><b>Courier</b></td>
+                    <td><b>Price</b></td>
+                </tr>
+                </thead>
+                <tbody id="easy_courier_list"></tbody>
+            </table>
+
+            <form id="selectedcourierform" name="selectedcourierform" method="POST" data-mage-init='{"validation": {}}'>
+                <input type="hidden" id="frm_order_id" name="order_id" value="<?= $orderId; ?>" />
+                <input type="hidden" id="frm_location_id" name="location_id" />
+                <input type="hidden" id="frm_courier_id" name="courier_id" />
+                <input type="hidden" id="frm_courier_name" name="courier_name" />
+                <input type="hidden" id="frm_total_charge" name="total_charge" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">// <![CDATA[
+    require([
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function($, modal) {
+            $(document).ready(function() {
+                var options = {
+                    type: 'popup',
+                    responsive: true,
+                    innerScroll: true,
+                    buttons: [{
+                        text: $.mage.__('Confirm Carrier'),
+                        class: 'mymodal1',
+                        click: function () {
+                            if ($('#frm_courier_id').val() == "") {
+                                alert('Please select a courier');
+                                return false;
+                            }
+                            var formdata = new FormData($('#selectedcourierform')[0]);
+                            formdata.append("form_key", window.FORM_KEY);
+
+                            $.ajax({
+                                method: "POST",
+                                url: "<?= $urlSelectCourier; ?>",
+                                dataType: "json",
+                                data: formdata,
+                                showLoader:true,
+                                processData: false,
+                                contentType: false,
+                                success: function(response){
+                                    location.reload();
+                                },
+                                error: function () {
+                                    alert('Something went wrong. Please try again.');
+                                }
+                            });
+                            this.closeModal();
+                        }
+                    }]
+                };
+                var popup = modal(options, $('#courierpopup'));
+
+                $('#easy_courier_list').on('click', 'tr', function(event) {
+                    if (event.target.type !== 'radio') {
+                        $(':radio', this).trigger('click');
+                    }
+                    var radio_elmt = $(':radio', this);
+                    $('#frm_location_id').val(radio_elmt.attr('data-locationid'));
+                    $('#frm_courier_id').val(radio_elmt.attr('data-courierid'));
+                    $('#frm_courier_name').val(radio_elmt.attr('data-couriername'));
+                    $('#frm_total_charge').val(radio_elmt.attr('data-totalcharge'));
+                });
+            });
+
+            $('.choosecourier').on('click', 'button.primary', function(event){
+                $('#title_vendorname').text('Vendor: ' + $(this).attr('data-vendorname'));
+                $('#title_locationname').text('Source: ' + $(this).attr('data-locationname'));
+                $('#easy_courier_list').html('');
+                $('#frm_location_id').val('');
+                $('#frm_courier_id').val('');
+                $('#frm_courier_name').val('');
+                $('#frm_total_charge').val('');
+
+                var couriers = "";
+                var location_id = $(this).attr('data-locationid');
+
+                $.ajax({
+                    method: "POST",
+                    url: "<?= $urlGetRates; ?>",
+                    dataType: "json",
+                    data: {
+                        form_key: window.FORM_KEY,
+                        order_id: <?= $orderId ?>,
+                        country: "<?= $country ?>",
+                        postal: "<?= $postal ?>",
+                        city: "<?= $city ?>",
+                        location_id: location_id
+                    },
+                    showLoader:true,
+                    success: function(response){
+                        if(response.error){
+                            location.reload();
+                            return false;
+                        }
+                        if (response.data.length > 0) {
+                            $("#courierpopup").modal("openModal");
+                            for (let index = 0; index < response.data.length; index++) {
+                                couriers += "<tr>";
+                                couriers += "<td><input type='radio' name='easy_courier' data-locationid='"+location_id+"' data-courierid='"+response.data[index]['courier_id']+"' data-couriername='"+response.data[index]['courier_name']+"' data-totalcharge='"+response.data[index]['total_charge']+"'></td>";
+                                couriers += "<td>"+response.data[index]['courier_name']+"</td>";
+                                couriers += "<td>"+response.data[index]['total_charge_currency']+"</td>";
+                                couriers += "</tr>";
+                            }
+                        }
+                        $('#easy_courier_list').append(couriers);
+                    }
+                });
+            })
+        }
+    );
+    // ]]></script>

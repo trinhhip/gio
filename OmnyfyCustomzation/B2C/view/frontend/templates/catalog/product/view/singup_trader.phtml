@@ -1,0 +1,10 @@
+<?php
+/** @var OmnyfyCustomzation\B2C\Helper\Data $helper */
+$helper = $this->helper(OmnyfyCustomzation\B2C\Helper\Data::class);
+$product = $block->getProduct();
+?>
+<?php if ($helper->isRetailBuyer() && $helper->isProductRetail($product)): ?>
+    <a href="<?= $helper->getToTradeUrl() ?>" class="amasty-hide-price-container">
+        <span class="amasty-hide-price-text"><?= __('Get Trade Price') ?></span>
+    </a>
+<?php endif; ?>

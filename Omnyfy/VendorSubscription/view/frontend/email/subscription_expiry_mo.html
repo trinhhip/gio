@@ -1,0 +1,15 @@
+<!--@subject  {{var vendor_name}}'s subscription is expired now @-->
+<!--@vars {
+    "template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+    "template config_path=\"design\/email\/header_template\"":"Email Header Template"
+    }
+ @-->
+{{template config_path="design/email/header_template"}}
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr class="email-intro">
+        <td>
+            <p>The subscription plan of {{var vendor_name}} is expired now. Please log in to your account to disable the user's account.</p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

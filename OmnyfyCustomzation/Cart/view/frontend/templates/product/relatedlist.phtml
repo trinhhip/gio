@@ -1,0 +1,422 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Catalog\Block\Product\ReviewRendererInterface;
+use Magento\Catalog\Model\Product;
+
+?>
+<?php
+/** @var Magento\Catalog\Helper\Output $helperOutput */
+/** @var Magento\Catalog\Helper\Image $imageHelper */
+/** @var Smartwave\Dailydeals\Helper\Data $dailyDealHelper */
+/** @var Smartwave\Porto\Helper\Data $portoHelper */
+/** @var Omnyfy\Vendor\Helper\Product $vendorHelper */
+/** @var Magento\Catalog\Helper\Product\Compare $compareHelper */
+/** @var Magento\Wishlist\Helper\Data $wishListHelper */
+/** @var Magento\CatalogInventory\Api\StockRegistryInterface $stock */
+/** @var OmnyfyCustomzation\PriceToQuote\Helper\Data $priceQuoteHelper */
+/** @var OmnyfyCustomzation\PriceToQuote\ViewModel\Product\Listing $productListModel */
+/** @var OmnyfyCustomzation\B2C\Helper\Data $b2cHelper */
+?>
+<?php
+$productCollection = $block->getLoadedProductCollection();
+?>
+<?php if ($productCollection) : ?>
+    <?php
+    $productListModel = $this->getData('productListModel');
+
+    $helperOutput = $productListModel->getOutputHelper();
+    $imageHelper = $productListModel->getImageHelper();
+    $dailyDealHelper = $productListModel->getDailyDealsHelper();
+    $portoHelper = $productListModel->getPortoHelper();
+    $vendorHelper = $productListModel->getVendorHelper();
+    $wishListHelper = $productListModel->getWishlistHelper();
+    $compareHelper = $productListModel->getCompareHelper();
+    $stock = $productListModel->getStock();
+    $priceQuoteHelper = $productListModel->getPriceQuoteHelper();
+    $b2cHelper = $productListModel->getB2CHelper();
+
+    $reviewModel = $portoHelper->getModel('Magento\Review\Model\Review');
+    $categoryConfig = $portoHelper->getConfig('porto_settings/category');
+    $categoryGridConfig = $portoHelper->getConfig('porto_settings/category_grid');
+    $productLabelConfig = $portoHelper->getConfig('porto_settings/product_label');
+    $lazyLoad = $portoHelper->getConfig('porto_settings/optimization/lazyload');
+
+    $vendorByProdId = [];
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $hoverImage = 'category_page_grid-hover';
+        $showDescription = false;
+        $templateType = ReviewRendererInterface::SHORT_VIEW;
+        $columns = 'columns4';
+        $productType = $categoryGridConfig['product_type'];
+        if ($productType == null) {
+            $productType = 1;
+        }
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $hoverImage = 'category_page_list-hover';
+        $showDescription = true;
+        $templateType = ReviewRendererInterface::FULL_VIEW;
+        $columns = '';
+        $productType = 0;
+    }
+    $imageWidth = ($categoryConfig['ratio_width']) ? $categoryConfig['ratio_width'] : 300;
+    $imageHeight = ($categoryConfig['ratio_height']) ? $categoryConfig['ratio_height'] : 300;
+    $aspectRatio = $categoryConfig['aspect_ratio'];
+    if ($aspectRatio)
+        $imageHeight = $imageWidth;
+    ?>
+    <?php $iterator = 1; ?>
+    <h3><?php echo __('Recommendations')?></h3>
+    <div class="products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?> <?php if ($productType == 2): ?>no-padding divider-line<?php endif; ?> <?php if ($productType == 5 || $productType == 6 || $productType == 7 || $productType == 8): ?>no-padding<?php endif; ?> <?php if ($productType == 6): ?>divider-line<?php endif; ?>">
+        <?php $iterator = 1; ?>
+        <ol class="owl-carousel owl-theme filterproducts products list items product-items <?php if (isset($categoryConfig['qty_field']) && $categoryConfig['qty_field']): ?>has-qty<?php endif; ?>">
+            <?php /** @var $product Product */ ?>
+            <?php foreach ($productCollection as $product): ?>
+                <?php echo ($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info type<?php echo $productType; ?>" data-container="product-grid">
+                    <?php
+                    if (!isset($vendorByProdId[$product->getId()])) {
+                        $vendorId = current(@$vendorHelper->getVendorId($product->getId())['vendor_ids']);
+                        $vendor = $vendorHelper->getVendor($vendorId);
+                        if ($vendor) {
+                            $vendor->setUrl($block->getUrl('omnyfy_vendor/brands/view', ['id' => $vendor->getId()]));
+                            $vendor->setLogoUrl($vendorHelper->getVendorLogo($vendor));
+                            $vendorByProdId[$product->getId()] = $vendor;
+                        }
+                    } else {
+                        $vendor = $vendorByProdId[$product->getId()];
+                    }
+                    ?>
+
+                    <?php if ($block->getMode() == 'grid'): ?>
+                        <?php if ($wishListHelper->isAllow()): ?>
+                            <a href="#"
+                               class="action towishlist actions-secondary"
+                               title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                               aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+                               data-post='<?php echo $block->getAddToWishlistParams($product); ?>'
+                               data-action="add-to-wishlist"
+                               role="button">
+                                <span><?php echo __('Add to Wish List') ?></span>
+                            </a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php // Product Image ?>
+                    <div class="product photo product-item-photo">
+                        <a href="<?php echo $product->getProductUrl() ?>" tabindex="-1">
+                            <?php
+                            if ($aspectRatio)
+                                $productImage = $imageHelper->init($product, $image)->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($imageWidth);
+                            else
+                                $productImage = $imageHelper->init($product, $image)->resize($imageWidth, $imageHeight);
+                            $productImageUrl = $productImage->getUrl();
+                            ?>
+                            <img class="product-image-inphoto default_image <?php if (!$lazyLoad): ?>porto-lazyload<?php endif; ?>"
+                                 <?php if (!$lazyLoad): ?>data-<?php endif; ?>src="<?php echo $productImageUrl; ?>"
+                                 width="<?php echo $imageWidth; ?>" height="<?php echo $imageHeight; ?>" alt=""/>
+                            <?php if ($categoryConfig['alternative_image']): ?>
+                                <?php
+                                if ($aspectRatio)
+                                    $productHoverImage = $imageHelper->init($product, $hoverImage)->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($imageWidth);
+                                else
+                                    $productHoverImage = $imageHelper->init($product, $hoverImage)->resize($imageWidth, $imageHeight);
+                                $productHoverImageUrl = $productHoverImage->getUrl();
+                                ?>
+                                <?php if ($productImageUrl != str_replace("/thumbnail/", "/small_image/", $productHoverImageUrl)): ?>
+                                    <img class="product-image-photo hover_image"
+                                         src="<?php echo $productHoverImageUrl; ?>" alt=""/>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </a>
+                        <?php
+                        $productLabel = "";
+                        if ($productLabelConfig['sale_label']) {
+                            $orgPrice = $product->getPrice();
+                            $specialPrice = $product->getSpecialPrice();
+                            $specialFromDate = $product->getSpecialFromDate();
+                            $specialToDate = $product->getSpecialToDate();
+                            $today = time();
+                            if (!$specialPrice)
+                                $specialPrice = $orgPrice;
+                            if ($specialPrice < $orgPrice) {
+                                if ((is_null($specialFromDate) && is_null($specialToDate)) || ($today >= strtotime($specialFromDate) && is_null($specialToDate)) || ($today <= strtotime($specialToDate) && is_null($specialFromDate)) || ($today >= strtotime($specialFromDate) && $today <= strtotime($specialToDate))) {
+                                    if ($productLabelConfig['sale_label_percent']) {
+                                        $savePercent = 100 - round(($specialPrice / $orgPrice) * 100);
+                                        $productLabel .= '<div class="product-label sale-label">' . '-' . $savePercent . '%' . '</div>';
+                                    } else {
+                                        $productLabel .= '<div class="product-label sale-label">' . $productLabelConfig['sale_label_text'] . '</div>';
+                                    }
+                                }
+                            }
+                        }
+                        if ($productLabelConfig['new_label']) {
+                            $now = date("Y-m-d");
+                            $newsFrom = substr($product->getData('news_from_date'), 0, 10);
+                            $newsTo = substr($product->getData('news_to_date'), 0, 10);
+
+                            if ($newsTo != '' || $newsFrom != '') {
+                                if (($newsTo != '' && $newsFrom != '' && $now >= $newsFrom && $now <= $newsTo) || ($newsTo == '' && $now >= $newsFrom) || ($newsFrom == '' && $now <= $newsTo)) {
+                                    $productLabel .= '<div class="product-label new-label">' . $productLabelConfig['new_label_text'] . '</div>';
+                                }
+                            }
+                        }
+                        if ($productLabel)
+                            echo '<div class="product-labels">' . $productLabel . '</div>';
+                        ?>
+                    </div>
+                    <div class="product details product-item-details">
+                        <?php $productNameStripped = $block->stripTags($product->getName(), null, true); ?>
+                        <?php if ($vendor): ?>
+                            <span style="display: flex; justify-content: flex-start; align-items: center; padding-top: 8px; padding-bottom: 15px;"
+                                  title="<?= $vendor ? $vendor->getName() : '' ?>"><?= $vendor->getName() ?>
+                            </span>
+                        <?php endif; ?>
+                        <strong class="product name product-item-name">
+                            <a class="product-item-link"
+                               href="<?php echo $product->getProductUrl() ?>">
+                                <?php echo $helperOutput->productAttribute($product, $product->getName(), 'name'); ?>
+                            </a>
+                        </strong>
+
+                        <?php if ($showDescription): ?>
+                            <div class="product description product-item-description">
+                                <?php echo $helperOutput->productAttribute($product, $product->getShortDescription(), 'short_description') ?>
+                                <a href="<?php echo $product->getProductUrl() ?>"
+                                   title="<?php echo $productNameStripped ?>"
+                                   class="action more"><?php echo __('Learn More') ?></a>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($b2cHelper->isShowRetailPrice($product)): ?>
+                            <?php echo $b2cHelper->getRetailPrice($product) ?>
+                        <?php endif; ?>
+                        <?php echo $block->getProductDetailsHtml($product); ?>
+
+                        <?php $stockItem = $stock->getStockItem($product->getId()); ?>
+                        <?php if (!empty($stockItem['min_sale_qty'])): ?>
+                            <div class="product moq product-item-moq">
+                                <?= __('MOQ:') ?>
+                                <?= $stockItem['min_sale_qty'] * 1 ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($product->getData('lead_time')): ?>
+                            <div class="product lead-time product-item-lead-time">
+                                <?= $product->getAttributeText('lead_time'); ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($categoryConfig['product_price']): ?>
+                            <?php echo $block->getProductPrice($product) ?>
+                        <?php endif; ?>
+                        <div class="product-item-inner">
+                            <div class="product actions product-item-actions">
+                                <?php if ($priceQuoteHelper->isPriceToQuote($product)): ?>
+                                    <?php echo $priceQuoteHelper->getEmailUsBox($product->getId()) ?>
+                                <?php else: ?>
+                                    <div class="actions-primary">
+                                        <?php if ($product->isSaleable()): ?>
+                                            <?php $postParams = $block->getAddToCartPostParams($product); ?>
+                                            <form data-role="tocart-form"
+                                                  action="<?php echo $postParams['action']; ?>"
+                                                  method="post">
+                                                <input type="hidden" name="product"
+                                                       value="<?php echo $postParams['data']['product']; ?>">
+                                                <input type="hidden"
+                                                       name="uenc"
+                                                       value="uenc">
+                                                <?php if (isset($categoryConfig['qty_field']) && $categoryConfig['qty_field']): ?>
+                                                    <div class="qty-box">
+                                                        <a href="javascript:void(0)" class="qtyminus">
+                                                            <i class="porto-icon-minus"></i>
+                                                        </a>
+                                                        <input type="text" name="qty" id="qty" maxlength="12"
+                                                               value="<?php /* @escapeNotVerified */
+                                                               echo $block->getProductDefaultQty() * 1 ?>"
+                                                               title="<?php /* @escapeNotVerified */
+                                                               echo __('Qty') ?>" class="input-text qty"
+                                                               data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"/>
+                                                        <a href="javascript:void(0)" class="qtyplus">
+                                                            <i class="porto-icon-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <?php echo $block->getBlockHtml('formkey') ?>
+                                                <button type="submit"
+                                                        title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                        class="action tocart primary">
+                                                    <span><?php echo __('Add to Cart') ?></span>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <?php if ($product->getIsSalable()): ?>
+                                                <div class="stock available">
+                                                    <span><?php echo __('In stock') ?></span>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="stock unavailable">
+                                                    <span><?php echo __('Out of stock') ?></span></div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($categoryConfig['addtocompare']): ?>
+                                    <a href="#"
+                                       class="action tocompare actions-secondary <?php if (isset($categoryConfig['qty_field']) && $categoryConfig['qty_field']): ?>has-qty<?php endif; ?>"
+                                       title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+                                       aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+                                       data-post='<?php echo $compareHelper->getPostDataParams($product); ?>'
+                                       role="button">
+                                        <span><?php echo __('Add to Compare') ?></span>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <style>
+        .product-item-photo a > img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .product-item-photo a > img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+    </style>
+    <script type="text/javascript">
+        require([
+            'jquery',
+            'owlcarousel',
+            'domReady!'
+        ], function ($) {
+
+            $(".product-items").owlCarousel({
+                loop:false,
+                margin:10,
+                nav:true,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    425: {
+                        items:2
+                    },
+                    600:{
+                        items:3
+                    },
+                    1000:{
+                        items:4
+                    }
+                }
+            });
+
+            var app = {
+                isAppleDevice: function () {
+                    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Safari)/) != null) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            // Timer for LEFT time for Dailydeal product
+            var _second = 1000, _minute = _second * 60, _hour = _minute * 60, _day = _hour * 24, timer,
+                date = new Date('<?php echo $dailyDealHelper->getCurrentDate() ?>');
+
+            //Set date as magentodatetime
+            if (app.isAppleDevice()) {
+                var mdate = '<?php echo $dailyDealHelper->getCurrentDate() ?>',
+                    dateParts = mdate.substring(0, 10).split('-'),
+                    timePart = mdate.substr(11);
+
+                date = dateParts[1] + '/' + dateParts[2] + '/' + dateParts[0] + ' ' + timePart;
+                date = new Date(date);
+            }
+            var l_date = new Date(),
+                offset_date = l_date - date;
+
+            function showRemaining() {
+                $(".sw-dailydeal-wrapper").each(function () {
+                    var uniqueId = $(this).attr("data-unique-id"),
+                        daysId = 'countdown_days_' + uniqueId,
+                        hoursId = 'countdown_hours_' + uniqueId,
+                        minutesId = 'countdown_minutes_' + uniqueId,
+                        secondsId = 'countdown_seconds_' + uniqueId,
+                        startDateId = 'fromdate_' + uniqueId,
+                        id = 'todate_' + uniqueId,
+                        endDate = new Date($('#' + id).val()),
+                        dealStartDate = new Date($('#' + startDateId).val());
+
+                    if (app.isAppleDevice() && $('#' + id).val() && $('#' + startDateId).val()) {
+                        var leDate = $('#' + id).val(),
+                            leDateParts = leDate.substring(0, 10).split('-'),
+                            leTimePart = leDate.substr(11);
+
+                        endDate = leDateParts[1] + '/' + leDateParts[2] + '/' + leDateParts[0] + ' ' + leTimePart;
+                        endDate = new Date(endDate).getTime();
+
+                        var lsDate = $('#' + startDateId).val(),
+                            lsDateParts = lsDate.substring(0, 10).split('-'),
+                            lstimePart = lsDate.substr(11);
+
+                        dealStartDate = lsDateParts[1] + '/' + lsDateParts[2] + '/' + lsDateParts[0] + ' ' + lstimePart;
+                        dealStartDate = new Date(dealStartDate).getTime();
+                    }
+                    var currentDate = new Date(),
+                        distance = endDate - (currentDate - offset_date);
+
+                    $('.sw-dailydeal-wrapper').show();
+
+                    if (distance < 0) {
+                        // clearInterval(timer);
+                        $('#expired_' + uniqueId).html("<span style='font-size:25px; color:#000;'>EXPIRED!<span>");
+
+                    } else if (dealStartDate > currentDate) {
+                        $('.countdowncontainer_' + uniqueId).hide();
+                        var msg = "<span style='font-size:15px; color:#000;'> Coming Soon..<br>Deal Start at:<br>" + $('#' + startDateId).val() + "<span>";
+                        $('#expired_' + uniqueId).html(msg);
+                    } else {
+                        var days = Math.floor(distance / _day),
+                            hours = Math.floor((distance % _day) / _hour),
+                            minutes = Math.floor((distance % _hour) / _minute),
+                            seconds = Math.floor((distance % _minute) / _second);
+
+                        if (hours < 10)
+                            hours = "0" + hours;
+                        if (minutes < 10)
+                            minutes = "0" + minutes;
+                        if (seconds < 10)
+                            seconds = "0" + seconds;
+                        $('.countdowncontainer_' + uniqueId).show();
+                        $('#' + daysId).html(days);
+                        $('#' + hoursId).html(hours);
+                        $('#' + minutesId).html(minutes);
+                        $('#' + secondsId).html(seconds);
+                    }
+                });
+            }
+
+            // Set Interval
+            timer = setInterval(function () {
+                showRemaining();
+            }, 1000);
+        });
+    </script>
+    <?php
+    echo $block->getChildHtml('filter_toggle');
+    ?>
+<?php endif; ?>

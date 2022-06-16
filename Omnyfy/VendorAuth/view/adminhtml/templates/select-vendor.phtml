@@ -1,0 +1,58 @@
+<?php
+/*
+* $block Omnyfy\VendorAuth\Block\Adminhtml\Integration\SelectVendor 
+*/
+$vendorIds = $this->getVendorIds();
+?>
+<?php if(count($vendorIds) > 1):  ?>
+<div class="admin__scope-old" id="select_vendor_id">
+    <div class="fieldset form-inline entry-edit">
+        <div class="field required _required">
+            <label class="label" for="vendor_id_dropdown"><span><?= __('Select Vendor') ?></span></label>
+
+            <div class="control">
+                <select id="vendor_id_dropdown" name="vendor_id_dropdown" class="select required-entry _required">
+                    <?php foreach ($vendorIds as $id => $name) : ?>
+                        <option value="<?= $id ;?>"><?= $name ;?></option>
+                    <?php endforeach ;?>
+
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    require(['jquery'],function($){
+        $(document).ready(function(){
+            $('#vendor_id_dropdown').change(function(){
+                let vendorID = $(this).val(),
+                    text = '';
+                if (vendorID) {
+                    text = $('#vendor_id_dropdown option[value=' + vendorID + ']').text();
+                    $('.page-title-wrapper .page-title').text('Create ' + text + ' Integration');
+                }else{
+                    $('.page-title-wrapper .page-title').text('New Vendor Integration');
+                }
+                $('[name=vendor_id]').val(vendorID);
+            });
+
+            $('#integration_vendor_button').click(function(e){
+                e.preventDefault();
+                if($('#vendor_id_dropdown').val() == ""){
+                    $('#vendor_id_dropdown').focus();
+                    alert('Please select the vendor.')
+                }else{
+                    var vendorID = $('#vendor_id_dropdown').val();
+                    var newHref = '<?= $block->getUrl("*/*/new", ["vendor_id" => "vendorID"]) ?>';
+                    newHref = newHref.replace('vendorID', vendorID);
+                    $('#integration_vendor_button').attr("onclick", "location.href = '" + newHref + "'");
+                    window.location.replace(newHref);
+                }
+                return false;
+            })
+        })
+    })
+</script>
+<?php else: ?>
+    <div class="message empty empty-vendor-id"><?= __('No vendors') ?></div>
+<?php endif; ?>

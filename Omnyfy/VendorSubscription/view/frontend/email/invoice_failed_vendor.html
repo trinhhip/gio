@@ -1,0 +1,26 @@
+<!--@subject Your most recent invoice payment for {{var store.getFrontendName()}} failed @-->
+<!--@vars {
+    "template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+    "template config_path=\"design\/email\/header_template\"":"Email Header Template"
+    }
+ @-->
+{{template config_path="design/email/header_template"}}
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">Hi {{var vendor_name}},</p>
+            <p>Unfortunately, your most recent invoice payment for {{var store.getFrontendName()}} was declined.</p>
+            <p>This could be due to card expiring or insufficient balance.</p>
+            <p>Please check your bank account and ensure it has enough balance for the payment.</p>
+            <p>Please view the details of the payment, as below:</p>
+            <p>Business name: {{var vendor_name}}</p>
+            <p>Subscription Plan Name: {{var plan_name}}</p>
+            <p>Plan Price: {{var plan_price}}</p>
+            <p>Billing Interval: {{var billing_interval}}</p>
+            <p>Description: {{var plan_description}}</p>
+            <p>Please contact {{config path="general/store_information/name"}} via {{config path="trans_email/ident_general/email"}} or call us at {{config path="general/store_information/phone"}} if you need any further assistance.</store>
+
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

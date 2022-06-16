@@ -1,0 +1,49 @@
+& when (@media-common = true) {
+    .checkout-agreements-block {
+        &:not(.checked) + .actions-toolbar {
+            .action.checkout {
+                cursor: none;
+                opacity: 0.5;
+                pointer-events: none;
+            }
+        }
+    }
+
+    .duties-tax {
+        margin: 18px 0;
+    }
+
+    .gdpr-customer-settings {
+        .column {
+            font-family: 'Rasa', serif;
+            font-style: normal;
+        }
+
+        .page-title, .customer-request.page-title {
+            font-size: 22px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        .private-policy, .request-content {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .private-policy {
+            margin-bottom: 50px;
+
+            a {
+                color: #0563c1;
+                text-decoration: underline;
+            }
+        }
+
+        .button.action.primary {
+            font-family: 'Poppins', serif;
+            font-style: normal;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+    }
+}

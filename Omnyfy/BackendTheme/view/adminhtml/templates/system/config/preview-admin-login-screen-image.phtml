@@ -1,0 +1,14 @@
+<?php
+/* @var $block Omnyfy\BackendTheme\Block\Adminhtml\System\Config\PreviewAdminLoginScreenImage */
+/* @var $helper Omnyfy\BackendTheme\Helper\Data */
+$helper = $this->helper('Omnyfy\BackendTheme\Helper\Data');
+$adminPageTitle = $helper->getAdminPageTitle();
+if (!$helper->getAdminPageTitle()) {
+    $adminPageTitle = 'Magento Admin Panel';
+}
+$logoSrc = 'images/magento-logo.svg';
+?>
+<img class="logo-img" src="<?= /* @noEscape */
+$block->getViewFileUrl($logoSrc) ?>"
+     alt="<?= $block->escapeHtml(__($adminPageTitle)) ?>" title="<?= $block->escapeHtml(__($adminPageTitle)) ?>"
+     width="200" height="300"/>

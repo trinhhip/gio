@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php $_item = $block->getItem();
+$_order = $block->getItem()->getOrder();
+
+/** @var \OmnyfyCustomzation\Mcm\Helper\Data $helper */
+$helper = $this->helper(\OmnyfyCustomzation\Mcm\Helper\Data::class);
+$product = $helper->getProductById($_item->getProductId());
+$vendor = $helper->getVendor($_item->getVendorId());
+$leadTime = $product->getResource()->getAttribute('lead_time')->getFrontend()->getValue($product);
+$largeOrder = $product->getResource()->getAttribute('large_order_lead_time')->getFrontend()->getValue($product)
+?>
+<tr>
+    <td class="col-thumbnail">
+        <img src="<?= $helper->getThumbnailItem($product) ?>" alt="<?= $product->getName() ?>" width="100" />
+    </td>
+    <td class="item-info<?= ($block->getItemOptions() ? ' has-extra' : '') ?>">
+        <p class="vendor-name"><?= $block->escapeHtml($vendor->getName()) ?></p>
+        <p class="product-name">
+            <a href="<?= $block->escapeHtml($product->getProductUrl()) ?>" target="_blank"><?= $block->escapeHtml($_item->getName()) ?></a>
+        </p>
+        <p class="sku"><?= $block->escapeHtml(__('SKU')) ?>: <?= $block->escapeHtml($block->getSku($_item)) ?></p>
+        <?php if ($block->getItemOptions()) : ?>
+            <dl>
+                <?php foreach ($block->getItemOptions() as $option) : ?>
+                    <dt><strong><em><?= $block->escapeHtml($option['label']) ?></em></strong></dt>
+                    <dd>
+                        <?= /* @noEscape */  nl2br($block->escapeHtml($option['value'])) ?>
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) : ?>
+            <?= $addInfoBlock->setItem($_item->getOrderItem())->toHtml() ?>
+        <?php endif; ?>
+        <?= $block->escapeHtml($_item->getDescription()) ?>
+        <br>
+        <?php if ($leadTime): ?>
+            <p class="lead-time">
+                <b><?= __('MOQ Lead Time: ') ?></b>
+            </p>
+            <p><?= __($leadTime) ?></p>
+        <?php endif; ?>
+
+        <?php if ($largeOrder): ?>
+            <p class="lead-time">
+                <b><?= __('Large Order Lead Time: ') ?></b>
+            </p>
+            <p><?= __($largeOrder) ?></p>
+        <?php endif; ?>
+    </td>
+    <td class="item-qty"><?= (int) $_item->getQty() ?></td>
+    <td class="col-weight">
+        <?php if ($product->getWeight()): ?>
+            <p><?= floatval($product->getWeight()) . ' kgs' ?></p>
+        <?php endif; ?>
+    </td>
+    <td class="col-dimensions">
+        <?php if ($product->getSwDimensions()): ?>
+            <p><?= $product->getSwDimensions() ?></p>
+        <?php endif; ?>
+    </td>
+    <td class="col-hs-code">
+        <?php if ($product->getHsCode()): ?>
+            <p><?= $product->getHsCode() ?></p>
+        <?php endif; ?>
+    </td>
+    <td class="item-tax" style="text-align: right;"><?= $block->getOrder()->formatPrice($_item->getTaxAmount()) ?></td>
+    <td class="item-price">
+        <?= /* @noEscape */ $block->getItemPrice($_item->getOrderItem()) ?>
+    </td>
+</tr>

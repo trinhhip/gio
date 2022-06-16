@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">omnyfy_rebate_vendor_report_listing.omnyfy_rebate_vendor_report_source
+            </item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>rebate_columns</spinner>
+        <deps>
+            <dep>omnyfy_rebate_vendor_report_listing.omnyfy_rebate_vendor_report_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="omnyfy_rebate_vendor_report_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render">
+                <param name="_current">true</param>
+            </updateUrl>
+            <filterUrlParams>
+                <param name="vendor_id">*</param>
+            </filterUrlParams>
+        </settings>
+        <dataProvider class="Omnyfy\RebateUI\Ui\Component\VendorReport\DataProvider" name="omnyfy_rebate_vendor_report_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </filterSearch>
+        <filters name="listing_filters">
+            <settings>
+                <templates>
+                    <filters>
+                        <select>
+                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
+                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
+                        </select>
+                    </filters>
+                </templates>
+            </settings>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="rebate_columns" class="Omnyfy\RebateUI\Ui\Component\Listing\Columns">
+        <settings>
+            <editorConfig>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="rebate/rebate/inlineEdit"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+                <param name="indexField" xsi:type="string">block_id</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+                <param name="selectProvider" xsi:type="string">
+                    omnyfy_rebate_vendor_report_listing.rebate_rebate.rebate_columns.ids
+                </param>
+            </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">
+                        omnyfy_rebate_vendor_report_listing.rebate_rebate.rebate_columns_editor
+                    </item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="order_increment_id">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Order#</label>
+            </settings>
+        </column>
+        <column name="order_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Order Placed Date</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="vendor_total_incl_tax" class="Omnyfy\RebateUI\Ui\Component\Listing\Column\VendorReport\OrderInfo">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Vendor Subtotal (incl Tax)</label>
+            </settings>
+        </column>
+        <column name="cost_goods_sold" class="Omnyfy\RebateUI\Ui\Component\Listing\Column\VendorReport\OrderCost">
+            <settings>
+                <filter>text</filter>
+                <sortable>false</sortable>
+                <label translate="true">Cost of Goods Sold</label>
+            </settings>
+        </column>
+        <column name="order_status" class="Omnyfy\RebateUI\Ui\Component\Listing\Column\VendorReport\OrderStatus">
+            <settings>
+                <sortable>false</sortable>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Order Status</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Omnyfy\RebateUI\Ui\Component\Listing\Column\VendorReport\Actions">
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

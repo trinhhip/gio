@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="vendor.sections">
+            <container name="vendor.sections.top" htmlTag="div" htmlClass="vendor-top-sections" before="-">
+                <container name="vendor.sections.inner" htmlTag="div" htmlClass="vendor-sections-first"/>
+                <block name="enquiry.form" class="Omnyfy\Enquiry\Block\Location\View\Form" ifconfig="enquiry/general/enable" template="Omnyfy_Enquiry::vendor/view/form.phtml" />
+            </container>
+        </referenceContainer>
+
+        <move element="details" destination="vendor.sections.inner" after="enquiry.form"/>
+        <move element="overview" destination="vendor.sections.inner" after="details"/>
+    </body>
+</page>

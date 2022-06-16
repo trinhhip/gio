@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="my_vendor" xsi:type="string">Omnyfy\Vendor\CustomerData\Vendor</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Omnyfy\Vendor\Model\Indexer\Vendor\Flat\State">
+        <arguments>
+            <argument name="isAvailable" xsi:type="boolean">true</argument>
+        </arguments>
+    </type>
+    <type name="Omnyfy\Vendor\Model\Indexer\Location\Flat\State">
+        <arguments>
+            <argument name="isAvailable" xsi:type="boolean">true</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Elasticsearch7\SearchAdapter\Mapper">
+        <plugin disabled="false" name="elastic_filter_vendor" sortOrder="10" type="Omnyfy\Vendor\Plugin\SearchAdapter\Mapper"/>
+    </type>
+
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin disabled="false" name="custom_layout_processor" sortOrder="10" type="Omnyfy\Vendor\Plugin\Checkout\LayoutProcessor"/>
+    </type>
+</config>

@@ -1,0 +1,43 @@
+//
+//    Variables
+//--------------------------------------
+
+@box-enquiry__border-bottom: 1px solid @border-color__base;
+@box-enquiry__padding: 0 0 @indent__base 0;
+@box-enquiry__margin: 0 0 @indent__base 0;
+
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+	.enquiry-customer-index {
+		.box-enquiry {
+			border-bottom: @box-enquiry__border-bottom;
+			padding: @box-enquiry__padding;
+			margin: @box-enquiry__margin;
+		}
+
+		.name {
+			font-weight: bold;
+		}
+
+		.date {
+			color: @text__color__muted;
+		}
+
+		.sub {
+			margin-bottom: @indent__s;
+		}
+
+		.actions {
+			text-align: right;
+
+			.button.action {
+				.lib-button();
+				.lib-link-as-button();
+			}
+		}
+	}
+}

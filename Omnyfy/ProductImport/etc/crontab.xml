@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Omnyfy\ProductImport\Cron\DownloadImage" method="execute" name="omnyfy_productimport_download_image">
+            <schedule>*/1 * * * *</schedule>
+        </job>
+        <job instance="Omnyfy\ProductImport\Cron\AssignImage" method="execute" name="omnyfy_productimport_assign_image">
+            <schedule>*/1 * * * *</schedule>
+        </job>
+    </group>
+</config>

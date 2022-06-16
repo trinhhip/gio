@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="review_vendor_email_to_mo_template" label="Review Vendor Email to Mo" file="review_vendor_email_to_mo.html" type="html" module="Omnyfy_VendorReview" area="frontend"/>
+    <template id="review_vendor_email_to_vendor_template" label="Review Vendor Email to Vendor" file="review_vendor_email_to_vendor.html" type="html" module="Omnyfy_VendorReview" area="frontend"/>
+</config>

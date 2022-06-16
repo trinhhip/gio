@@ -1,0 +1,91 @@
+{
+    "items": [
+      {
+        "createdAt": "2021-04-21T05:11:28.217Z",
+        "inventory": {
+          "vendor_ids": [
+            27
+          ],
+          "items": [
+            {
+              "location_id": 31,
+              "qty": 33
+            }
+          ]
+        },
+        "updatedAt": "2021-04-21T05:11:31.605Z",
+        "price": {
+          "value": 83,
+          "currency": "AUD"
+        },
+        "product_data": {
+          "sku": "27-2032836",
+          "name": "Re-Nutriv Hydrating Foaming Cleanser",
+          "attribute_set_id": 18,
+          "status": 1,
+          "visibility": 4,
+          "type_id": "simple",
+          "weight": 0.5,
+          "website_codes": ["base"],
+          "custom_attributes": [
+            {
+              "attribute_code": "url_key",
+              "value": "EL Re-Nutriv Hydrating Foam Clnsr 125ml-27-2032836"
+            },
+            {
+              "attribute_code": "brand_category",
+              "value": "Re-Nutriv"
+            },
+            {
+              "attribute_code": "name",
+              "value": "Re-Nutriv Hydrating Foaming Cleanser"
+            },
+            {
+              "attribute_code": "size_text",
+              "value": "125ml"
+            },
+            {
+              "attribute_code": "description",
+              "value": "Now, create and sustain a remarkably more youthful appearance with a day and night anti-aging ritual of surpassing richness and power. Infused with Glacial BioExtract and the highest concentration of Life Re-Newing Molecules, Re-Creation gives your skin renewed radiance and striking vitality. By day, the restorative Creme helps skin boost its natural collagen network. Lines look reduced. Discolorations appear more faded. By night, begin with the Serum to experience the nourishing infusion. Follow with the Creme to create an ageless future for your skin. Includes Life Re-Newing Molecules, the multi-patented infusion that is the secret strength of Re-Nutriv's power to visibly renew skin at any age. "
+            },
+            {
+              "attribute_code": "skin_care_type",
+              "value": [
+                "122"
+              ]
+            },
+            {
+              "attribute_code": "category_ids",
+              "value": [
+                "30"
+              ]
+            }
+          ],
+          "media_gallery_entries": [
+            {
+              "media_type": "image",
+              "label": "Image",
+              "position": 1,
+              "disabled": false,
+              "types": [
+                "image",
+                "small_image",
+                "thumbnail"
+              ],
+              "file": "https://images.shopdutyfree.com/image/upload/v1531299499/040/003/001/27131219125/27131219125_1_default_default.jpg",
+              "content": {
+                "base64_encoded_data": "",
+                "type": "image/jpeg",
+                "name": "27-2032836_1.jpg"
+              }
+            }
+          ],
+          "extension_attributes": {
+            "stock_item": {
+              "is_in_stock": true
+            }
+          }
+        }
+      }
+    ]
+  }

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="amasty_regenerate_url_rewrites_process" resource="default" engine="innodb" comment="amasty_regenerate_url_rewrites_process">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="identity" nullable="false" length="127" comment="Identity"/>
+    <column xsi:type="int" name="pid" padding="11" unsigned="false" nullable="true" identity="false" comment="Pid"/>
+    <column xsi:type="varchar" name="status" nullable="false" length="127" comment="Status"/>
+    <column xsi:type="boolean" name="finished" nullable="false" comment="Finished"/>
+    <column xsi:type="blob" name="command_result" nullable="true" comment="Command_result"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="unique" referenceId="AMASTY_REGENERATE_URL_REWRITES_PROCESS_IDENTITY">
+      <column name="identity"/>
+    </constraint>
+  </table>
+</schema>

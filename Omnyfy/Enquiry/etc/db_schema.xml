@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Setup table omnyfy_enquiry_enquiries -->
+    <table name="omnyfy_enquiry_enquiries" resource="default" engine="innodb">
+        <column name="enquiries_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column name="product_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Product Reference" />
+        <column name="customer_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Customer Reference" />
+        <column name="customer_first_name" xsi:type="text" nullable="false" comment="Customer First Name" />
+        <column name="customer_last_name" xsi:type="text" nullable="false" comment="Customer Last Name" />
+        <column name="customer_email" xsi:type="varchar" length="127" nullable="false" comment="Customer Email" />
+        <column name="customer_mobile" xsi:type="varchar" length="24" nullable="false" comment="Customer Email" />
+        <column name="customer_company" xsi:type="varchar" length="24" nullable="false" comment="Customer Company" />
+        <column name="created_date" xsi:type="datetime" nullable="false" comment="Created Date" />
+        <column name="updated_date" xsi:type="datetime" nullable="true" comment="Updated Date" />
+        <column name="status" xsi:type="smallint" padding="6" nullable="false" default="1" comment="1 - New 2-Open 3-Complete 4-Achieve" />
+        <column name="store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="false" comment="Store ID" />
+        <column name="summary" xsi:type="varchar" length="255" nullable="false" comment="Message Title" />
+        <column name="location_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Location ID" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="enquiries_id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_BB7EB10766CC8D98861D1B120865F61A" table="omnyfy_enquiry_enquiries" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_ENQUIRY_ENQUIRIES_PRD_ID_CAT_PRD_ENTT_ENTT_ID" table="omnyfy_enquiry_enquiries" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_ENQUIRY_ENQUIRIES_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="omnyfy_enquiry_enquiries" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_ENQUIRY_ENQUIRIES_STORE_ID_STORE_STORE_ID" table="omnyfy_enquiry_enquiries" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup table omnyfy_enquiry_enquiry_messages -->
+    <table name="omnyfy_enquiry_enquiry_messages" resource="default" engine="innodb">
+        <column name="enquiry_messages_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="enquiry_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Reference to Enquiry Id" />
+        <column name="from_id" xsi:type="int" padding="11" nullable="false" comment="Id reference of from entity" />
+        <column name="from_type" xsi:type="varchar" length="255" nullable="false" comment="Vendor or Client" />
+        <column name="to_id" xsi:type="int" padding="11" nullable="false" comment="Type Referance" />
+        <column name="to_type" xsi:type="text" nullable="true" comment="To Type" />
+        <column name="send_time" xsi:type="datetime" nullable="false" comment="Send Time" />
+        <column name="message" xsi:type="text" nullable="true" comment="Message" />
+        <column name="is_notify_customer" xsi:type="tinyint" padding="2"  nullable="false" comment="Did email sent to the customer" />
+        <column name="is_visible_frontend" xsi:type="tinyint" padding="2"  nullable="false" comment="Is Private Message" />
+        <column name="status" xsi:type="int" padding="11"  nullable="true" comment="Message Status: Enable Disable" />
+    
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="enquiry_messages_id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_276D637FC42E1EB1F6CE2DE95AD8EFD3" table="omnyfy_enquiry_enquiry_messages" column="enquiry_id" referenceTable="omnyfy_enquiry_enquiries" referenceColumn="enquiries_id" onDelete="CASCADE" />
+    </table>
+
+
+</schema>

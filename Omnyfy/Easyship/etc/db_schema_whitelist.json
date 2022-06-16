@@ -1,0 +1,192 @@
+{
+    "omnyfy_easyship_account": {
+        "column": {
+            "entity_id": true,
+            "name": true,
+            "created_by_mo": true,
+            "country_code": true,
+            "access_token": true,
+            "use_live_rate": true,
+            "created_at": true,
+            "created_by": true,
+            "webhook_secret_key": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_easyship_vendorlocation_account": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "vendor_location_id": true,
+            "easyship_account_id": true,
+            "easyship_address_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_B2AB508EDF6F0EBEC6BD4DFA8CA43E95": true
+        }
+    },
+    "omnyfy_easyship_rate_option": {
+        "column": {
+            "shipping_rate_option_id": true,
+            "name": true,
+            "is_active": true,
+            "easyship_account_id": true,
+            "shipping_rate_option_price": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_B70F61D71FCFAB867846CD9802C5F643": true
+        }
+    },
+    "omnyfy_easyship_selected_courier": {
+        "column": {
+            "entity_id": true,
+            "quote_id": true,
+            "vendor_location_id": true,
+            "courier_id": true,
+            "courier_name": true,
+            "shipping_rate_option_id": true,
+            "total_charge": true,
+            "customer_paid": true,
+            "source_code": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_easyship_quoteitem_courier": {
+        "column": {
+            "quoteitem_id": true,
+            "quote_id": true,
+            "selected_courier_id": true,
+            "ship_by_marketplace": true,
+            "easyship_account_id": true,
+            "vendor_location_id": true,
+            "created_at": true,
+            "source_code": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_EASYSHIP_QUOTEITEM_COURIER_QUOTE_ID_QUOTE_ENTITY_ID": true,
+            "FK_0B239FE6FAB5F2368343BA88A2077487": true,
+            "FK_1ECBD4B5CCFCF1874C680AF61D322F8C": true
+        }
+    },
+    "omnyfy_easyship_salesorder_courier": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "vendor_location_id": true,
+            "vendor_id": true,
+            "selected_courier_id": true,
+            "ship_by_marketplace": true,
+            "created_at": true,
+            "source_code": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_EASYSHIP_SALESORDER_COURIER_ORDER_ID_SALES_ORDER_ENTT_ID": true,
+            "FK_DBE34CA9CBCF262FBDA8C4D24296B376": true
+        }
+    },
+    "omnyfy_easyship_vendor_salesorderitem_courier": {
+        "column": {
+            "item_id": true,
+            "sales_order_id": true,
+            "vendor_id": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_375A2ABE74D31E894CD37A9AD9BCB197": true
+        }
+    },
+    "omnyfy_easyship_shipment": {
+        "column": {
+            "easyship_shipment_id": true,
+            "destination_name": true,
+            "vendor_location_id": true,
+            "order_id": true,
+            "selected_courier_id": true,
+            "currency": true,
+            "courier_does_pickup": true,
+            "total_charge": true,
+            "courier_name": true,
+            "status": true,
+            "created_at": true,
+            "source_code": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_easyship_shipment_item": {
+        "column": {
+            "entity_id": true,
+            "easyship_shipment_id": true,
+            "product_id": true,
+            "sku": true,
+            "name": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_99D3FC6FD96C6A30A4F73ADBCE52B396": true
+        }
+    },
+    "omnyfy_easyship_shipment_label": {
+        "column": {
+            "entity_id": true,
+            "easyship_shipment_id": true,
+            "label_state": true,
+            "label_url": true,
+            "status": true,
+            "tracking_number": true,
+            "tracking_page_url": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_4D3FF02D0DB1FFE8CC2D9184CD16800D": true
+        }
+    },
+    "omnyfy_easyship_pickup": {
+        "column": {
+            "entity_id": true,
+            "pickup_id": true,
+            "pickup_reference_number": true,
+            "pickup_state": true,
+            "pickup_fee": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_easyship_shipment_pickup": {
+        "column": {
+            "entity_id": true,
+            "easyship_shipment_id": true,
+            "pickup_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_D1662B18D8801CD8ED024CBAEB646264": true
+        }
+    },
+    "inventory_source": {
+        "column": {
+            "easyship_account_id": true,
+            "easyship_address_id": true,
+            "company_name": true
+        },
+        "constraint": {
+            "INV_SOURCE_EASYSHIP_ACCOUNT_ID_OMNYFY_EASYSHIP_ACCOUNT_ENTT_ID": true
+        }
+    }
+}

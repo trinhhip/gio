@@ -1,0 +1,26 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<div id="added-to-cart" data-bind="scope: `added-to-cart`">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+{
+    "#added-to-cart": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "added-to-cart": {
+                    "component": "Omnyfy_Vendor/js/view/added-to-cart",
+                    "config": {
+                        "popupBlock": "#added-to-cart",
+                        "checkoutUrl": "<?= $this->getUrl('checkout/cart', ['_secure' => true]);?>"
+                    }
+                }
+            }
+        }
+    }
+}
+</script>

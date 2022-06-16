@@ -1,0 +1,52 @@
+<?php
+$_items = $block->getItems();
+/** @var \OmnyfyCustomzation\ShippingTracking\Helper\Data $helper */
+$helper = $this->helper(\OmnyfyCustomzation\ShippingTracking\Helper\Data::class);
+?>
+<table class="email-items">
+    <thead>
+    <tr>
+        <th class="item-thumbnail">
+            <?= $block->escapeHtml(__('Item')) ?>
+        </th>
+        <th class="item-info">
+            <?= $block->escapeHtml(__('Description')) ?>
+        </th>
+        <th class="item-qty">
+            <?= $block->escapeHtml(__('Qty')) ?>
+        </th>
+        <th class="item-price">
+            <?= $block->escapeHtml(__('Price')) ?>
+        </th>
+    </tr>
+    </thead>
+    <?php foreach ($_items as $_item) : ?>
+        <?php $product = $helper->getProductById($_item->getProductId()); ?>
+        <?php $vendorId = $helper->getVendorByProductId($_item->getProductId()); ?>
+        <?php $vendor = $helper->getVendor($vendorId); ?>
+
+        <tbody>
+        <tr>
+            <td class="col-thumbnail">
+                <img src="<?= $helper->getThumbnailItem($product) ?>"
+                     alt="<?= $product->getName() ?>"
+                     width="100"/>
+            </td>
+            <td class="item-info">
+                <?php if ($vendorId): ?>
+                    <p class="vendor-name"><?= $block->escapeHtml($vendor->getName()) ?></p>
+                <?php endif; ?>
+                <p class="product-name"><?= $block->escapeHtml($product->getName()) ?></p>
+                <p class="sku"><?= $block->escapeHtml(__('SKU')) ?>
+                    : <?= $block->escapeHtml($product->getSku()) ?></p>
+            </td>
+            <td class="item-qty"><?= (int)$_item->getQty() ?></td>
+            <td class="item-price">
+                <?= /* @noEscape */
+                $_item->getPrice() ?>
+            </td>
+        </tr>
+        </tbody>
+
+    <?php endforeach; ?>
+</table>

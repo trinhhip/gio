@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var Omnyfy\Enquiry\Block\Customer\History $block
+ */
+?>
+
+<?php $collection = $block->getCollection();?>
+<?php if($collection->getSize()):?>
+<div class="block block-enquiries">
+	<div class="block-content">
+		<?php foreach($collection as $enquiry):?>
+		<div class="box-enquiry">
+			<div class="title">
+                <span class="name"><a href="<?php echo $block->getEnquiryUrl($enquiry->getId())?>"><?php echo $block->escapeHtml($enquiry->getSummary());?></a></span>
+                <span class="date"><?php echo $block->getFrontendDate($enquiry->getUpdatedDate())?></span>
+                <div class="sub"><?php echo $enquiry->getName()?> <?php if($enquiry->getProductId()) echo '| '.$block->getProductName($enquiry->getProductId())?></div>
+			</div>
+			<div class="content">
+				<p><?php echo $block->escapeHtml($enquiry->getMessage());?> </p>
+			</div>
+			<div class="actions">
+				<a href="<?php echo $block->getEnquiryUrl($enquiry->getId())?>" class="button action"><?php echo __('View history')?></a>
+			</div>
+		</div>
+		<?php endforeach;?>
+	</div>
+</div>
+<?php else:?>
+    <div class="message info empty">
+        <span><?= __('There are no enquiries') ?></span>
+    </div>
+<?php endif;?>

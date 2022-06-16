@@ -1,0 +1,23 @@
+{
+    "name": "omnyfy/vendorgallery",
+    "description": "Vendor Gallery",
+    "type": "magento2-module",
+    "version": "2.2.1",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@omnyfy.com",
+            "name": "Omnyfy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\VendorGallery\\": ""
+        }
+    }
+}

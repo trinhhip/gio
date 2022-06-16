@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Setup table omnyfy_vendorauth_log -->
+    <table name="omnyfy_vendorauth_log" resource="default" engine="innodb">
+        <column name="log_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="loggedin_vendor_id" xsi:type="int" padding="11" nullable="true" comment="loggedin_vendor_id" />
+        <column name="module" xsi:type="text" nullable="true" comment="module" />
+        <column name="route" xsi:type="text" nullable="true" comment="route" />
+        <column name="controller" xsi:type="text" nullable="true" comment="controller" />
+        <column name="action" xsi:type="text" nullable="true" comment="action" />
+        <column name="requested_entity_id" xsi:type="int" padding="11" nullable="true" comment="requested_entity_id" />
+        <column name="date" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" comment="date" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="log_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_vendorauth_endpoint_allowlist -->
+    <table name="omnyfy_vendorauth_endpoint_allowlist" resource="default" engine="innodb">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="store_id" xsi:type="smallint" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <column name="endpoint_type" xsi:type="text" nullable="true" comment="Endpoint type" />
+        <column name="endpoint" xsi:type="text" nullable="true" comment="Endpoint" />
+        <column name="method" xsi:type="text" nullable="true" comment="Method" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDORAUTH_ENDPOINT_ALLOWLIST_STORE_ID_STORE_STORE_ID" table="omnyfy_vendorauth_endpoint_allowlist" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDORAUTH_ENDPOINT_ALLOWLIST_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID" table="omnyfy_vendorauth_endpoint_allowlist" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup table integration -->
+    <table name="integration" resource="default" engine="innodb" comment="integration">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+    </table>
+
+    <!-- Setup table oauth_token -->
+    <table name="oauth_token" resource="default" engine="innodb" comment="OAuth Tokens">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+    </table>
+</schema>

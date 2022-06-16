@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Mirasvit\GoogleTagManager\Block\Event\ViewList" name="mst_gtm.event.view_category">
+                <arguments>
+                    <argument name="list_type" xsi:type="string">category</argument>
+                    <argument name="block_name" xsi:type="string">category.products.list</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

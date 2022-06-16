@@ -1,0 +1,9 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+$urlLogin = $block->getData('loginUrl');
+$email = $block->getData('email');
+
+?>
+<?php echo __('Your email %1 already exists. Please login to continue shopping. ', $email) ?>
+<a href="<?= $urlLogin ?>"><?= __('Login now')?></a>

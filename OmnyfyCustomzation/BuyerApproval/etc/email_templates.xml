@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="buyerapproval_admin_notification_email_template" label="Admin Default Template" file="notice_admin.html" type="html" module="OmnyfyCustomzation_BuyerApproval" area="frontend"/>
+    <template id="buyerapproval_customer_notification_email_customer_success_email_template" label="Successful Register Template" file="success.html" type="html" module="OmnyfyCustomzation_BuyerApproval" area="frontend"/>
+    <template id="buyerapproval_customer_notification_email_customer_approve_email_template" label="Approve Template" file="approve.html" type="html" module="OmnyfyCustomzation_BuyerApproval" area="frontend"/>
+    <template id="buyerapproval_customer_notification_email_customer_not_approve_email_template" label="Not Approve Template" file="notapprove.html" type="html" module="OmnyfyCustomzation_BuyerApproval" area="frontend"/>
+</config>

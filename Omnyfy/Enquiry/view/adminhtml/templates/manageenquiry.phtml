@@ -1,0 +1,140 @@
+<?php
+/**
+ * @var $block \Omnyfy\Enquiry\Block\Adminhtml\ManageEnquiry
+ */
+?>
+<?php if($block->enquiry):?>
+    <fieldset class="fieldset admin__fieldset " id="enquiry_information">
+        <legend class="admin__legend legend">
+            <span><?php echo __("Enquiry Information"); ?></span>
+        </legend>
+        <hr class="page-separator">
+        <div class="row row-gutter">
+            <div class="col-m-6">
+                <h2><strong><?php echo __("Enquiry #") ?><?php echo __($block->enquiry["enquiry_id"]) ?></strong></h2>
+
+                <table class="admin__table-secondary">
+                    <tbody>
+                        <tr>
+                            <th><?php echo __("Vendor Name")?></th>
+                            <td><?php echo __($block->enquiry["vendor_name"]) ?></td>
+                        </tr>
+                        <?php if ($block->enquiry["product_name"]) { ?>
+                            <tr>
+                                <th><?php echo __("Product Name")?></th>
+                                <td><?php echo __($block->enquiry["product_name"]) ?></td>
+                            </tr>
+                        <?php } ?>
+                        <tr>
+                            <th><?php echo __("Start Date")?></th>
+                            <td><?php echo __($block->enquiry["created_date"]) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __("Last Updated Date")?></th>
+                            <td><span id="last-updated-date"><?php echo __($block->enquiry["updated_date"]) ?></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-m-6">
+                <h2><strong><?php echo __("Customer Information") ?></strong></h2>
+
+                <table class="admin__table-secondary">
+                    <tbody>
+                        <tr>
+                            <th><?php echo __("Customer Name")?></th>
+                            <td><?php echo $block->escapeHtml(__($block->enquiry["customer_full_name"])) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __("Email")?></th>
+                            <td><?php echo $block->escapeHtml(__($block->enquiry["customer_email"])) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __("Mobile")?></th>
+                            <td><?php echo $block->escapeHtml(__($block->enquiry["customer_mobile"])) ?></td>
+                        </tr>
+                        <tr>
+                            <th><?php echo __("Company")?></th>
+                            <td><?php echo $block->escapeHtml(__($block->enquiry["customer_company"])) ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+    <br/><br/>
+    <fieldset class="fieldset admin__fieldset " id="enquiry_history">
+        <legend class="admin__legend legend">
+            <span><?php echo __("Enquiry History") ?></span>
+        </legend>
+        <hr class="page-separator">
+        <div class="row row-gutter">
+            <div class="col-m-6" id="enquiry-messages">
+                <div class="enquiry-message summery">
+                    <?php echo $block->escapeHtml($block->enquiry["summery"])?>
+                </div>
+                <?php foreach ($block->messages as $message):?>
+                    <?php $from ="" ?>
+                    <?php if($message["from_type"] != \Omnyfy\Enquiry\Helper\Data::VENDOR_TYPE) { ?>
+                        <?php $from = __("From <strong>%1</strong>",$block->enquiry["customer_full_name"]); ?>
+                    <?php } else { ?>
+                        <?php if (($message["is_notify_customer"] == 0 && $message["is_visible_frontend"] == 0 )):?>
+                            <?php $from = "Customer Not Notified"; ?>
+                        <?php else:?>
+                            <?php $from = "Customer Notified"; ?>
+                        <?php endif; ?>
+                    <?php } ?>
+
+                    <div class="enquiry-message speech-bubble <?php echo $message["from_type"] ?>">
+                        <div class="head"><?php echo $from ?> | <?php echo $message["send_time"]?></div>
+                        <div class="details"><?php echo $block->escapeHtml($message["message"]) ?></div>
+                        <?php if (($message["is_notify_customer"] == 0 && $message["is_visible_frontend"] == 0 )):?>
+                            <div class="private-message"><?php echo __("private") ?></div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-m-6">
+                <div class="reply-form">
+                    <div id="message-complete" style="display:none"></div>
+                    <div class="reply-form-message"><textarea rows="8" cols="8" name="reply-message" class="textarea" maxlength="1000" required></textarea></div>
+                    <div class="notify-customer">
+                        <input class="checkbox" type="checkbox" name="is_notify_customer" id="is_notify_customer" checked/>
+                        <lable for="is_notify_customer"><?php echo __("Notify Customer by Email") ?></lable>
+                    </div>
+                    <div class="visible-storefront">
+                        <input class="checkbox" type="checkbox" name="is_visible_frontend" id="is_visible_frontend" checked/>
+                        <lable for="is_visible_frontend"><?php echo __("Visible on Storefront") ?></lable>
+                    </div>
+                    <div class="controllers">
+                        <input type="hidden" name="enquiry-id" value="<?php echo $block->enquiry["enquiry_id"]?>" />
+                        <input type="hidden" name="vendor-id" value="<?php echo $block->enquiry["vendor_id"]?>" />
+                        <input type="hidden" name="customer-id" value="<?php echo $block->enquiry["customer_id"]?>" />
+                        <input type="hidden" name="customer-email" value="<?php echo $block->enquiry["customer_email"] ?>" />
+                        <input type="hidden" name="product-id" value="<?php echo $block->enquiry["product_id"]?>" />
+                        <input type="hidden" name="from_type" value="<?php echo \Omnyfy\Enquiry\Helper\Data::CUSTOMER_TYPE ?>" />
+                        <input type="hidden" name="to_type" value="<?php echo \Omnyfy\Enquiry\Helper\Data::VENDOR_TYPE ?>" />
+                        <input type="hidden" name="ajax-url" value="<?php echo $block->replyAjaxUrl ?>" />
+                        <input type="hidden" name="email-url" value="<?php echo $block->emailAjaxUrl ?>" />
+                        <?php if ($block->enquiry["product_name"]) { ?>
+                            <input type="hidden" name="product-name" value="<?php echo $block->enquiry["product_name"] ?>" />
+                        <?php }else{ ?>
+                            <input type="hidden" name="product-name" value="N/A" />
+                        <?php } ?>
+                        <button id="reply-btn" class="submit-btn"><?php echo __("Reply") ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+<?php else:?>
+    <fieldset class="fieldset admin__fieldset " id="docs_base_fieldset">
+        <?php echo __("Could not find the enquiry.")?>
+    </fieldset>
+<?php endif; ?>
+<script id="vendor-conversation" type="text/x-magento-template">
+    <div class="enquiry-message speech-bubble vendor">
+        <div class="head"><%- data.title %></div>
+        <div class="details"><%- data.message %></div>
+    </div>
+</script>

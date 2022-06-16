@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Omnyfy\ProductImport\Api\ProductImportWebApiInterface" type="Omnyfy\ProductImport\Model\ProductImportWebApi" />
+	<preference for="Omnyfy\ProductImport\Api\ResponseInterface" type="Omnyfy\ProductImport\Model\Response\MainResponse" />
+	<preference for="Omnyfy\ProductImport\Api\ResponseDataInterface" type="Omnyfy\ProductImport\Model\Response\ResponseData" />
+	<preference for="Omnyfy\ProductImport\Api\ResponseDataProductInterface" type="Omnyfy\ProductImport\Model\Response\ResponseDataProduct" />
+
+	<type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="omnyfy_productimport_downloadimage" xsi:type="object">Omnyfy\ProductImport\Console\Command\DownloadImage</item>
+                <item name="omnyfy_productimport_assignimage" xsi:type="object">Omnyfy\ProductImport\Console\Command\AssignImage</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

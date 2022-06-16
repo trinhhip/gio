@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="admin-2columns-left">
+    <body>
+        <referenceContainer name="content">
+<!--            <uiComponent name="omnyfy_vendorsignup_signup_form"/>-->
+			<block class="Magento\Framework\View\Element\Template" name="signup.scripts" template="Omnyfy_VendorSignUp::signup/signup-scripts.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Omnyfy\Vendor\Block\Adminhtml\Vendor\Edit\Tabs" name="omnyfy_vendorsignup.edit.tabs">
+                <block class="Omnyfy\VendorSignUp\Block\Adminhtml\SignUp\Edit\Tab\Main" name="omnyfy_vendorsignup.edit.tab.main"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">omnyfy_vendorsignup.edit.tab.main</argument>
+                </action>
+                <action method="setActiveTab">
+                    <argument name="tabId" xsi:type="string">main_section</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Omnyfy\VendorSignUp\Block\Adminhtml\SignUp\Edit"
+                   name="omnyfy_vendorsignup.edit"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,23 @@
+{
+    "name": "amasty/groupcat",
+    "description": "Amasty Customer Group Catalog",
+    "require": {
+        "php": "^7.1.0",
+        "amasty/base": ">=1.11.1",
+        "amasty/reindex-from-admin": ">=1.1.1",
+        "amasty/customer-group-assign": ">=1.0.3"
+    },
+    "type": "magento2-module",
+    "version": "1.7.0",
+    "license": [
+        "Commercial"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\Groupcat\\": ""
+        }
+    }
+}

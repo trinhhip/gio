@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Omnyfy\VendorSignUp\Block\Adminhtml\Vendor\Edit\Tab\KycInfo"
+                type="OmnyfyCustomzation\Vendor\Block\Adminhtml\Vendor\Edit\Tab\KycInfo"/>
+    <type name="Omnyfy\Vendor\Block\Vendor\Brand">
+        <plugin name="change_vendor_url_brand" type="OmnyfyCustomzation\Vendor\Plugin\Vendor\Brand" sortOrder="10" />
+    </type>
+    <type name="Omnyfy\Vendor\Block\Vendor\Listing">
+        <plugin name="change_vendor_url_listing" type="OmnyfyCustomzation\Vendor\Plugin\Vendor\Listing" sortOrder="10" />
+    </type>
+    <type name="Omnyfy\Vendor\Block\Vendor\Location">
+        <plugin name="change_vendor_url_location" type="OmnyfyCustomzation\Vendor\Plugin\Vendor\Location" sortOrder="10" />
+    </type>
+    <type name="Omnyfy\Vendor\Block\Customer\Vendor\Link">
+        <plugin name="change_vendor_url_link" type="OmnyfyCustomzation\Vendor\Plugin\Vendor\Link" sortOrder="10" />
+    </type>
+    <preference for="Omnyfy\Vendor\Block\Vendor\Listing"
+                type="OmnyfyCustomzation\Vendor\Block\Vendor\Listing"/>
+    <preference for="Omnyfy\Vendor\Block\Adminhtml\Vendor\Edit\Tab\Main"
+                type="OmnyfyCustomzation\Vendor\Block\Adminhtml\Vendor\Edit\Tab\Main"/>
+</config>

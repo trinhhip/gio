@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction" class="Omnyfy\Approval\Ui\Component\MassActions">
+            <action name="submit_to_review">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">submit_to_review</item>
+                        <item name="label" xsi:type="string" translate="true">Submit to review</item>
+                        <item name="url" xsi:type="url" path="omnyfy_approval/record/massSubmitToReview" />
+                    </item>
+                </argument>
+            </action>
+            <action name="review_passed">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">review_passed</item>
+                        <item name="label" xsi:type="string" translate="true">Review passed</item>
+                        <item name="url" xsi:type="url" path="omnyfy_approval/record/massApproveProduct" />
+                    </item>
+                </argument>
+            </action>
+            <action name="review_failed">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">review_failed</item>
+                        <item name="label" xsi:type="string" translate="true">Review failed</item>
+                        <item name="url" xsi:type="url" path="omnyfy_approval/record/massDeclineProduct" />
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+    <columns name="product_columns">
+        <column name="approval_status" class="Omnyfy\Approval\Ui\Component\Listing\Column\ApprovalStatus">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Omnyfy\Approval\Model\Source\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="add_field" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Approval Status</item>
+                    <item name="sortOrder" xsi:type="number">180</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

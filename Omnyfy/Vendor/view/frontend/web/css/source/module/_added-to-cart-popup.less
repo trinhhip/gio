@@ -1,0 +1,72 @@
+// /**
+//  * Copyright © Omnyfy, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables for new theme
+//  ---------------------------------------------
+.atcp-wrapper {
+	display: flex;
+}
+.atcp-wrapper .atcp-media {
+	width: 75px;
+}
+.atcp-wrapper .atcp-price {
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+.atcp-wrapper .atcp-product-info {
+	padding-left: 10px;
+}
+.atcp-wrapper .atcp-product-info .atcp-product-title {
+	margin: 0 0 7px;
+}
+
+.added-to-cart-modal {
+    z-index: 9999;
+}
+
+.added-to-cart-modal .modal-inner-wrap {
+	width: fit-content;
+	max-width: 90%;
+}
+.added-to-cart-modal .modal-inner-wrap .modal-header {
+	padding-right: 6rem;
+}
+.added-to-cart-modal .modal-inner-wrap .modal-header .action-close {
+	box-shadow: none;
+}
+.added-to-cart-modal .modal-inner-wrap .modal-title {
+	border-bottom: 0;
+	font-size: 24px;
+	margin: 0;
+	font-weight: 700;
+}
+.added-to-cart-modal .modal-inner-wrap .modal-footer {
+	text-align: center;
+}
+.added-to-cart-modal .modal-inner-wrap .modal-footer .action {
+	margin: 5px;
+}
+
+
+@media screen and (min-width: 768px) {
+	.added-to-cart-modal .modal-inner-wrap {
+		max-width: 700px;
+		width: 700px;
+	}
+
+	.added-to-cart-modal .modal-inner-wrap .modal-footer {
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.added-to-cart-modal .modal-inner-wrap .modal-footer .action {
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+}

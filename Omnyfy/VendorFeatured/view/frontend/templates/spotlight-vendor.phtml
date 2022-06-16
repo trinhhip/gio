@@ -1,0 +1,88 @@
+<?php
+$url = $block->getUrl("vendorfeatured/spotlight/ajaxSaveClick");
+$vendorHelper = $this->helper('Omnyfy\VendorFeatured\Helper\VendorSpotlightBanner');
+$vendor = $block->getVendor();
+$vendorId = $vendor->getEntityId();
+$banners = $vendorHelper->getBannerPlacementByVendorId($vendorId);
+?>
+
+<?php if ($vendorHelper->isSpotlightBannerEnabled()) : ?>
+
+    <?php if ($banners) : ?>
+
+        <?php
+        $_getVendor = $vendorHelper->getAssignedVendorOnBanner($banners[0]['banner_id']);
+        ?>
+
+        <div class="title-mobile-spotlight">
+            <strong><?= $vendorHelper->getBannerTitle() ?></strong>
+        </div>
+        <div class="banner-spotlight-wrapper">
+            <div class="title">
+                <h4><?= $vendorHelper->getBannerTitle() ?></h4>
+            </div>
+            <div class="banner-items">
+                <div class="item-wrapper">
+
+                    <?php foreach ($_getVendor as $_vendor) : ?>
+                        <div class="item">
+                        <span class="vendor-spotlight-link" banner-vendor-id="<?= $_vendor->getBannerVendorId() ?>" link="<?= $block->getBaseUrl().'/shop/brands/view/id/' . $_vendor['vendor_id'] . '/' ?>">
+                                <img src="<?= $vendorHelper->getVendorLogo($_vendor['vendor_id']) ?>" alt="" />
+                            </span>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            require([
+                'jquery',
+                'matchMedia'
+            ], function($, mediaCheck) {
+
+                /*Break Point*/
+                mediaCheck({
+                    media: '(min-width: <?= $vendorHelper->getMobileBreakpoint() ?>px)',
+                    entry: function() {
+                        (function() {
+                            $(".banner-spotlight-wrapper").addClass("desktop");
+                            $(".banner-spotlight-wrapper").removeClass("mobile");
+                            $("footer.page-footer").css('margin-bottom', "0px");
+                        })();
+                    },
+                    exit: function() {
+                        (function() {
+                            $(".banner-spotlight-wrapper").removeClass("desktop");
+                            $(".banner-spotlight-wrapper").addClass("mobile");
+                            $("footer.page-footer").css('margin-bottom', "112px");
+                        })();
+                    }
+                });
+
+                /*Ajax for click count*/
+                $(".vendor-spotlight-link").on('click', function() {
+
+                    var direct = $(this).attr("link");
+                    var id = $(this).attr("banner-vendor-id");
+                    var url = "<?= $url . '?banner_vendor_id=' ?>" + id;
+
+                    $.ajax({
+                        showLoader: false,
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        success: function() {
+                            parent.window.location = direct;
+                        },
+                        error: function() {
+                            console.log('ERROR: ');
+                        },
+                    });
+                });
+            });
+        </script>
+
+    <?php endif ?>
+<?php endif ?>

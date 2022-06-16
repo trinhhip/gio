@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\RegenerateUrlRewrites\Api\Data\GenerateConfigInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Generate\Config\Config"/>
+    <preference for="Amasty\RegenerateUrlRewrites\Api\Data\GenerateStartResultInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Generate\StartResult"/>
+    <preference for="Amasty\RegenerateUrlRewrites\Api\Data\GenerateStatusInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Generate\Status\Status"/>
+    <preference for="Amasty\RegenerateUrlRewrites\Api\Data\GenerateStatusMessageInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Generate\Status\Message"/>
+    <preference for="Amasty\RegenerateUrlRewrites\Api\GeneratorInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Generator"/>
+    <preference for="Amasty\RegenerateUrlRewrites\Generator\Command\CommandResultInterface"
+                type="Amasty\RegenerateUrlRewrites\Generator\Command\CommandResult"/>
+
+    <preference for="Amasty\RegenerateUrlRewrites\Console\Command\Regenerate\OptionResolverInterface"
+                type="Amasty\RegenerateUrlRewrites\Console\Command\Regenerate\OptionResolver"/>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="Amasty_RegenerateUrlRewrites::regenerate_command" xsi:type="object">Amasty\RegenerateUrlRewrites\Console\Command\RegenerateCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Amasty\RegenerateUrlRewrites\Console\Command\RegenerateCommand">
+        <arguments>
+            <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Amasty\RegenerateUrlRewrites\Model\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="product" xsi:type="string">Amasty\RegenerateUrlRewrites\Model\Processor\ProductProcessor</item>
+                <item name="category" xsi:type="string">Amasty\RegenerateUrlRewrites\Model\Processor\CategoryProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

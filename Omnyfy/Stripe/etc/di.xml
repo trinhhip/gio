@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Omnyfy\VendorSignUp\Helper\GatewayInterface" type="\Omnyfy\Stripe\Helper\Gateway" />
+    <type name="Omnyfy\Mcm\Model\VendorPayoutType">
+        <plugin name="vendor_default_stripe_payout_type" type="Omnyfy\Stripe\Plugin\Model\VendorPayoutType" />
+    </type>
+    <type name="StripeIntegration\Payments\Model\StripeCustomer">
+        <plugin name="vendor_stripe_customer_get_subscriptions" type="Omnyfy\Stripe\Plugin\Model\StripeCustomer" />
+    </type>
+</config>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="buyerapproval_reindex" xsi:type="object">OmnyfyCustomzation\BuyerApproval\Console\Command\Reindex</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="OmnyfyCustomzation\Customer\Model\EmailNotification">
+        <plugin name="buyerapproval_disable_email_notification" type="OmnyfyCustomzation\BuyerApproval\Plugin\EmailNewAccount" sortOrder="1"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\CreatePost">
+        <plugin name="buyerapproval_account_create_post" type="OmnyfyCustomzation\BuyerApproval\Plugin\CustomerCreatePost" sortOrder="1"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\Confirm">
+        <plugin name="buyerapproval_account_create_confirm" type="OmnyfyCustomzation\BuyerApproval\Plugin\CustomerConfirm" sortOrder="1"/>
+    </type>
+    <preference for="OmnyfyCustomzation\BuyerApproval\Api\ListApproveInterface" type="OmnyfyCustomzation\BuyerApproval\Model\ListApprove"/>
+</config>

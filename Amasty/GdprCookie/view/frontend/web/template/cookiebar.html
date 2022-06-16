@@ -1,0 +1,39 @@
+<!-- ko if: $data.isShowNotificationBar -->
+<div role="alertdialog" tabindex="-1" class="amgdprcookie-bar-container" data-amcookie-js="bar" afterRender="detectScroll.bind($data)">
+    <div class="amgdprcookie-bar-block">
+        <p class="amgdprcookie-policy" data-bind="html: policyText"></p>
+        <div class="amgdprcookie-buttons-block">
+            <button class="amgdprcookie-button -allow"
+                    data-bind="text: acceptBtnText || $t('Accept Cookies'),
+                               attr: {
+                                    title: acceptBtnText || $t('Accept Cookies'),
+                                    'aria-label': acceptBtnText || $t('Accept Cookies')
+                                    },
+                               click: allowCookies">
+            </button>
+            <button if="isDeclineEnabled"
+                    class="amgdprcookie-button -decline"
+                    data-bind="text: declineBtnText || $t('Decline Cookies'),
+                               attr: {
+                                    title: declineBtnText || $t('Decline Cookies'),
+                                    'aria-label': declineBtnText || $t('Decline Cookies')
+                                    },
+                               click: declineCookie.bind($data, $element, $data)">
+            </button>
+            <button class="amgdprcookie-button -settings"
+                    data-bind="text: settingsBtnText || $t('Custom Settings'),
+                               attr: {
+                                    title: settingsBtnText || $t('Custom Settings'),
+                                    'aria-label': settingsBtnText || $t('Custom Settings')
+                                    },
+                               click: allowCookies, click: openModal">
+            </button>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: $data.elems().length -->
+    <!-- ko foreach: $data.elems() -->
+        <!--ko template: getTemplate()--><!-- /ko -->
+    <!-- /ko -->
+<!-- /ko -->

@@ -1,0 +1,134 @@
+<?php
+/**
+ * @var $block \Omnyfy\VendorFeatured\Block\Vendor\Featured
+ */
+
+$vendorHelper = $this->helper('Omnyfy\Vendor\Helper\Data');
+
+$configCarousel = [
+    'responsive' => [
+        'items_0' => (int)($block->getData('items_0') ? $block->getData('items_0') : '2'),
+        'items_640' => (int)($block->getData('items_640') ? $block->getData('items_640') : '3'),
+        'items_768' => (int)($block->getData('items_768') ? $block->getData('items_768') : '4'),
+        'items_992' => (int)($block->getData('items_992') ? $block->getData('items_992') : '5'),
+        'items_1200' => (int)($block->getData('items_1200') ? $block->getData('items_1200') : '5')
+    ],
+    'autoplay' => $block->getData('autoplay') ? $block->getData('autoplay') : 'true',
+    'autoplayTimeout' => $block->getData('autoplayTimeout') ? $block->getData('autoplayTimeout') : '5000',
+    'autoplayHoverPause' => $block->getData('autoplayHoverPause') ? $block->getData('autoplayHoverPause') : 'true',
+    'margin' => (int)($block->getData('margin') ? $block->getData('margin') : '20'),
+    'nav' => $block->getData('nav') ? $block->getData('nav') : 'true',
+    'navText' => $block->getData('navText') ? $block->getData('navText') : ["<em class='porto-icon-left-open-big'></em>", "<em class='porto-icon-right-open-big'></em>"],
+    'navTextPrev' => $block->getData('navTextPrev') ? $block->getData('navTextPrev') : "prev",
+    'navTextNext' => $block->getData('navTextNext') ? $block->getData('navTextNext') : "Next",
+    'dots' => $block->getData('dots') ? $block->getData('dots') : 'true',
+    'loop' => $block->getData('loop') ? $block->getData('loop') : 'true',
+    'totalVendor' => 2
+];
+?>
+
+<?php /** @var \Omnyfy\VendorFeatured\Model\ResourceModel\VendorTag\Collection $tags */
+$tags = $block->getTags() ?>
+<?php if ($tags->count() > 0): ?>
+    <div class="fv-wrapper"
+        <?php if ($tags->count() > 1): ?>
+            data-mage-init='{"mage/tabs": {"openedState": "active", "animate": {"duration": 100}, "active": 0}}'
+        <?php endif ?>
+    >
+        <?php foreach ($tags as $tag): ?>
+
+            <?php $vendors = $block->getFeaturedVendors($tag->getId()) ?>
+            <?php if ($vendors && $vendors->count() > 0): ?>
+
+                <div class="fv-nav-item" data-role="collapsible">
+                    <h2 class="filterproduct-title"><span class="content"><strong><?php echo $tag->getName() ?></strong></span>
+                    </h2>
+                </div>
+                <div class="fv-content-wrapper">
+                    <ol id="vendor_featured_items_tag_<?= $tag->getId(); ?>"
+                        class="vendors grid items vendor-items tag-<?= $tag->getId(); ?> owl-carousel">
+                        <?php foreach ($vendors as $vendor): ?>
+                            <?php // Set vendor data
+                            $vendorObject = $block->getVendor($vendor->getData("vendor_id"));
+                            if ($vendorObject) :
+                                $typeId = $vendorObject->getData("type_id");
+                                $vendorLink = "";
+                                $logoLink = $block->getVendorMedia($vendorObject);
+                                $description = substr($vendor->getData("description"), 0, 20);
+
+                                if (!$block->isVendorTemplate($typeId)):
+                                    $vendorLink = "/shop/brands/view/id/" . $vendor->getData("vendor_id");
+                                    $name = $vendorObject->getName();
+                                    $address = $vendorObject->getData("address");
+                                else:
+                                    $vendorLink = "/booking/practice/view/id/" . $vendor->getData("location_id");
+                                    if ($locationId = $vendor->getData("location_id")):
+                                        $location = $block->getLocation($locationId);
+                                        $name = $location->getName();
+                                        $address = $location->getData("address") . ", "
+                                            . $location->getData("suburb") . ", "
+                                            . $location->getData("region") . ", "
+                                            . $location->getData("postcode");
+                                    endif;
+                                endif;
+                            endif; ?>
+
+                            <?php
+                            // Additional data
+                            $description = substr($vendor->getData("description"), 0, 20);
+                            ?>
+
+                            <li class="vendor-item vendor item">
+                                <a href="<?php echo $vendorLink ?>" class="vendor-item-link">
+                                    <div class="vendor-item-info">
+                                        <div class="vendor-item-photo photo">
+                                            <img src="<?php echo $logoLink ?>" class="photo-image">
+                                        </div>
+
+                                        <div class="vendor vendor-item-details details">
+                                            <h5 class="vendor-name"><?= $name ?></h5>
+
+                                            <?php if ($address): ?>
+                                                <p class="vendor-location">
+                                                    <?= $address ?>
+                                                </p>
+                                            <?php endif; ?>
+
+                                            <?php if ($description): ?>
+                                                <div class="vendor-description">
+                                                    <?php echo $description; ?>
+                                                </div>
+                                            <?php endif ?>
+
+                                            <div class="info-left">
+                                                <span class="info-text"><?php echo $vendor->getData("location_name") ?></span>
+                                                <?php if ($vendor->getData("location_count") > 0): ?>
+                                                    <span class="more">and <?php echo $vendor->getData("location_count") ?> more locations</span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="info-right">
+                                                <span class="info-text"><?php echo $vendor->getData("suburb") ?></span>
+                                                <?php /* <span class="more">and 1 more suburbs</span> */ ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                    <?php $configCarousel['totalVendor'] = $vendors->count(); ?>
+                    <script type="text/x-magento-init">
+                    {
+                       "#vendor_featured_items_tag_<?= $tag->getId(); ?>": {
+                            "Omnyfy_VendorFeatured/js/unified-featured" : {
+                                "options" : <?= json_encode($configCarousel); ?>,
+                                "elementClass" : ".vendor-items.tag-<?= $tag->getId(); ?>"
+                            }
+                        }
+                    }
+                    </script>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

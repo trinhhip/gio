@@ -1,0 +1,28 @@
+<?php
+/* @var $block \Omnyfy\Vendor\Block\Vendor\ListProduct */
+$categories = $block->getCategory();
+?>
+<?php if(!empty($categories)): ?>
+<section class="vendor-category-section" id="categories">
+
+    <div class="container">
+        <h2><?= __("Categories") ?></h2>
+        <div class="category-container">
+        <?php foreach ($categories as $category): ?>
+            <div class="category-item-wrapper">
+                <a class="category-item" href="<?= $block->getCatalogSeoSuffix($category->getId()) ?>">
+                    <div class="img-container">
+                        <img src="<?= $block->getThumbnailUrl($category) ?>" alt="<?= $category->getData('name') ?>">
+                    </div>
+                    <span class="name">
+                        <?= $category->getData('name') ?>
+                    </span>
+                </a>
+            </div>
+        <?php endforeach ?>
+        </div>
+    </div>
+
+</section>
+<?php endif; ?>
+

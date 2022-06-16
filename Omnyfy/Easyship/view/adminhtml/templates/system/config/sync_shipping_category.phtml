@@ -1,0 +1,19 @@
+<?php echo $block->getButtonHtml() ?>
+
+<script>
+    require([
+        'jquery'
+    ], function($){
+        $('#synccategory_button').click(function(){
+            $.ajax({
+                method: "GET",
+                url: "<?= $block->getAjaxUrl(); ?>",
+                dataType: "json",
+                showLoader:true,
+                success: function(response){
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>

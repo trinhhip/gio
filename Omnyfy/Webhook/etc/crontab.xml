@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Omnyfy\Webhook\Cron\WebhookEventSchedule" method="execute" name="omnyfy_webhook_send_webhook_by_schedule">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job instance="Omnyfy\Webhook\Cron\DeleteWebhookHistory" method="execute" name="omnyfy_webhook_delete_history">
+            <schedule>0 0 * * *</schedule>
+        </job>
+    </group>
+</config>

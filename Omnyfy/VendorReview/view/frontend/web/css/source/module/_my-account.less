@@ -1,0 +1,100 @@
+// /**
+//  * Copyright © Omnyfy, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables
+//  ---------------------------------------------
+// @vendor-customer-review -> @vcr
+@vcr-container__border: none;
+@vcr-container__border-radius: 8px;
+@vcr-container__background: @color-white;
+@vcr-container__padding: @indent__xl @indent__l;
+@vcr-container__box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
+
+@vcr-vendor__display__mobile: flex;
+@vcr-vendor__align-items__mobile: center;
+@vcr-vendor__justify-content__mobile: flex-start;
+@vcr-vendor__border-bottom__mobile: 1px solid @border-color__base;
+@vcr-vendor-logo__width__mobile: 112px;
+@vcr-vendor-media__margin_mobile: 0 @indent__base 0 0;
+
+@vcr-customer-review__display__desktop: flex;
+@vcr-review-title__margin-top: 0;
+
+@vcr-vendor__display__desktop: block;
+@vcr-vendor__max-width__desktop: 30%;
+@vcr-vendor__border-bottom__desktop: none;
+@vcr-vendor__border-right__desktop: 1px solid @border-color__base;
+@vcr-vendor__padding__desktop: 0 @indent__l 0 0;
+@vcr-vendor__margin__desktop: 0 @indent__l 0 0;
+@vcr-vendor__text-align__desktop: center;
+@vcr-vendor-logo__width__desktop: auto;
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+    .customer-review.view {
+        border: @vcr-container__border;
+        border-radius: @vcr-container__border-radius;
+        background: @vcr-container__background;
+        padding: @vcr-container__padding;
+        box-shadow: @vcr-container__box-shadow;
+    }
+}
+
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .vendorreview-customer-view {
+        .vendor {
+            display: @vcr-vendor__display__mobile;
+            align-items: @vcr-vendor__align-items__mobile;
+            justify-content: @vcr-vendor__justify-content__mobile;
+            border-bottom: @vcr-vendor__border-bottom__mobile;
+        }
+
+        .vendor-media {
+            margin: @vcr-vendor-media__margin_mobile;
+        }
+
+        .vendor-image-photo {
+            width: @vcr-vendor-logo__width__mobile;
+        }
+    }
+}
+
+//
+//    Tablet (from 768px)
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .vendorreview-customer-view {
+        .customer-review.view {
+            display: flex;
+
+            .review-details .review-title {
+                margin-top: 0;
+            }
+        }
+
+
+        .vendor {
+            display: @vcr-vendor__display__desktop;
+            max-width: @vcr-vendor__max-width__desktop;
+            border-bottom: @vcr-vendor__border-bottom__desktop;
+            border-right: @vcr-vendor__border-right__desktop;
+            padding: @vcr-vendor__padding__desktop;
+            margin: @vcr-vendor__margin__desktop;
+            text-align: @vcr-vendor__text-align__desktop;
+        }
+
+        .vendor-image-photo {
+            width: @vcr-vendor-logo__width__desktop;
+        }
+
+    }
+}

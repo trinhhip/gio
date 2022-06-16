@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/rma/rma/:orderId" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getByOrderId"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/itemsForRmaId/:rmaId" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaItemsForRmaId"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/itemsForRmaIds/:rmaIds" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaItemsForRmaIds"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/rmaReasonList/" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaReasonList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/rmaConditionList/" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaConditionList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/rmaStatusList/" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaStatusList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/rmaResolutionList/" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaResolutionList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/rmaAddressList/" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaAddressList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/save/" method="PUT">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="saveRma"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/vendor/save/" method="PUT">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="VendorSaveRma"/>
+        <resources>
+            <resource ref="Omnyfy_RmaMobileapi::api"/>
+        </resources>
+    </route>
+    <route url="/V1/rma/vendor/get_items/:rmaIds" method="GET">
+        <service class="Omnyfy\RmaMobileapi\Api\RmaRepositoryInterface" method="getRmaItems"/>
+        <resources>
+            <resource ref="Omnyfy_RmaMobileapi::api"/>
+        </resources>
+    </route>
+</routes>

@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © Omnyfy, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Vendor view template
+ *
+ * @var $block \Omnyfy\Vendor\Block\Vendor\Location
+ */
+$locationDetails = $block->getLocationDetails();
+$vendorDetails = $block->getVendorDetails($locationDetails->getVendorId());
+?>
+
+<div class="hero-banner" style="background-image: url('<?php echo $block->getBannerUrl($vendorDetails->getBanner()); ?>');">
+    <div class="container">
+    </div>
+</div>

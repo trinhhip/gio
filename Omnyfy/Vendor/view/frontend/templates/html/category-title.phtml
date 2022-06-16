@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magento\Theme\Block\Html\Title
+ * @var $filterHlp \Omnyfy\Vendor\Helper\Filter
+ */
+$filterHlp = $this->helper('\Omnyfy\Vendor\Helper\Filter');
+$vendorId = $block->getRequest()->getParam('vendor_id');
+$logo = $filterHlp->getVendorLogoUrl();
+$vendorName = $filterHlp->getVendorName();
+$valueOfHideVendorLink = $filterHlp->getValueOfHideVendorLinkFromVendorType($vendorId);
+?>
+
+<?php if($vendorId):?>
+    <?php if ($valueOfHideVendorLink) : ?>
+        <div class="vendor-category-title-wrapper">
+            <a href="<?= $block->getUrl('shop/brands/view',['id' => $vendorId]) ?>" class="vendor-category-title">
+                <?php if ($logo): ?>
+                <div class="logo-container">
+                    <img src="<?= $logo ?>" alt="<?= $vendorName ?>" />
+                </div>
+                <?php endif; ?>
+                <div class="vendor-info">
+                    <h1 class="vendor-name">
+                        <?= $vendorName ?>
+                    </h1>
+                    <span class="sub-line">
+                        <?= __('View Profile') ?>
+                    </span>
+                </div>
+            </a>
+            <?= $block->getChildHtml() ?>
+        </div>
+    <?php endif; ?>
+<?php endif;?>
+

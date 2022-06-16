@@ -1,0 +1,29 @@
+<?php
+/** @var OmnyfyCustomzation\B2C\Block\Retail\Price $block */
+$product = $block->getProduct();
+$postParams = $block->getAddToCartPostParams($product);
+$pageAction = $block->getPageAction();
+
+?>
+<div class="retail-price" id="retail-price" data-bind="scope: 'retail-price-component'">
+    <?php if ($block->getIsShowRetailPrice() && $product->isSaleable()): ?>
+        <form action="<?php echo $postParams['action']; ?>" method="post" class="retail-form">
+            <?php echo $block->getBlockHtml('formkey') ?>
+            <input type="hidden" name="product"
+                   value="<?php echo $postParams['data']['product']; ?>">
+            <input type="hidden"
+                   name="uenc"
+                   value="<?php echo $postParams['data']['uenc']; ?>">
+            <input type="hidden" name="qty" id="qty" maxlength="12"
+                   value="<?php /* @escapeNotVerified */
+                   echo $block->getProductDefaultQty() * 1 ?>"
+                   title="<?php /* @escapeNotVerified */
+                   echo __('Qty') ?>" class="input-text qty"/>
+            <button type="submit"
+                    title="<?php echo $block->escapeHtml(__($block->getAddToCartLabel())); ?>"
+                    class="btn-retail">
+                <span><?php echo __('Add To Cart') ?></span>
+            </button>
+        </form>
+    <?php endif; ?>
+</div>

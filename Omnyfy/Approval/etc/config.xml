@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <omnyfy_approval>
+            <general>
+                <enabled>1</enabled>
+                <copy_method>bcc</copy_method>
+                <email_template_fail>omnyfy_approval_general_email_template_fail</email_template_fail>
+                <email_template_submit>omnyfy_approval_general_email_template_submit</email_template_submit>
+                <email_template_pass>omnyfy_approval_general_email_template_pass</email_template_pass>
+                <email_template_approval>omnyfy_approval_general_email_template_approval</email_template_approval>
+                <sender>general</sender>
+            </general>
+        </omnyfy_approval>
+    </default>
+</config>

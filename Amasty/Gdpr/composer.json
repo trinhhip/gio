@@ -1,0 +1,29 @@
+{
+    "name": "amasty/module-gdpr",
+    "description": "GDPR by Amasty",
+    "require": {
+        "php": "^7.3.0",
+        "amasty/base": ">=1.12.11",
+        "amasty/geoip": ">=1.5.5",
+        "amasty/cron-schedule-list": ">=1.0.5",
+        "amasty/gdpr-cookie": ">=2.6.1"
+    },
+    "suggest": {
+        "amasty/module-gdpr-graphql": "Please install Gdpr GraphQL module to add GraphQL support.",
+        "amasty/module-gdpr-mftf-2": "Install module-gdpr-mftf-2 module to be able to run Gdpr MFTF tests for Magento ee2.3.6+ version.",
+        "amasty/module-gdpr-mftf-3": "Install module-gdpr-mftf-3 module to be able to run Gdpr MFTF tests for Magento ee2.4.1+ version."
+    },
+    "type": "magento2-module",
+    "version": "2.6.7",
+    "license": [
+        "Commercial"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\Gdpr\\": ""
+        }
+    }
+}

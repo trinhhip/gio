@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Ihor Vansach (ihor@omnyfy.com). All rights reserved.
+ * See LICENSE.txt for license details (http://opensource.org/licenses/osl-3.0.php).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="OmnyfyCustomzation_CmsBlog::elements" title="CMS" module="OmnyfyCustomzation_CmsBlog" parent="Magento_Backend::content" sortOrder="10"
+             resource="OmnyfyCustomzation_CmsBlog::elements"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::article" title="Articles" module="OmnyfyCustomzation_CmsBlog" parent="OmnyfyCustomzation_CmsBlog::elements" sortOrder="10"
+             action="cms/article/" resource="OmnyfyCustomzation_CmsBlog::article"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::tool_template" title="Tools and Templates" module="OmnyfyCustomzation_CmsBlog"
+             parent="OmnyfyCustomzation_CmsBlog::elements" sortOrder="30" action="cms/tool_template/"
+             resource="OmnyfyCustomzation_CmsBlog::toolTemplate"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::category" title="Categories" module="OmnyfyCustomzation_CmsBlog" parent="OmnyfyCustomzation_CmsBlog::elements"
+             sortOrder="20" action="cms/category/edit" resource="OmnyfyCustomzation_CmsBlog::category"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::user_type" title="Personalisation" module="OmnyfyCustomzation_CmsBlog"
+             parent="Magento_Backend::stores_attributes" sortOrder="60" action="cms/user_type/"
+             resource="OmnyfyCustomzation_CmsBlog::userType"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::config_cms" title="Configuration" module="OmnyfyCustomzation_CmsBlog" parent="OmnyfyCustomzation_CmsBlog::elements"
+             sortOrder="50" action="adminhtml/system_config/edit/section/mfcms/" resource="OmnyfyCustomzation_CmsBlog::config_cms"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::country_industry" title="Countries and Industries" module="OmnyfyCustomzation_CmsBlog"
+             parent="Magento_Backend::content" sortOrder="20" resource="OmnyfyCustomzation_CmsBlog::country_industry"/> <!---->
+
+        <add id="OmnyfyCustomzation_CmsBlog::country" title="Countries" module="OmnyfyCustomzation_CmsBlog" parent="OmnyfyCustomzation_CmsBlog::country_industry"
+             sortOrder="30" action="cms/country/" resource="OmnyfyCustomzation_CmsBlog::country"/>
+
+        <add id="OmnyfyCustomzation_CmsBlog::industry" title="Industries" module="OmnyfyCustomzation_CmsBlog" parent="OmnyfyCustomzation_CmsBlog::country_industry"
+             sortOrder="50" action="cms/industry/" resource="OmnyfyCustomzation_CmsBlog::industry"/>
+
+    </menu>
+</config>

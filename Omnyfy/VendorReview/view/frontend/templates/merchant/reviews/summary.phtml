@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @description:
+ *
+ */
+?>
+<?php
+$_items = $block->getReviewsCollection()->getItems();
+$format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
+
+/** @var  $helper \Omnyfy\VendorReview\Helper\Vendor */
+$helper = $this->helper('Omnyfy\VendorReview\Helper\Vendor');
+?>
+<?php if ($helper->isVendorReviewEnabled()): ?>
+    <?php if (count($_items)):?>
+        <div class="block review-list" id="customer-reviews">
+            <div class="block-content">
+                <h2 class="reviews-title"><?= __('Reviews') ?></h2>
+                <?php foreach ($_items as $_review):?>
+                    <?php $totalRating = 0; ?>
+                    <?php foreach($_review->getRatingVotes() as $rating):?>
+                        <?php $totalRating += $rating->getData('percent') ?>
+                    <?php endforeach; ?>
+
+                    <?php /* to show number of votes, uncomment this code
+                    <?php $numRating = count($_review->getRatingVotes()); ?>
+                    <?php $avgRating = $totalRating/$numRating; ?>
+                    <div class="rating-row-container">
+                        <div class="rating-stars-container">
+                            <div class="rating-stars-wrapper star-lg">
+                                <div class="rating-stars">
+                                    <span style="width: <?php echo $avgRating; ?>%;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php */ ?>
+                <div class="review-wrapper">
+                    <div class="review-name">
+                        <?php $customerName = $block->getCustomerName($_review); ?>
+                        <h5 class="name" style="display: inline"><?php echo $block->escapeHtml($customerName) ?></h5>
+                        <div class="date">
+                            <time class="review-details-value"
+                                  itemprop="datePublished"
+                                  datetime="<?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?>">
+                                <?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?>
+                            </time>
+                        </div>
+                    </div>
+
+                    <?php if (count($_review->getRatingVotes())): ?>
+                    <div class="review-rating-wrapper">
+                        <div class="review-rating">
+                            <div class="rating-stars-wrapper">
+                                <?php foreach ($_review->getRatingVotes() as $_vote): ?>
+
+                                <span class="label rating-name"><?php echo $block->escapeHtml($_vote->getVendorRatingCode()) ?></span>
+                                <div class="rating-result">
+                                    <span style="width: <?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%;"></span>
+                                </div>
+
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="review-text">
+                        <?php
+                        $reviewText = $block->escapeHtml($_review->getDetail());
+                        echo "<p>" . preg_replace("/[\r\n]/","</p><p>", $reviewText) . "</p>";
+                        ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <div class="toolbar review-toolbar">
+                    <?php echo $block->getChildHtml('toolbar') ?>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="message"><?= __('There are current no reviews for this vendor')?></div>
+    <?php endif;?>
+<?php endif; ?>

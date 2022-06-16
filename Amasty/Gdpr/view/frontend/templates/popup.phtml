@@ -1,0 +1,21 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_Gdpr
+ */
+?>
+<?php /** @var \Amasty\Gdpr\Block\Popup $block */ ?>
+
+<div class="amgdpr-privacy-policy" id="amgdpr-privacy-popup"></div>
+
+<script type="text/x-magento-init">
+    {
+        "#amgdpr-privacy-popup": {
+            "Amasty_Gdpr/js/popup":{
+                "textUrl":"<?= $block->escapeUrl($block->getTextUrl()); ?>",
+                "modalClass": "amgdpr-modal-container"
+            }
+        }
+    }
+</script>

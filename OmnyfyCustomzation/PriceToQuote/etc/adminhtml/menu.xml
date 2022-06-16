@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="OmnyfyCustomzation_PriceToQuote::price_to_quote" title="Price To Be Quoted" translate="title"
+             module="OmnyfyCustomzation_PriceToQuote"
+             parent="OmnyfyCustomzation_Core::vermillion" sortOrder="30"
+             resource="OmnyfyCustomzation_PriceToQuote::price_to_quote"/>
+
+        <add id="OmnyfyCustomzation_PriceToQuote::management" title="Management Request" translate="title"
+             module="OmnyfyCustomzation_PriceToQuote"
+             parent="OmnyfyCustomzation_PriceToQuote::price_to_quote" sortOrder="10"
+             dependsOnModule="OmnyfyCustomzation_PriceToQuote" action="catalog/product/quote"
+             resource="OmnyfyCustomzation_B2C::management"/>
+        <add id="OmnyfyCustomzation_PriceToQuote::configuration" title="Configuration" translate="title"
+             module="OmnyfyCustomzation_PriceToQuote"
+             parent="OmnyfyCustomzation_PriceToQuote::price_to_quote" sortOrder="20"
+             dependsOnModule="OmnyfyCustomzation_PriceToQuote" action="admin/system_config/edit/section/price_to_quote/"
+             resource="OmnyfyCustomzation_B2C::configuration"/>
+
+    </menu>
+</config>

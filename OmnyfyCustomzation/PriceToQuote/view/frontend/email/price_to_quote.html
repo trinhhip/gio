@@ -1,0 +1,36 @@
+<!--@subject Price To Be Quoted @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td valign="top">
+            <p>
+            <p>{{trans "Hi "}}</p>
+            </p>
+            <p>
+                {{trans "You have received a quote notification."}}
+            </p>
+            <p>
+                <strong>{{trans "Brand Name: "}}</strong> {{var data.brand_name|escape}}
+            </p>
+            <p>
+                <strong>{{trans "Product Name: "}}</strong> {{var data.product_name|escape}}
+            </p>
+            <p>
+                <strong>{{trans "Sku: "}}</strong> {{var data.product_sku|escape}}
+            </p>
+            <p>
+                <strong>{{trans "Customer Name: "}}</strong> {{var data.name|escape}}
+            </p>
+            <p>
+                <strong>{{trans "Email: "}}</strong> {{var data.email|escape}}
+            </p>
+            <p>
+                <strong>{{trans "Inquiry: "}}</strong> {{var data.inquiry|escape}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

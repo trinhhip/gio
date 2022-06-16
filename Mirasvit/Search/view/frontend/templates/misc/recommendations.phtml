@@ -1,0 +1,25 @@
+<?php
+/**
+ * @var \Magento\AdvancedSearch\Block\SearchData $block
+ */
+?>
+<?php
+/** @var \Magento\Search\Model\QueryResult[] $data */
+$data = $block->getItems();
+if (!$data) {
+    return;
+}
+?>
+<dl class="block mst-search__misc-recommendations">
+    <dt class="title"><?= $block->escapeHtml(__($block->getTitle())) ?></dt>
+    <?php foreach ($data as $additionalInfo) : ?>
+        <dd class="item">
+            <a href="<?= $block->escapeUrl($block->getLink($additionalInfo->getQueryText())) ?>">
+                <?= $block->escapeHtml($additionalInfo->getQueryText()) ?>
+            </a>
+            <?php if ($block->isShowResultsCount()) : ?>
+                <span class="count"><?= (int)$additionalInfo->getResultsCount() ?></span>
+            <?php endif; ?>
+        </dd>
+    <?php endforeach; ?>
+</dl>

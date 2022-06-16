@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="cms.articles.list">
+            <block class="OmnyfyCustomzation\CmsBlog\Block\Article\ArticleList\Item" name="cms.articles.list.item"
+                   template="article/list/item.phtml">
+                <block class="OmnyfyCustomzation\CmsBlog\Block\Article\Info" name="cms.article.info" template="article/info.phtml"/>
+                <action method="setProductInfoBlockName">
+                    <argument name="name" xsi:type="string">cms.article.info</argument>
+                </action>
+            </block>
+            <block class="OmnyfyCustomzation\CmsBlog\Block\Article\ArticleList\Toolbar" name="article_list_toolbar"
+                   template="article/list/toolbar.phtml">
+                <block class="OmnyfyCustomzation\CmsBlog\Block\Article\ArticleList\Toolbar\Pager" name="article_list_toolbar_pager">
+                    <action ifconfig="mfcms/article_list/lazyload_enabled" method="setTemplate">
+                        <argument name="template" xsi:type="string">OmnyfyCustomzation_CmsBlog::article/list/toolbar/lazyload.phtml
+                        </argument>
+                    </action>
+                    <arguments>
+                        <argument name="lazyload_js" xsi:type="string">OmnyfyCustomzation_CmsBlog/js/lazyload</argument>
+                        <argument name="list_wrapper" xsi:type="string">.article-list-wrapper .article-list,
+                            .cms-list-wrapper .cms-list
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">article_list_toolbar</argument>
+            </action>
+
+            <block class="OmnyfyCustomzation\CmsBlog\Block\Social\AddThis" name="addthis.js.init" as="addthisJs"
+                   template="OmnyfyCustomzation_CmsBlog::addthis-js.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

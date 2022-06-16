@@ -1,0 +1,47 @@
+& when (@media-common = true) {
+	.support-link-wrapper {
+		margin-right: 60px;
+		width: 30px;
+		float: right;
+	}
+
+	.support-link {
+		padding-top: 0.7rem;
+		position: relative;
+		z-index: @field-tooltip-content__z-index + 1;
+
+		.lib-icon-font(
+				@icon-help__content,
+				@icons-admin__font-name,
+				@_icon-font-size: @field-tooltip-icon__size,
+				@_icon-font-line-height: 1
+		);
+
+		span {
+			&:extend(.abs-visually-hidden);
+		}
+
+		&:hover {
+			&:before {
+				color: #060504;
+			}
+		}
+	}
+    .admin__field .admin__field-control .admin__control-select {
+        display: inline-block;
+    }
+    .admin__field .admin__field-control .admin__control-multiselect {
+        display: inline-block;
+    }
+	body {
+		.admin__menu {
+			.submenu {
+				.column:only-of-type {
+					.submenu-group-title {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}

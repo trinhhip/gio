@@ -1,0 +1,222 @@
+<?php
+    $shipmentData = $block->getData('shipment_data');
+    $orderData = $block->getData('order_data');
+    $invoiceData = $block->getData('invoice_data');
+    $orderAttributes = $block->getData('order_attributes');
+    $soldData = $block->getData('sold_data');
+    $shippingData = $block->getData('shipping_data');
+    $orderItems = $block->getData('order_items');
+    $vendorInfo = $block->getData('vendor_info');
+    $vendorSignUp = $block->getData('vendor_signup');
+    $logoSrc = $block->getData('logo_url');
+?>
+<body class="packing_slip">
+    <!--HEADING-->
+    <table style="table-layout: fixed; width: 100%; line-height: 10px; font-family: Arial, Helvetica, sans-serif; font-weight: bold">
+        <tr>
+            <td style="width:80%; font-size: 28px; text-align: left; padding-top: 25px">
+                <?= $orderData['mo_name']; ?>
+            </td>
+            <td>
+                <img src="<?= $logoSrc; ?>" style="display: block; max-height: 60px; max-width: 132px; width: 100%; text-align: right;">
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top: 30px;"></div>
+
+    <div style="font-size: 32px; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding-left: 5px;">
+        <b><?= __('Packing Slip') ?></b>
+    </div>
+
+    <table class="header" cellpadding="5px" style="table-layout: fixed; width: 100%; line-height: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
+        <tr>
+            <td style="text-align: left;">
+                <b><?= __('Packing Slip') ?></b>
+            </td>
+            <td style="text-align: right;">
+                <b><?= __('Invoice from') ?></b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;">
+                <?= __('Packing Slip #: ') . $shipmentData->getIncrementId(); ?>
+            </td>
+            <td style="text-align: right;"><?= $invoiceData['invoice_name'] ?></td>
+        </tr>
+        <tr>
+            <td style="text-align: left;"><?= __('Order #: ') . $orderData['increment_id'] ?></td>
+            <td style="text-align: right;"><?= __('Tax Number: ') . $invoiceData['tax_number'] ?></td>
+        </tr>
+        <tr>
+            <td style="text-align: left;"><?= __('Order Date: ') . $orderData['date'] ?></td>
+            <td style="text-align: right;"><?= $invoiceData['address_line1'] . ', ' . $invoiceData['address_line2'] ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: right;">
+                <?= $invoiceData['city'] . ', ' . $invoiceData['post_code'] . ', ' . $invoiceData['region_name'] ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: right;"><?= $invoiceData['country_name'] ?></td>
+        </tr>
+    </table>
+
+    <!--SOLD AND SHIP-->
+    <div style="margin-top: 30px;"></div>
+    <table class="sold-ship" cellpadding="5px" style="table-layout: fixed; width: 100%; border-collapse: collapse; line-height: 10px; display: inline-table; font-size: 13px; font-family: Arial, Helvetica, sans-serif;">
+        <tr style="background-color: #F6F6F8;">
+            <td style="text-align: left; padding: 10px;">
+                <b><?= __('Sold To') ?></b>
+            </td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding: 10px;">
+                    <b><?= __('Ship To') ?></b>
+                </td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-top: 15px; padding-left: 10px;"><?= $soldData['customer_name'] ?></td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding-top: 15px; padding-left: 10px;"><?= $shippingData['customer_name'] ?></td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-left: 10px;"><?= $soldData['street'] ?></td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding-left: 10px;"><?= $shippingData['street'] ?></td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-left: 10px;"><?= $soldData['city'] ?></td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding-left: 10px;"><?= $shippingData['city'] ?></td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-left: 10px;"><?= $soldData['country'] ?></td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding-left: 10px;"><?= $shippingData['country'] ?></td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-left: 10px;"><?= __('T: ') . $soldData['telephone'] ?></td>
+            <?php if ($shippingData): ?>
+                <td style="text-align: left; padding-left: 10px;"><?= __('T: ') . $shippingData['telephone'] ?></td>
+            <?php endif; ?>
+        </tr>
+    </table>
+
+    <?php if ($vendorInfo['vendor_id']): ?>
+        <!--SOLD BY-->
+        <div style="margin-top: 30px;"></div>
+        <table class="sold-by" cellpadding="5px" style="table-layout: fixed; width: 100%; border-collapse: collapse; line-height: 10px; display: inline-table; font-size: 13px; font-family: Arial, Helvetica, sans-serif; background-color: #F6F6F8;">
+            <tr>
+                <td colspan="2" style="padding-left: 10px; padding-top: 10px;">
+                    <b><?= __('Sold By') ?></b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-left: 10px; padding-right: 10px; background-color: #F6F6F8;">
+                    <hr style="border-bottom: solid 2px #ebebef;">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%; padding-left: 10px">
+                    <b><?= __('Vendor Name') ?></b>
+                </td>
+                <td style="width: 75%">
+                    <?= $vendorSignUp->getBusinessName() ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%; padding-left: 10px;">
+                    <b><?= __('Vendor Address') ?></b>
+                </td>
+                <td style="width: 75%">
+                    <?= $vendorSignUp->getBusinessAddress() ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 25%; padding-left: 10px;">
+                    <b><?= __('Vendor Phone Number') ?></b>
+                </td>
+                <td style="width: 75%">
+                    <?= $vendorSignUp->getTelephone() ?>
+                </td>
+            </tr>
+        </table>
+    <?php endif; ?>
+
+    <?php
+    if(!empty($orderAttributes)):
+        ?>
+        <table class="order-attributes" cellpadding="5px" style="table-layout: fixed; width: 100%; border-collapse: collapse; line-height: 10px; display: inline-table; font-size: 13px; font-family: Arial, Helvetica, sans-serif; margin-top: 30px">
+            <tr style="line-height: 20px; background-color: #F6F6F8;">
+                <td colspan="6" style="text-align: left;">
+                    <b>Additional Data</b>
+                </td>
+            </tr>
+
+            <?php
+            foreach ($orderAttributes as $orderAttribute):
+                ?>
+                <tr style="width: 100%; line-height: 20px;">
+                    <td colspan="6">
+                        <b><?=$orderAttribute['label']?> : </b> <?= $orderAttribute['value']?>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+        </table>
+    <?php endif;?>
+
+    <!--ORDER ITEMS-->
+    <div style="margin-top: 30px;"></div>
+    <table class="order-item" cellpadding="5px" style="table-layout: fixed; width: 100%; border-collapse: collapse; line-height: 10px; display: inline-table; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
+        <tr style="line-height: 20px; background-color: #F6F6F8; font-weight: bold">
+            <td style="width: 30%; text-align: left;"><?= __('SKU') ?></td>
+            <td style="width: 60%; text-align: left;"><?= __('Products') ?></td>
+            <td style="width: 10%; text-align: right"><?= __('Qty') ?></td>
+        </tr>
+        <?php foreach ($orderItems as $orderItem): ?>
+            <?php if ($orderItem->getQtyShipped() > 0): ?>
+                <?php if (!$vendorInfo['vendor_id']):?>
+                    <?php if ($orderItem->getProductType() == "configurable"): ?>
+                        <?php $childItems = $orderItem->getChildrenItems(); ?>
+                        <?php foreach ($childItems as $item): ?>
+                            <tr>
+                                <td style="width: 17%; word-wrap: break-word; line-height: 20px;"><?= $item->getSku() ?></td>
+                                <td style="width: 24%; word-wrap: break-word; line-height: 20px;"><?= $item->getName() ?></td>
+                                <td style="width: 6%; text-align: right"> <?= $item->getQtyOrdered() * 1 ?> </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td style="width: 17%; word-wrap: break-word; line-height: 20px;"><?= $orderItem->getSku() ?></td>
+                            <td style="width: 24%; word-wrap: break-word; line-height: 20px;"><?= $orderItem->getName() ?></td>
+                            <td style="width: 6%; text-align: right"><?= $orderItem->getQtyOrdered() * 1 ?></td>
+                        </tr>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if ($vendorInfo['vendor_id'] == $orderItem->getVendorId()): ?>
+                        <?php if ($orderItem->getProductType() == "configurable"): ?>
+                            <?php $childItems = $orderItem->getChildrenItems(); ?>
+                            <?php foreach ($childItems as $item): ?>
+                                <tr>
+                                    <td style="width: 17%; word-wrap: break-word; line-height: 20px;"><?= $item->getSku() ?></td>
+                                    <td style="width: 24%; word-wrap: break-word; line-height: 20px;"><?= $item->getName() ?></td>
+                                    <td style="width: 6%; text-align: right"> <?= $item->getQtyOrdered() * 1 ?> </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td style="width: 17%; word-wrap: break-word; line-height: 20px;"><?= $orderItem->getSku() ?></td>
+                                <td style="width: 24%; word-wrap: break-word; line-height: 20px;"><?= $orderItem->getName() ?></td>
+                                <td style="width: 6%; text-align: right"><?= $orderItem->getQtyOrdered() * 1 ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+</body>

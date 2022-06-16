@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Omnyfy\RebateCore\Api\Data\IRebateRepository"
+                type="Omnyfy\RebateCore\Model\Repository\RebateRepository"/>
+    <preference for="Omnyfy\RebateCore\Api\Data\IVendorRebateRepository"
+                type="Omnyfy\RebateCore\Model\Repository\VendorRebateRepository"/>
+    <preference for="Omnyfy\RebateCore\Api\Data\IInvoiceRebateCalculateRepository"
+                type="Omnyfy\RebateCore\Model\Repository\InvoiceRebateCalculateRepository"/>
+    <preference for="Omnyfy\RebateCore\Api\Data\IAccumulatedSubtotalRepository"
+                type="Omnyfy\RebateCore\Model\Repository\AccumulatedSubtotalRepository"/>
+    <preference for="Omnyfy\RebateCore\Api\Data\ITransactionRebateRepository"
+                type="Omnyfy\RebateCore\Model\Repository\TransactionRebateRepository"/>
+    <preference for="Omnyfy\RebateCore\Api\Data\IRebateInvoiceRepository"
+                type="Omnyfy\RebateCore\Model\Repository\RebateInvoiceRepository"/>
+</config>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Omnyfy_Webhook::webhook_all" sortOrder="10" title="Omnyfy Webhook Module">
+                    <resource id="Omnyfy_Webhook::webhook" sortOrder="10" title="Omnyfy Webhook">
+                        <resource id="Omnyfy_Webhook::webhook_view" sortOrder="10" title="View Webhook"/>
+                        <resource id="Omnyfy_Webhook::webhook_save" sortOrder="20" title="Save Webhook"/>
+                        <resource id="Omnyfy_Webhook::webhook_delete" sortOrder="30" title="Delete Webhook"/>
+                    </resource>
+
+                    <resource id="Omnyfy_Webhook::webhook_type" sortOrder="20" title="Omnyfy Webhook Type">
+                        <resource id="Omnyfy_Webhook::webhook_type_view" sortOrder="10" title="View Webhook Type"/>
+                    </resource>
+
+                    <resource id="Omnyfy_Webhook::webhook_schedule" sortOrder="30" title="Omnyfy Webhook Event Schedule">
+                        <resource id="Omnyfy_Webhook::webhook_schedule_view" sortOrder="10" title="View Webhook Event Schedule"/>
+                    </resource>
+
+                    <resource id="Omnyfy_Webhook::webhook_history" sortOrder="40" title="Omnyfy Webhook Event History">
+                        <resource id="Omnyfy_Webhook::webhook_history_view" sortOrder="10" title="View Webhook Event History"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

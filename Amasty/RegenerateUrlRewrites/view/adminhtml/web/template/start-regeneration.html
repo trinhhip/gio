@@ -1,0 +1,42 @@
+<div>
+    <div class="amregenerateurl-step-container">
+        <p class="amregenerateurl-step">
+            <span data-bind="i18n: 'Step'"></span>
+            <span data-bind="text: typeCounter"></span>
+            <span data-bind="i18n: 'of'"></span>
+            <span data-bind="text: maxTypes"></span>
+            <span>-</span>
+            <span data-bind="text: currentRegenerateType().name"></span>
+        </p>
+        <button class="amregenerateurl-next"
+                data-bind="i18n: 'Next Step',
+                           click: initRegeneration.bind($data, false),
+                           disable: isDisableNextButton, visible: isShowNextButton">
+        </button>
+    </div>
+    <!-- ko if: $data.showLoader -->
+    <div class="amloader-spinner-container">
+        <div class="amloader-spinner">
+            <!-- ko foreach: new Array(12) -->
+            <div class="amloader-dot-container" data-bind="css:'dot-' + ($index()+1) + '-container'">
+                <div class="amloader-dot" data-bind="css:'dot-' + ($index()+1)"></div>
+            </div>
+            <!-- /ko -->
+        </div>
+        <p class="amloader-title" data-bind="i18n: 'Please wait...'"></p>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $data.messages().length -->
+    <div class="messages" style="margin: 20px 0; word-break: break-word;">
+        <!-- ko foreach: $data.messages() -->
+        <div class="message" data-bind="
+                css: {
+                     'message-error error': $data.type === 40 || $data.type === 50,
+                     'message-warning warning': $data.type === 30
+                     }">
+            <span data-bind="text: $data.message"></span>
+        </div>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+</div>

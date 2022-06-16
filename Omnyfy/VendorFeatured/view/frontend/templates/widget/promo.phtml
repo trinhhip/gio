@@ -1,0 +1,113 @@
+<?php
+/**
+ * @var $block \Omnyfy\VendorFeatured\Block\Vendor\Featured
+ */
+?>
+<?php 
+$helper = $this->helper('Omnyfy\VendorFeatured\Helper\PromoWidget'); 
+$promoVendors = $helper->getWidgetContent();
+$abstractProductBlock = $block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+$_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+$image_width = 300;
+$image_height = 300;
+$i = 0;
+?>
+<?php if(count($promoVendors)>0): ?>
+    <div class="promo-vendors-container">
+    <?php foreach ($promoVendors as $promotedVendor): ?>
+        <?php $i++; ?>
+        <div class="promo-vendor-wrapper">
+            <div class="promo-vendor" style="background-color: #<?php echo $promotedVendor['background_colour']; ?>;">
+                <?php $vendorUrl = $block->getBaseUrl()."/shop/brands/view/id/" . $promotedVendor['vendor_id'] . "/"; ?>
+                <a href="<?php echo $vendorUrl ?>" title="<?php echo $promotedVendor['vendor_name'] ?>" class="logo-container">
+                    <img src="<?php echo $promotedVendor['logo']; ?>" alt="<?php echo $promotedVendor['vendor_name']; ?>">
+                </a>
+                <p class="desc" style="color: #<?php echo $promotedVendor['text_colour']; ?>;">
+                    <?php echo $promotedVendor['description']; ?>
+                </p>
+                <div class="promo-vendor-products owl-carousel">
+
+                <?php foreach ($promotedVendor['products'] as $product): ?>
+                    <?php
+                        $productImage = $_imagehelper->init($product, 'category_page_grid')->resize($image_width, $image_height);
+                        $productImageUrl = $productImage->getUrl();
+                    ?>
+                    <a href="<?php echo $product->getProductUrl(); ?>" class="item product-item">
+
+                        <div class="product-image">
+                            <img src="<?php echo $productImageUrl ?>" alt="<?php echo $product->getName(); ?>">
+                        </div>
+                        <div class="product-info">
+                            <div class="name">
+                                <?php echo $product->getName(); ?>
+                            </div>
+                            <div class="bottom-area">
+                                <?php echo $abstractProductBlock->getProductPrice($product) ?>
+                            </div>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+                                    
+                </div>
+                <div class="links">
+                    <div class="link-wrapper">
+                        <a href="<?php echo $promotedVendor['link_url_1']; ?>" style="color: #<?php echo $promotedVendor['text_colour']; ?>;">
+                            <?php echo $promotedVendor['link_label_1']; ?>
+                        </a>
+                    </div>
+                    <div class="link-wrapper">
+                        <a href="<?php echo $promotedVendor['link_url_2']; ?>" style="color: #<?php echo $promotedVendor['text_colour']; ?>;">
+                            <?php echo $promotedVendor['link_label_2']; ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <style>
+            .promo-vendor-wrapper:nth-child(<?php echo $i; ?>) .promo-vendor-products.owl-theme .owl-dots .owl-dot span {
+                background-color: #<?php echo $promotedVendor['text_colour']; ?>;
+            }
+
+            .promo-vendor-wrapper:nth-child(<?php echo $i; ?>) .promo-vendor-products.owl-theme .owl-dots .owl-dot.active span {
+                background-color: #<?php echo $promotedVendor['text_colour']; ?>;
+            }
+            </style>
+        </div>
+
+    <?php endforeach; ?>
+    </div>
+    <script>
+    require([
+        'jquery',
+        'owl.carousel/owl.carousel.min'
+    ], function($) {
+        $(".vendor-items").owlCarousel({
+            autoplay: <?= $block->getData('autoplay') ? $block->getData('autoplay') : 'true' ?>,
+            autoplayTimeout: <?= $block->getData('autoplayTimeout') ? $block->getData('autoplayTimeout') : '5000' ?>,
+            autoplayHoverPause: <?= $block->getData('autoplayHoverPause') ? $block->getData('autoplayHoverPause') : 'true' ?>,
+            margin: <?= $block->getData('margin') ? $block->getData('margin') : '20' ?>,
+            nav: <?= $block->getData('nav') ? $block->getData('nav') : 'true' ?>,
+            navText: <?= $block->getData('navText') ? $block->escapeHtml($block->getData('navText')) : '["<em class=\'porto-icon-left-open-big\'></em>","<em class=\'porto-icon-right-open-big\'></em>"]' ?>,
+            dots: <?= $block->getData('dots') ? $block->getData('dots') : 'true' ?>,
+            loop: <?= $block->getData('loop') ? $block->getData('loop') : 'true' ?>,
+            responsive: {
+                0: {
+                    items: <?= $block->getData('items_0') ? $block->getData('items_0') : '2' ?>
+                },
+                640: {
+                    items: <?= $block->getData('items_640') ? $block->getData('items_0') : '3' ?>
+                },
+                768: {
+                    items: <?= $block->getData('items_768') ? $block->getData('items_0') : '4' ?>
+                },
+                992: {
+                    items: <?= $block->getData('items_992') ? $block->getData('items_0') : '5' ?>
+                },
+                1200: {
+                    items: <?= $block->getData('items_1200') ? $block->getData('items_0') : '5' ?>
+                }
+            }
+        });
+    });
+    </script>
+
+<?php endif; ?>

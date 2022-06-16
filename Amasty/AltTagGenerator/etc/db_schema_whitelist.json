@@ -1,0 +1,26 @@
+{
+    "amasty_alt_template": {
+        "column": {
+            "id": true,
+            "enabled": true,
+            "title": true,
+            "priority": true,
+            "replacement_logic": true,
+            "template": true,
+            "conditions_serialized": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "amasty_alt_template_store": {
+        "column": {
+            "template_id": true,
+            "store_id": true
+        },
+        "constraint": {
+            "AMASTY_ALT_TMPL_STR_TMPL_ID_AMASTY_ALT_TMPL_ID": true,
+            "AMASTY_ALT_TMPL_STR_STR_ID_STORE_STORE_ID": true
+        }
+    }
+}

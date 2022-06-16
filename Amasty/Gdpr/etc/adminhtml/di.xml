@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_Gdpr
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="addConsentQueueAddNoticeMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Amasty_Gdpr::messages/addConsentQueueAddNoticeMessage.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Amasty\Gdpr\Model\Anonymizer">
+        <arguments>
+            <argument name="logger" xsi:type="object">Amasty\Gdpr\Model\ActionLoggerFromAdmin</argument>
+        </arguments>
+    </type>
+    <!-- This plugin disables updating orders customer email after corresponding customer email changed -->
+    <type name="Magento\Customer\Observer\UpgradeOrderCustomerEmailObserver">
+        <plugin name="amasty-gdpr-customer-upgrade-order-email" type="Amasty\Gdpr\Plugin\Customer\Observer\UpgradeOrderCustomerEmailObserverPlugin" />
+    </type>
+</config>

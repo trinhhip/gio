@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Amasty\HidePrice\Helper\Data">
+		<plugin name="advanced.price.retail" type="OmnyfyCustomzation\B2C\Plugin\Helper\Data" sortOrder="10" disabled="false"/>
+	</type>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="buyer_account_listing_data_source" xsi:type="string">
+					OmnyfyCustomzation\B2C\Model\ResourceModel\BuyerAccount\Grid\Collection
+				</item>
+			</argument>
+		</arguments>
+	</type>
+	<type name="Magento\Customer\Block\Account\AuthenticationPopup">
+		<plugin name="custom.authenticate.popup" type="OmnyfyCustomzation\B2C\Plugin\Block\AuthenticationPopup" sortOrder="10" disabled="false"/>
+	</type>
+	<type name="Omnyfy\Vendor\Model\ShippingInformationManagement">
+		<plugin name="validate_b2c_country_can_ship" type="OmnyfyCustomzation\B2C\Plugin\Checkout\ShippingInformationManagement" sortOrder="20" disabled="false"/>
+	</type>
+	<type name="Magento\Checkout\Model\DefaultConfigProvider">
+		<plugin name="validate_b2c_country_can_ship" type="OmnyfyCustomzation\B2C\Plugin\Checkout\CheckoutConfig" sortOrder="10" disabled="false"/>
+	</type>
+	<type name="Magento\Catalog\Model\Product\Option\Value">
+		<plugin name="Amasty_HidePrice:hide_custom_option_price_select" disabled="true"/>
+	</type>
+</config>

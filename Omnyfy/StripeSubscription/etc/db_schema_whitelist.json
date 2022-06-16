@@ -1,0 +1,12 @@
+{
+    "omnyfy_stripe_webhook_content": {
+        "column": {
+            "id": true,
+            "content": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

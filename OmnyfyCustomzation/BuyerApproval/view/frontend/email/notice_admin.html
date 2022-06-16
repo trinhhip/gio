@@ -1,0 +1,23 @@
+<!--@subject {{trans "Admin Approval Buyer - A new account from %store_name has been registered." store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var customer.name":"Customer Name",
+"var customer.email":"Customer Email",
+"var store.getFrontendName()":"Store Name",
+"var store.getBaseUrl()":"Store URL"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">{{trans "Hi"}},</p>
+<p>{{trans "A new account has just been registered with the following details:"}}</p>
+<ul>
+    <li><strong>{{trans "Name:"}}</strong> {{var customer.name}}</li>
+    <li><strong>{{trans "Email:"}}</strong> {{var customer.email}}</li>
+    <li><strong>{{trans "Company Name:"}}</strong> {{var customer.business_name}}</li>
+    <li><strong>{{trans "Company URL:"}}</strong> {{var customer.business_url}}</li>
+    <li><strong>{{trans "Company Type:"}}</strong> {{var customer.business_type}}</li>
+</ul>
+<p>Please go to <a href="https://admin.vermillionlifestyle.com/admin_portal/customer/index/">Customer Management</a> section to confirm the approval for this account.</p>
+
+<p>Thanks,</p>
+{{template config_path="design/email/footer_template"}}

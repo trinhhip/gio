@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <amregenerateurlrewrites>
+            <general>
+                <enabled>1</enabled>
+                <skip_reindex>0</skip_reindex>
+                <skip_cache_flash>0</skip_cache_flash>
+            </general>
+            <url_rewrites_category>
+                <include_category_regeneration>1</include_category_regeneration>
+                <use_category_range_regenerate>0</use_category_range_regenerate>
+                <category_id_range_regenerate></category_id_range_regenerate>
+                <use_category_ids_regenerate>0</use_category_ids_regenerate>
+                <category_ids_regenerate></category_ids_regenerate>
+            </url_rewrites_category>
+            <url_rewrites_product>
+                <include_product_regeneration>1</include_product_regeneration>
+                <use_product_range_regenerate>0</use_product_range_regenerate>
+                <product_id_range_regenerate></product_id_range_regenerate>
+                <use_product_ids_regenerate>0</use_product_ids_regenerate>
+                <product_ids_regenerate></product_ids_regenerate>
+            </url_rewrites_product>
+            <url_rewrites_regeneration>
+                <apply_store_views></apply_store_views>
+            </url_rewrites_regeneration>
+        </amregenerateurlrewrites>
+    </default>
+</config>

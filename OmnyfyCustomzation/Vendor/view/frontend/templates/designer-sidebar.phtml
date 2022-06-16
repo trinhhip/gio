@@ -1,0 +1,42 @@
+<?php
+/* @var OmnyfyCustomzation\Vendor\Block\Vendor\Listing $block */
+$vendorSidebar = $block->getVendorSidebar();
+?>
+
+<div class="filter-wrapper">
+    <div class="filter-character-title">
+        <span><?= __('Filter alphabetically') ?></span>
+    </div>
+    <div id="filter-accordion">
+        <?php foreach ($vendorSidebar as $alphabet => $vendors): ?>
+            <div data-role="collapsible">
+                <div class="filter-character" data-role="trigger">
+                    <span><?= $alphabet ?></span>
+                    <span class="count">(<?= count($vendors) ?>)</span>
+                </div>
+            </div>
+            <div class="filter-character-content" data-role="content">
+                <ul>
+                    <?php foreach ($vendors as $vendor): ?>
+                        <li>
+                            <a href="<?= $block->escapeHtml($block->getVendorUrl($vendor)) ?>">
+                                <?= $vendor->getName() ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'accordion'
+    ], function ($) {
+        $("#filter-accordion").accordion(
+            {"animate": {"height": "100%", "easing": "swing", "duration": 350}}
+        );
+    });
+</script>

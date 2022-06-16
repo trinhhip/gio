@@ -1,0 +1,30 @@
+<div class="admin__control-table-wrapper">
+    <table class="data-table admin__control-table" id="tracking_numbers_table">
+        <thead>
+        <tr class="headings">
+            <th class="col-carrier"><?= $block->escapeHtml(__('Tracking Number')) ?></th>
+            <th colspan="2" class="col-title"><?= $block->escapeHtml(__('Tracking Url')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="col-number">
+                <input class="admin__control-text"
+                       type="text"
+                       name="tracking[1][number]"
+                       value="" />
+            </td>
+            <td class="col-title">
+                <input class="admin__control-text"
+                       type="text"
+                       name="tracking[1][title]"
+                       value="" />
+            </td>
+            <input class="admin__control-text"
+                   type="hidden"
+                   name="tracking[1][carrier_code]"
+                   value="custom" />
+        </tr>
+        </tbody>
+    </table>
+</div>

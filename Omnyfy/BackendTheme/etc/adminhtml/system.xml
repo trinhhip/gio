@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="omnyfy" translate="label" sortOrder="10">
+            <label>Omnyfy</label>
+        </tab>
+        <section id="omnyfy_backend" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Backend</label>
+            <tab>omnyfy</tab>
+            <resource>Omnyfy_Vendor::base</resource>
+            <group id="admin_backend" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="0">
+                <label>Admin Backend</label>
+                <field id="admin_login_screen" translate="label"
+                       type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="10" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Admin Login Screen</label>
+                    <backend_model>Omnyfy\BackendTheme\Model\Config\Backend\Image</backend_model>
+                </field>
+                <field id="preview_admin_login_screen_image" translate="label" sortOrder="20" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Preview Admin Login Screen Image</label>
+                    <frontend_model>Omnyfy\BackendTheme\Block\Adminhtml\System\Config\PreviewAdminLoginScreenImage</frontend_model>
+                </field>
+                <field id="admin_backend_logo" translate="label"
+                       type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="30" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Admin Backend Logo</label>
+                    <backend_model>Omnyfy\BackendTheme\Model\Config\Backend\Image</backend_model>
+                </field>
+                <field id="preview_admin_backend_logo_image" translate="label" sortOrder="40" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Preview Admin Backend Logo Image</label>
+                    <frontend_model>Omnyfy\BackendTheme\Block\Adminhtml\System\Config\PreviewAdminBackendLogoImage</frontend_model>
+                </field>
+                <field id="admin_page_title" translate="label" type="text" sortOrder="50" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Admin page title</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

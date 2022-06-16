@@ -1,0 +1,147 @@
+// /**
+//  * Copyright © Omnyfy, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables for new theme
+//  ---------------------------------------------
+
+@ui-03: #F0F1F3;
+@ui-04: #D3D4D8;
+@narrow-box-width: 800px;
+@panel__background-color: #f5f5f5;
+
+@signup-omnyfy__h4__border-bottom: 1px solid #777;
+@signup-omnyfy-labels__display: block;
+@signup-omnyfy-fieldset__display__desktop: flex;
+@signup-omnyfy-fieldset__flex-wrap: wrap;
+@signup-omnyfy-fieldset__justify-content: space-between;
+@signup-omnyfy-fieldset__border: none;
+@signup-omnyfy-fieldset__margin: 0 0 @indent__base 0;
+@signup-omnyfy-field__width: 100%;
+@signup-omnyfy-field__margin: 0 0 @indent__s 0;
+@signup-omnyfy-field-firstname__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-lastname__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-store-name__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-legal-entity__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-city__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-state__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-postcode__width: calc(~"50% - "@indent__s);
+@signup-omnyfy-field-country__width: calc(~"50% - "@indent__s);
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+	.signup-omnyfy {
+		h4 {
+			border-bottom: @signup-omnyfy__h4__border-bottom;
+		}
+
+		label {
+			display: @signup-omnyfy-labels__display;
+		}
+
+		fieldset {
+			border: @signup-omnyfy-fieldset__border;
+			margin: @signup-omnyfy-fieldset__margin;
+		}
+
+		.field {
+			width: @signup-omnyfy-field__width;
+			margin: @signup-omnyfy-field__margin;
+		}
+
+		.complex-field {
+			display: flex;
+			justify-content: stretch;
+
+			> div:first-child {
+				width: 180px;
+				flex-basis: 180px;
+				margin-right: @indent__base;
+			}
+
+			> div:last-child {
+				flex-basis: 100%;
+			}
+		}
+
+		.actions-toolbar {
+			display: flex;
+			justify-content: space-between;
+
+			&:before,
+			&:after {
+				display: none;
+			}
+		}
+		.field-payout-basis-type{
+			background-color: #EEEEF9;
+			padding: 25px 20px;
+			.payout-basis-type-label{
+				font-size: 20px;
+				font-weight: 500;
+			}
+			#payout-basis-type{
+				margin-bottom: 20px;
+			}
+		}
+	}
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+	.omnyfy_vendorsignup-index-index {
+		.vendor-signup-form-wrapper,
+		.page-title-wrapper {
+			max-width: @narrow-box-width;
+			margin: auto;
+		}
+
+		fieldset {
+			display: @signup-omnyfy-fieldset__display__desktop;
+			flex-wrap: @signup-omnyfy-fieldset__flex-wrap;
+			justify-content: @signup-omnyfy-fieldset__justify-content;
+		}
+
+		.field-firstname {
+			width: @signup-omnyfy-field-firstname__width;
+		}
+
+		.field-lastname {
+			width: @signup-omnyfy-field-lastname__width;
+		}
+
+		.field-store-name {
+			width: @signup-omnyfy-field-store-name__width;
+		}
+
+		.field-legal-entity {
+			width: @signup-omnyfy-field-legal-entity__width;
+		}
+
+		.field-city {
+			width: @signup-omnyfy-field-city__width;
+		}
+
+		.field-state {
+			width: @signup-omnyfy-field-state__width;
+		}
+
+		.field-postcode {
+			width: @signup-omnyfy-field-postcode__width;
+		}
+
+		.field-country {
+			width: @signup-omnyfy-field-country__width;
+		}
+
+	}
+}

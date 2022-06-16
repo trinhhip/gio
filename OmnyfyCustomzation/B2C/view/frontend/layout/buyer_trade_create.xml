@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Sign Up To Trade</title>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">To The Trade</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="OmnyfyCustomzation\B2C\Block\Trade\Register" name="customer_trade_form_register"
+                   template="OmnyfyCustomzation_B2C::form/trade/register.phtml" cacheable="false"/>
+            <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie"
+                   template="Magento_Cookie::require_cookie.phtml">
+                <arguments>
+                    <argument name="triggers" xsi:type="array">
+                        <item name="registerSubmitButton" xsi:type="string">.action.submit</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

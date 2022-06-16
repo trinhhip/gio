@@ -1,0 +1,134 @@
+<?php
+/* @var \Omnyfy\Vendor\Block\Vendor\Location $block*/
+$locationDetails = $block->getLocationDetails();
+$vendorDetails = $block->getVendorDetails($locationDetails->getVendorId());
+$allLocation = $block->getAllLocations($locationDetails->getVendorId());
+$providers = $this->helper('\Omnyfy\Vendor\Helper\Location')->getProvider($locationDetails->getId());
+$locationAttributes = $block->loadLocationAttributes();
+
+$locationAttributes = $locationAttributes->getData();
+
+/** @var $favouriteHelper \Omnyfy\Vendor\Helper\FavouriteVendor */
+$favouriteHelper = $this->helper('Omnyfy\Vendor\Helper\FavouriteVendor');
+
+?>
+<div class="vendor-header">
+    <div class="container">
+        <div class="vendor-brand">
+            <div class="logo-container">
+
+                <img src="<?php echo $this->getLogoUrl($vendorDetails->getLogo()); ?>" class="vendor-logo" />
+
+            </div>
+            <div class="main-content">
+                <h1 class="merchant-name"><?php echo $locationDetails->getLocationName(); ?></h1>
+                <p class="location">
+                    <?php if ($locationDetails->getAddress()) {
+                        echo $locationDetails->getAddress() . ', ';
+                    } ?>
+                    <?php if ($locationDetails->getSuburb()) {
+                        echo $locationDetails->getSuburb();
+                    } ?>
+                    <?php if ($locationDetails->getRegion()) {
+                        echo $locationDetails->getRegion();
+                    } ?>
+                    <?php if ($locationDetails->getPostcode()) {
+                        echo $locationDetails->getPostcode();
+                    } ?>
+                    <?php if ($locationDetails->getCountry()) {
+                        echo $locationDetails->getCountry();
+                    } ?>
+                </p>
+            </div>
+        </div>
+        <div class="vendor-actions">
+            <button class="action primary" id="make-booking-btn">
+                <?= __('Make A Booking') ?>
+            </button>
+
+            <?php if ($this->helper('Omnyfy\Vendor\Helper\Session')->isLoggedIn()): ?>
+                <button
+                    class="favourite-add-btn <?= $favouriteHelper->isVendorSetFavourite($locationDetails->getVendorId()) ? 'hide' : ''?>"
+                    data-action-type="add"
+                    data-vendor-id="<?php echo $locationDetails->getVendorId(); ?>"
+                >
+                    <?= __('Favourite')?>
+                </button>
+
+                <button
+                        class="favourite-remove-btn <?= $favouriteHelper->isVendorSetFavourite($locationDetails->getVendorId()) ? 'active' : 'hide'?>"
+                        data-action-type="remove"
+                        data-vendor-id="<?php echo $locationDetails->getVendorId(); ?>"
+                >
+                    <?= __('Remove Favourite')?>
+                </button>
+
+            <?php endif; ?>
+            <button class="change-location-btn" id="change-location-btn">
+                <span>
+                    <?= __('Other Locations') ?>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<?= $block->getChildHtml('vendor.navigation')?>
+<?= $block->getChildHtml('location.sections');?>
+
+<div id="change-location-popup" style="display:none;">
+    <div class="change-location-list">
+        <?php foreach ($allLocation as $location): ?>
+        <a href="<?php echo $block->getUrl('shop/index/location/id/' . $location->getId()) ?>" class="option-item">
+            <span class="option-name"><?php echo $location->getName(); ?></span>
+            <span class="view">
+                <?= __('View') ?>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" fill="black"/>
+                </svg>
+            </span>
+        </a>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<?php if(!empty($providers)): ?>
+<section class="provider-section" id="provider">
+    <div class="container">
+        <h2>
+            <?= __('Service Providers') ?>
+        </h2>
+        <div class="provider-container">
+            <?php foreach ($providers as $provider): ?>
+            <div class="provider-tile-wrapper">
+                <div class="provider-tile">
+                    <div class="pic-container">
+                        <img src="<?= $block->getProviderPhotoUrl($provider->getData('photo')) ?>" alt="<?= $provider->getName() ?>">
+                    </div>
+                    <h4 class="name">
+                        <a href="<?= $block->getUrl('booking/practitioner/view',['id'=>$provider->getId()])?>"><?= $provider->getName(); ?></a>
+                    </h4>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+<script type="text/javascript">
+    require([
+        "Omnyfy_Vendor/js/customscript",
+        "Omnyfy_Vendor/js/favorite-vendor"
+    ], function(customscript, fv){
+        customscript.init();
+        fv.init();
+    });
+</script>
+
+<script type="text/x-magento-init">
+    {
+    "*": {
+        "Omnyfy_Vendor/js/location-page": {}
+    }
+}
+</script>

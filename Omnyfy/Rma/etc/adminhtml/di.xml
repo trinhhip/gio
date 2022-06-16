@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- filter Rma recods per vendor id -->
+    <preference for="Mirasvit\Rma\Model\ResourceModel\Rma\Grid\Collection" type="Omnyfy\Rma\Model\ResourceModel\Rma\Grid\Collection" />
+    <preference for="Mirasvit\Rma\Model\ResourceModel\Rma\Grid\Order\Collection" type="Omnyfy\Rma\Model\ResourceModel\Rma\Grid\Order\Collection" />
+    <type name="\Mirasvit\Rma\Service\Rma\RmaManagement">
+        <plugin name="aroundGetRmasByOrder" type="Omnyfy\Rma\Plugin\Service\Rma\RmaManagementPlugin" sortOrder="1" />
+    </type>
+    <!-- Moved template files related to Omnyfy_Rma module -->
+    <preference for="Mirasvit\Rma\Block\Adminhtml\Rma\Edit\Form" type="Omnyfy\Rma\Block\Adminhtml\Rma\Edit\Form" />
+
+    <!-- Change RMA owner from dropdown to disable text field and make sure its assign to the Vendor Admin User -->
+    <preference for="Mirasvit\Rma\Block\Adminhtml\Rma\Edit\Form\GeneralInfo" type="Omnyfy\Rma\Block\Adminhtml\Rma\Edit\Form\GeneralInfo" />
+
+    <!-- Removed Credit memo on vendor admin and Exchange order for all admin -->
+    <preference for="Mirasvit\Rma\Block\Adminhtml\Rma\Edit" type="Omnyfy\Rma\Block\Adminhtml\Rma\Edit" />
+
+    <!-- filter Return address recods per vendor id -->
+    <preference for="Mirasvit\Rma\Model\ResourceModel\Address\Grid\Collection" type="Omnyfy\Rma\Model\ResourceModel\Address\Grid\Collection" />
+
+    <!-- Fix url order creditmemo -->
+    <preference for="Mirasvit\Rma\Helper\Order\Creditmemo" type="Omnyfy\Rma\Helper\Order\Creditmemo" />
+
+    <!-- Filter Return address per vendor when Editing RMA -->
+    <type name="\Mirasvit\Rma\Model\ResourceModel\Address\Collection">
+        <plugin name="addVendorIdBeforeSave" type="Omnyfy\Rma\Plugin\Model\ResourceModel\Address\Collection" sortOrder="1" />
+    </type>
+
+    <!-- Set customer_is_guest to 0 if customer_id exist-->
+    <type name="\Mirasvit\Rma\Service\Rma\RmaManagement\CreateReplacementOrder">
+        <plugin name="aroundCreateReplacementOrder" type="Omnyfy\Rma\Plugin\Service\Rma\RmaManagement\AroundCreateReplacementOrderPlugin" sortOrder="1" />
+    </type>
+
+</config>

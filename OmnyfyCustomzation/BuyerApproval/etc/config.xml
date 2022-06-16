@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <buyerapproval>
+            <general>
+                <enabled>1</enabled>
+                <message_after_register><![CDATA[ Thank you for submitting your details. Please allow one business days to receive notification via email about the status of your request. Please email us at <a href="mailto:cs@vermillionlifestyle.com">cs@vermillionlifestyle.com</a> if you have an urgent enquiry. ]]></message_after_register>
+                <error_message>Your account has not been approved.</error_message>
+                <redirect_cms_page>buyerapproval-not-approved</redirect_cms_page>
+            </general>
+            <admin_notification_email>
+                <enabled>1</enabled>
+                <sender>support</sender>
+                <sendto>admin@gmail.com</sendto>
+                <template>buyerapproval_admin_notification_email_template</template>
+            </admin_notification_email>
+            <customer_notification_email>
+                <sender>support</sender>
+                <customer_success_email>
+                    <enabled>1</enabled>
+                    <template>buyerapproval_customer_notification_email_customer_success_email_template</template>
+                </customer_success_email>
+                <customer_approve_email>
+                    <enabled>1</enabled>
+                    <template>buyerapproval_customer_notification_email_customer_approve_email_template</template>
+                </customer_approve_email>
+                <customer_not_approve_email>
+                    <enabled>1</enabled>
+                    <template>buyerapproval_customer_notification_email_customer_not_approve_email_template</template>
+                </customer_not_approve_email>
+            </customer_notification_email>
+        </buyerapproval>
+    </default>
+</config>

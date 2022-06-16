@@ -1,0 +1,180 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Sales\Block\Order\Email\Items */
+
+?>
+<?php $_order = $block->getOrder() ?>
+<?php /** @var $_helper \Omnyfy\Vendor\Helper\Product */ ?>
+<?php $_helper = $this->helper('Omnyfy\Vendor\Helper\Product'); ?>
+<?php /** @var $_vendorHelper \Omnyfy\Vendor\Helper\Data */ ?>
+<?php $_vendorHelper = $this->helper('Omnyfy\Vendor\Helper\Data'); ?>
+<?php if ($_order) : ?>
+    <?php if ($_vendorHelper->getInvoiceBy() == \Omnyfy\Vendor\Model\Config::INVOICE_BY_MO): ?>
+        <?php $_items = $_order->getAllItems(); ?>
+        <table class="email-items">
+            <thead>
+            <tr>
+                <th class="item-thumbnail">
+                    <?= $block->escapeHtml(__('Item')) ?>
+                </th>
+                <th class="item-info">
+                    <?= $block->escapeHtml(__('Description')) ?>
+                </th>
+                <th class="item-qty">
+                    <?= $block->escapeHtml(__('Qty')) ?>
+                </th>
+                <th class="item-weight">
+                    <?= $block->escapeHtml(__('Weight')) ?>
+                </th>
+                <th class="item-dimensions">
+                    <?= $block->escapeHtml(__('Dimensions')) ?>
+                </th>
+                <th class="item-hs-code">
+                    <?= $block->escapeHtml(__('HS Code')) ?>
+                </th>
+                <th class="item-price">
+                    <?= $block->escapeHtml(__('Price')) ?>
+                </th>
+                <th class="item-order-note">
+                    <?= $block->escapeHtml(__('Note')) ?>
+                </th>
+            </tr>
+            </thead>
+            <?php foreach ($_items as $_item) : ?>
+                <?php if (!$_item->getParentItem()) : ?>
+                    <tbody>
+                    <?= $block->getItemHtml($_item) ?>
+                    </tbody>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <tfoot class="order-totals">
+            <?= $block->getChildHtml('order_totals') ?>
+            </tfoot>
+        </table>
+        <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)
+                ->isMessagesAllowed('order', $_order, $_order->getStore())
+            && $_order->getGiftMessageId()
+        ) : ?>
+            <?php $_giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)
+                ->getGiftMessage($_order->getGiftMessageId()); ?>
+            <?php if ($_giftMessage) : ?>
+                <br/>
+                <table class="message-gift">
+                    <tr>
+                        <td>
+                            <h3><?= $block->escapeHtml(__('Gift Message for this Order')) ?></h3>
+                            <strong><?= $block->escapeHtml(__('From:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?>
+                            <br/><strong><?= $block->escapeHtml(__('To:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                            <br/><strong><?= $block->escapeHtml(__('Message:')) ?></strong>
+                            <br/><?= $block->escapeHtml($_giftMessage->getMessage()) ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php $_items = $_order->getAllItems(); ?>
+        <?php $_locations = $_vendorHelper->getLocationsInfo($_items); ?>
+        <?php foreach ($_locations as $_location): ?>
+            <table class="email-items" style="margin: 12px 0;">
+                <tr>
+                    <td colspan="3" class="item-extra" style="padding: 0;">
+                        <table class="pickup-location" style="width: 100%; background: #ECECEC; margin-top: 10px;">
+                            <tr>
+                                <td>
+                                    <p></p>
+                                    <p class="vendor" style="padding: 8px; text-align: center">
+                                        <?= /* @escapeNotVerified */
+                                        __('Vendor'); ?>
+                                        : <?= $block->escapeHtml($_helper->getLocation($_location->getId())->getName()) ?>
+                                        <br>
+                                        <?php $vendorDetails = $_helper->getVendor($_location->getVendorId()); ?>
+                                        <?php if (!empty($vendorDetails) && !empty($vendorDetails->getAbn())): ?>
+                                            <span><?= $_vendorHelper->getTaxNumberByVendorId($vendorDetails->getId()) . ': ' . $vendorDetails->getAbn(); ?></span>
+                                            <br>
+                                        <?php endif; ?>
+                                        <?php $attributeShowOnEmail = $_helper->getAttributeShowOnEmail($vendorDetails); ?>
+                                        <?php if (!empty($attributeShowOnEmail)): ?>
+                                            <?php foreach ($attributeShowOnEmail as $attribute): ?>
+                                                <span><?= $attribute['label'] ?>: <?= $attribute['value'] ?></span><br>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table class="email-items">
+
+                <thead>
+                <tr>
+                    <th class="item-info">
+                        <?= $block->escapeHtml(__('Items')) ?>
+                    </th>
+                    <th class="item-qty">
+                        <?= $block->escapeHtml(__('Qty')) ?>
+                    </th>
+                    <th class="item-weight">
+                        <?= $block->escapeHtml(__('Weight')) ?>
+                    </th>
+                    <th class="item-dimensions">
+                        <?= $block->escapeHtml(__('Dimensions')) ?>
+                    </th>
+                    <th class="item-hs-code">
+                        <?= $block->escapeHtml(__('HS Code')) ?>
+                    </th>
+                    <th class="item-price">
+                        <?= $block->escapeHtml(__('Price')) ?>
+                    </th>
+                    <th class="item-order-note">
+                        <?= $block->escapeHtml(__('Note')) ?>
+                    </th>
+                </tr>
+                </thead>
+                <?php foreach ($_items as $_item) : ?>
+                    <?php if (!$_item->getParentItem()) : ?>
+                        <tbody>
+                        <?php if ($_item->getLocationId() == $_location->getId()) : ?>
+                            <?= $block->getItemHtml($_item) ?>
+                        <?php endif; ?>
+                        </tbody>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </table>
+        <?php endforeach; ?>
+        <table class="email-items">
+            <tfoot class="order-totals">
+            <?= $block->getChildHtml('order_totals') ?>
+            </tfoot>
+        </table>
+        <?php if ($this->helper(\Magento\GiftMessage\Helper\Message::class)
+                ->isMessagesAllowed('order', $_order, $_order->getStore())
+            && $_order->getGiftMessageId()
+        ) : ?>
+            <?php $_giftMessage = $this->helper(\Magento\GiftMessage\Helper\Message::class)
+                ->getGiftMessage($_order->getGiftMessageId()); ?>
+            <?php if ($_giftMessage) : ?>
+                <br/>
+                <table class="message-gift">
+                    <tr>
+                        <td>
+                            <h3><?= $block->escapeHtml(__('Gift Message for this Order')) ?></h3>
+                            <strong><?= $block->escapeHtml(__('From:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?>
+                            <br/><strong><?= $block->escapeHtml(__('To:')) ?></strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                            <br/><strong><?= $block->escapeHtml(__('Message:')) ?></strong>
+                            <br/><?= $block->escapeHtml($_giftMessage->getMessage()) ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <omnyfy_product_import>
+            <general>
+                <category_strategy>not_remove</category_strategy>
+                <image_strategy>not_remove</image_strategy>
+            </general>
+        </omnyfy_product_import>
+    </default>
+</config>

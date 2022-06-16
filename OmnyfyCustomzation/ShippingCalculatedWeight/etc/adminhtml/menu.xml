@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="OmnyfyCustomzation_ShippingCalculatedWeight::shipping" title="Shipping Calculated Weight" translate="title"
+             module="OmnyfyCustomzation_ShippingCalculatedWeight"
+             parent="OmnyfyCustomzation_Core::vermillion" sortOrder="10"
+             resource="OmnyfyCustomzation_ShippingCalculatedWeight::shipping"/>
+
+        <add id="OmnyfyCustomzation_ShippingCalculatedWeight::rules" title="Calculation Rules" translate="title"
+             module="OmnyfyCustomzation_ShippingCalculatedWeight"
+             parent="OmnyfyCustomzation_ShippingCalculatedWeight::shipping" sortOrder="10"
+             dependsOnModule="OmnyfyCustomzation_ShippingCalculatedWeight" action="calc_weight/rules"
+             resource="OmnyfyCustomzation_ShippingCalculatedWeight::rules"/>
+
+    </menu>
+</config>

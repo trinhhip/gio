@@ -1,0 +1,172 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+
+<div class="block-authentication" id="block-authentication"
+     data-bind="afterRender: setModalElement, blockLoader: isLoading"
+     style="display: none" data-mage-init='{"mage/tabs": {"openedState": "active", "animate": {"duration": 100}, "active": 0, "disabledState": "disabled"}}'>
+    <div class="block-title" data-role="collapsible">
+        <a id="block-customer-login-heading"
+           role="heading"
+           aria-level="2"
+           data-toggle="trigger" href="#tab-login"
+           data-bind="i18n: 'Sign in'"></a>
+    </div>
+    <div id="tab-login" class="block-content block-customer-login"
+         data-bind="attr: {'data-label': $t('or')}" data-role="content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <!-- ko foreach: getRegion('before') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        <div aria-labelledby="block-customer-login-heading">
+            <form class="form form-login"
+                  method="post"
+                  data-bind="event: {submit: login }"
+                  id="login-form">
+                <div class="fieldset login" data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
+                    <div class="field email required">
+                        <label class="label" for="customer-email"><span data-bind="i18n: 'Email Address'"></span></label>
+                        <div class="control">
+                            <input name="username"
+                                   id="customer-email"
+                                   type="email"
+                                   class="input-text"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true, 'validate-email':true}">
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <label for="pass" class="label"><span data-bind="i18n: 'Password'"></span></label>
+                        <div class="control">
+                            <input name="password"
+                                   type="password"
+                                   class="input-text"
+                                   id="pass"
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true}">
+                        </div>
+                    </div>
+                    <!-- ko foreach: getRegion('additional-login-form-fields') -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+                    <div class="actions-toolbar">
+                        <input name="context" type="hidden" value="checkout" />
+                        <div class="primary">
+                            <button type="submit" class="action action-login secondary" name="send" id="send2">
+                                <span data-bind="i18n: 'Sign In'"></span>
+                            </button>
+                        </div>
+                        <div class="secondary">
+                            <a class="action" data-bind="attr: {href: forgotPasswordUrl}">
+                                <span data-bind="i18n: 'Forgot Your Password?'"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="block-title" data-role="collapsible">
+        <a id="block-new-customer-heading"
+           role="heading"
+           aria-level="2"
+           data-toggle="trigger" href="#tab-create"
+           data-bind="i18n: 'I\'m new here'"></a>
+    </div>
+    <div id="tab-create" class="block-content block-new-customer"
+         data-bind="attr: {'data-label': $t('or')}"
+         data-role="content">
+        <div aria-labelledby="block-new-customer-heading">
+            <form class="form form-login"
+                  method="post"
+                  data-bind="event: {submit: retailRegister }"
+                  id="retail-form">
+                <div class="fieldset login" data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
+                    <div class="field first-name required">
+                        <label class="label" for="customer-email"><span data-bind="i18n: 'First Name'"></span></label>
+                        <div class="control">
+                            <input name="firstname"
+                                   type="text"
+                                   class="input-text"
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true}">
+                        </div>
+                    </div>
+                    <div class="field last-name required">
+                        <label class="label" for="customer-email"><span data-bind="i18n: 'Last Name'"></span></label>
+                        <div class="control">
+                            <input name="lastname"
+                                   type="text"
+                                   class="input-text"
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true}">
+                        </div>
+                    </div>
+                    <div class="field email required">
+                        <label class="label" for="customer-email"><span data-bind="i18n: 'Email Address'"></span></label>
+                        <div class="control">
+                            <input name="email"
+                                   type="email"
+                                   class="input-text"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true, 'validate-email':true}">
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <label for="pass" class="label"><span data-bind="i18n: 'Password'"></span></label>
+                        <div class="control">
+                            <input name="password"
+                                   type="password"
+                                   class="input-text"
+                                   data-password-min-length="8"
+                                   data-password-min-character-sets="3"
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true, 'validate-customer-password':true}">
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <label for="confirmation" class="label"><span data-bind="i18n: 'Confirm Password'"></span></label>
+                        <div class="control">
+                            <input name="password_confirmation"
+                                   type="password"
+                                   id="confirmation"
+                                   class="input-text"
+                                   data-bind="attr: {autocomplete: autocomplete}"
+                                   data-validate="{required:true}">
+                        </div>
+                    </div>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="submit" class="action action-login secondary" name="send" id="retail-submit">
+                                <span data-bind="i18n: 'Create an Account'"></span>
+                            </button>
+                        </div>
+                        <span class="text" data-bind="i18n: 'Are you an Interior Designer or Architect?'"></span>
+                        <div class="secondary">
+                            <a class="action" data-bind="attr: {href: requestToTradeUrl}">
+                                <span data-bind="i18n: 'Request A Trade Account'"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'tabs'], function ($) {
+        $("#block-authentication").tabs({
+            active: 0
+        });
+    });
+</script>

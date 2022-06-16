@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::marketing">
+                    <resource id="Amasty_AltTagGenerator::alt_tag" title="Amasty AltTagGenerator" translate="title" sortOrder="100">
+                        <resource id="Amasty_AltTagGenerator::template" title="Alt Tag Rules (Products)" translate="title" sortOrder="10">
+                            <resource id="Amasty_AltTagGenerator::template_delete" title="Mass Delete Alt Tag Rules" translate="title" sortOrder="10" />
+                            <resource id="Amasty_AltTagGenerator::edit" title="Edit Alt Tag Rules" translate="title" sortOrder="20" />
+                            <resource id="Amasty_AltTagGenerator::new" title="Create Alt Tag Rules" translate="title" sortOrder="30" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

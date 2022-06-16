@@ -1,0 +1,416 @@
+& when (@media-common = true) {
+    .order-details-items.review {
+		.vendor-block {
+			background: #F5F5F8;
+			border: 1px solid #CCCCD2;
+			box-sizing: border-box;
+			padding: 26px 24px;
+			margin-bottom: 24px;
+			.vendor-name {
+				font-family: Kansas TRIAL;
+				font-style: normal;
+				font-weight: normal;
+				font-size: 24px;
+				line-height: 32px;
+				color: #36373E;
+				max-width: 50%;
+			}
+			.review-status.approved {
+				color: #009EFF;
+				font-family: Avenir;
+				font-style: normal;
+				font-weight: normal;
+				font-size: 16px;
+				line-height: 24px;
+				text-decoration-line: underline;
+				max-width: 50%;
+				text-align: right;
+			}
+			.review-status.pending {
+				font-size: 16px;
+				line-height: 24px;
+				color: #8B90A0;
+				margin-bottom: 0;
+				text-align: right;
+			}
+			.review-status.not-approved {
+				font-size: 16px;
+				line-height: 24px;
+				color: #8B90A0;
+				margin-bottom: 0;
+				text-align: right;
+			}
+			.product-name {
+				color: #36373E;
+				font-size: 16px;
+				line-height: 24px;
+				padding-left: 16px;
+			}
+			.vendor-item {
+				border-bottom: 1px solid #CCCCD2;
+				padding-bottom: 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				max-width: unset;
+			}
+		}
+		.product-list {
+			.product-item {
+				border-bottom: 1px solid #CCCCD2;
+				padding-top: 16px;
+				padding-bottom: 8px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				.product-review {
+					border: 1px solid #009eff;
+					color: #ffffff;
+					cursor: pointer;
+					display: inline-block;
+					font-family: "New Kansas";
+					font-weight: 600;
+					padding: 7px 24px;
+					font-size: 16px;
+					box-sizing: border-box;
+					vertical-align: middle;
+					line-height: 36px;
+					height: 36px;
+					border-radius: 40px;
+					background: #009eff;
+					line-height: 1;
+					padding: 0 20px;
+					max-width: 170px;
+					&:hover {
+						background: #005f99;
+						border: 1px solid #005f99;
+						color: #ffffff;
+					}
+					span {
+						display: inline-block;
+						vertical-align: middle;
+					}
+				}
+				.product-info {
+					display: flex;
+					align-items: center;
+					img {
+						max-width: 80px;
+						height: auto;
+					}
+				}
+			}
+		}
+	}
+	.order-details-items.review {
+		padding-bottom: 0;
+		.actions-toolbar {
+			display: none;
+		}
+	}
+	.modal-popup.productReviewForm, .modal-popup.vendorReviewForm {
+		.modal-inner-wrap {
+			width: 544px;
+			height: auto;
+			background: #FFFFFF;
+			box-shadow: 0px 4px 20px rgba(0, 53, 85, 0.15);
+			border-radius: 16px;
+		}
+		.modal-title {
+			color: #36373E;
+			font-family: Kansas TRIAL;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 24px;
+			line-height: 32px;
+			padding-bottom: 24px;
+			border-bottom: 1px solid #CCCCD2;
+		}
+		.modal-header {
+			padding: 24px;
+			padding-bottom: 0;
+		}
+		.modal-content {
+			padding: 8px 24px 32px 24px;
+			.product-info {
+				border-bottom: 1px solid #CCCCD2;
+				display: flex;
+				align-items: center;
+				padding-bottom: 8px;
+				.product-item-photo {
+					width: 112px;
+					img {
+						width: 100%;
+						height: auto;
+					}
+				}
+				.product-name {
+					font-family: Avenir;
+					font-style: normal;
+					font-weight: 800;
+					font-size: 16px;
+					line-height: 24px;
+					color: #36373E;
+				}
+				>.product-name {
+					padding-left: 24px;
+				}
+			}
+			.fieldset {
+				.review-legend.legend {
+					display: none;
+				}
+			}
+			.product-review-form {
+				padding-top: 24px;
+				.review-fieldset {
+					margin-bottom: 0;
+					.field {
+						margin-bottom: 24px;
+					}
+				}
+				.review-add {
+					margin-bottom: 0;
+				}
+			}
+		}
+		.action-close {
+			&:before {
+				color: #000;
+				font-size: 20px;
+				line-height: 20px;
+			}
+			padding: 24px;
+		}
+	}
+
+	.modal-popup.vendorReviewForm {
+		.modal-content {
+			h5.vendor-name {
+				font-family: Avenir;
+				font-style: normal;
+				font-weight: 800;
+				font-size: 16px;
+				line-height: 24px;
+				padding-left: 24px;
+			}
+			.vendor-info {
+				display: flex;
+				align-items: center;
+				padding-bottom: 8px;
+				border-bottom: 1px solid #CCCCD2;
+			}
+			.vendor-review-form {
+				.review-form-title {
+					display: none;
+				}
+			}
+			.vendor-item-photo.photo {
+				width: 112px;
+			}
+		}
+		.vendor-review-form {
+			padding-top: 24px;
+		}
+		.field.choice.review-field-rating {
+			position: relative;
+		}
+		.review-control-vote {
+			label {
+				&:before {
+					font-size: 25px;
+					height: 26px;
+					line-height: 25px;
+				}
+			}
+			&:before {
+				font-size: 25px;
+				height: 26px;
+				line-height: 25px;
+			}
+		}
+		.review-field-rating {
+			.control {
+				margin-bottom: 28px;
+				margin-top: 7px;
+				position: static;
+			}
+		}
+		.review-form {
+			.field {
+				.label {
+					span {
+						font-family: Avenir;
+						font-style: normal;
+						font-weight: 800;
+						font-size: 12px;
+						line-height: 16px;
+					}
+				}
+				margin-bottom: 24px;
+			}
+			.review-fieldset {
+				margin-bottom: 0;
+			}
+		}
+	}
+	.modal-popup.productReviewForm {
+		.modal-content {
+			.review-form {
+				.field {
+					.label {
+						span {
+							font-family: Avenir;
+							font-style: normal;
+							font-weight: 800;
+							font-size: 12px;
+							line-height: 16px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.modal-popup.productReviewForm, .modal-popup.vendorReviewForm {
+		.modal-content {
+			.product-review-form {
+				.review-field-ratings {
+					legend.label {
+						display: none;
+					}
+					.label {
+						font-weight: 800;
+						font-size: 12px;
+						line-height: 16px;
+						color: #36373E;
+					}
+					.control {
+						position: static;
+					}
+				}
+				.review-field-ratings.field {
+					position: relative;
+					margin-bottom: 0;
+				}
+				.review-field-rating {
+					.control {
+						margin-bottom: 48px;
+						margin-top: 8px;
+					}
+				}
+				.review-control-vote {
+					&:before {
+						font-size: 25px;
+						line-height: 26px;
+						height: 26px;
+					}
+					label {
+						&:before {
+							font-size: 25px;
+							line-height: 26px;
+							height: 26px;
+						}
+					}
+				}
+				padding-top: 0;
+			}
+		}
+	}
+
+	.customer-review {
+		.product-reviews-summary {
+			.reviews-actions {
+				.view.action {
+					border: 0;
+				}
+				.add.action {
+					display: none;
+				}
+			}
+		}
+		.review-details {
+			padding-top: 15px;
+			.title {
+				font-size: 25px;
+				margin-bottom: 10px;
+			}
+			.customer-review-rating {
+				margin-bottom: 10px;
+			}
+			.review-title {
+				margin-top: 10px;
+				margin-bottom: 15px;
+			}
+			.review-content {
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+
+	@media (max-width: 767px) {
+	    .vendorreview-order-review {
+			.modal-popup.modal-slide {
+				.modal-inner-wrap {
+					margin: 25px auto;
+					width: 90%;
+				}
+				left: 0;
+			}
+		}
+		.order-details-items.review {
+			padding: 15px;
+		}
+		.order-details-items {
+			.product-list {
+				.product-item {
+					.product-info {
+						flex-direction: column;
+						align-items: normal;
+					}
+					flex-direction: column;
+					align-items: initial;
+					padding-bottom: 16px;
+					.product-review {
+						margin-top: 8px;
+					}
+				}
+			}
+			.vendor-block {
+				.product-name {
+					padding-left: 0;
+					padding-top: 8px;
+				}
+				.review-status.approved {
+					text-align: left;
+				}
+				padding: 16px;
+				.review-status.pending {
+					text-align: left;
+				}
+				.vendor-item {
+					flex-direction: column;
+					align-items: initial;
+				}
+				.review-status {
+					padding-top: 8px;
+				}
+			}
+		}
+
+
+		.modal-popup.productReviewForm, .modal-popup.vendorReviewForm {
+			left: 0;
+			.modal-inner-wrap {
+				width: 343px;
+				background: #FFFFFF;
+				margin: 32px auto;
+			}
+		}
+	}
+
+	
+
+
+}

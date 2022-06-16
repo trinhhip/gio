@@ -1,0 +1,62 @@
+<?php
+/**
+ * Project: Vendor Subscription
+ * User: jing
+ * Date: 2019-08-13
+ * Time: 13:35
+ */
+
+/** @var \Omnyfy\VendorSubscription\Block\Form\Type $block  */
+$vendorTypeId = $block->getData('vendor_type_id');
+
+$types = $block->loadVendorTypeCollection();
+$vendorType = $types->getItemById($vendorTypeId);
+
+if (empty($vendorType)) return;
+
+$plans = $block->loadPlanCollection($vendorTypeId);
+if (empty($plans)  || $plans->getSize()==0) return;
+
+?>
+<div class="plans-list"><?php
+
+foreach($plans as $plan) {
+    $statusClass = $plan->getStatus() ? '' : ' disabled';
+    $promoClass = $plan->getPromoText() ? '' : ' no-text';
+    $price = $plan->getIsFree() ? 0.00 : $plan->getPrice();
+    ?><div class="plan-item<?php echo $statusClass?>">
+        <?php if ($plan->getPromoText() != ''): ?>
+            <div class="plan-label<?php echo $promoClass;?>"><?php echo $plan->getPromoText();?></div>
+        <?php endif ?>
+        <div class="plan-wrapper">
+            <div class="main-wrapper">
+                <div class="main-info">
+                    <div class="plan-title"><?php echo $plan->getPlanName();?></div>
+                    <div class="plan-price-container">
+                        <span class="plan-price"><?php echo $block->formatPrice($price, true, 0);?></span>
+                        &nbsp;/&nbsp;
+                        <span class="plan-unit"><?php echo $block->getIntervalTitle($plan->getInterval());?></span>
+                    </div>
+                </div>
+                <div class="plan-features-list">
+                    <?php
+                    $benefits = $block->parseBenefits($plan->getBenefits());
+                    foreach($benefits as $benefit) {
+                    ?><div class="plan-feature"><?php echo $benefit;?></div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <?php if ($plan->getDescription()):?>
+                <div class="plan-description"><?= $plan->getDescription();?></div>
+                <?php endif;?>
+            </div>
+            <div class="plan-actions">
+                <a href="<?php echo $block->getLinkUrl($vendorTypeId, $plan->getId(), $plan->getStatus());?>" class="action primary <?= $plan->getStatus() ? '' : 'disabled'?>"><?php echo $plan->getButtonLabel();?></a>
+            </div>
+        </div>
+    </div>
+<?php
+}
+?>
+</div>
