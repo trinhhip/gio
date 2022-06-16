@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="amregenerateurlrewrites" translate="label" type="text" sortOrder="180521" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>URL Rewrites Regenerator</label>
+            <tab>amasty</tab>
+            <resource>Amasty_RegenerateUrlRewrites::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_reindex" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Skip Reindex</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skip_cache_flash" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Skip Cache Flush and Cache Clean</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="url_rewrites_category" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Url Rewrites For Categories</label>
+                <field id="include_category_regeneration" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Include Categories to Regeneration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_category_range_regenerate" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Choose Category Range to Regenerate</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="include_category_regeneration">1</field>
+                    </depends>
+                </field>
+                <field id="category_id_range_regenerate" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <comment>Specify a range for IDs, e.g., 1-15.</comment>
+                    <label>Category ID Range to Regenerate</label>
+                    <depends>
+                        <field id="include_category_regeneration">1</field>
+                        <field id="use_category_range_regenerate">1</field>
+                    </depends>
+                </field>
+                <field id="use_category_ids_regenerate" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Choose Category IDs to Regenerate</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="include_category_regeneration">1</field>
+                    </depends>
+                </field>
+                <field id="category_ids_regenerate" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category IDs to Regenerate</label>
+                    <comment>Specify a comma-separated list of IDs.</comment>
+                    <depends>
+                        <field id="include_category_regeneration">1</field>
+                        <field id="use_category_ids_regenerate">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="url_rewrites_product" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Url Rewrites For Products</label>
+                <field id="include_product_regeneration" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Include Products to Regeneration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_product_range_regenerate" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Choose Product Range to Regenerate</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="include_product_regeneration">1</field>
+                    </depends>
+                </field>
+                <field id="product_id_range_regenerate" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product ID Range to Regenerate</label>
+                    <comment>Specify a range for IDs, e.g., 1-15.</comment>
+                    <depends>
+                        <field id="include_product_regeneration">1</field>
+                        <field id="use_product_range_regenerate">1</field>
+                    </depends>
+                </field>
+                <field id="use_product_ids_regenerate" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Choose Product IDs to Regenerate</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="include_product_regeneration">1</field>
+                    </depends>
+                </field>
+                <field id="product_ids_regenerate" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product IDs to Regenerate</label>
+                    <comment>Specify a comma-separated list of IDs.</comment>
+                    <depends>
+                        <field id="include_product_regeneration">1</field>
+                        <field id="use_product_ids_regenerate">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="url_rewrites_regeneration" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>URL Rewrites Regeneration</label>
+                <field id="apply_store_views" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Regenerate URL Rewrites for Store Views</label>
+                    <source_model>Amasty\RegenerateUrlRewrites\Model\Config\Source\StoreOptions</source_model>
+                </field>
+                <field id="start_regeneration" translate="label" type="button" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Start Regeneration</label>
+                    <frontend_model>Amasty\RegenerateUrlRewrites\Block\Adminhtml\StartRegeneration</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

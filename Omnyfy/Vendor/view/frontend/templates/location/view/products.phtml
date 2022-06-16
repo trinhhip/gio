@@ -1,0 +1,24 @@
+<?php
+/**
+ * Project: Multi Vendor M2.
+ * User: jing
+ * Date: 7/8/17
+ * Time: 2:20 PM
+ *
+ */
+
+/* @var $block \Omnyfy\Vendor\Block\Vendor\Location*/
+/* @var $filterHlp \Omnyfy\Vendor\Helper\Filter */
+$filterHlp = $this->helper('\Omnyfy\Vendor\Helper\Filter');
+$vendorId = $block->getRequest()->getParam('id');
+?>
+<main id="products" class="page-main nav-target"><a id="contentarea" tabindex="-1"></a>
+
+<div class="columns">
+	<div id="layer-product-list">
+		<?php echo $block->getChildHtml();?>
+		<div class="text-center"><a href="<?php echo $filterHlp->getVendorSeoSuffix($vendorId);?>" class="btn btn-primary"><span>VIEW ALL <?php echo $block->getProductCount()?> PRODUCTS</span></a></div>
+	</div>
+</div>
+
+</main>

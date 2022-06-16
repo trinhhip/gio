@@ -1,0 +1,28 @@
+{
+    "name": "omnyfy/omnyfy-stripe-subscription",
+    "description": "Omnyfy Stripe Subscription",
+    "require": {
+        "php": "~7.4.0",
+        "magento/framework": "103.0.*",
+        "omnyfy/omnyfy-core": "dev-commerce-develop2.4",
+        "omnyfy/omnyfy-vendor-subscription": "dev-commerce-develop2.4",
+        "omnyfy/omnyfy-stripe-api": "dev-commerce-develop2.4"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "email": "admin@omnyfy.com",
+            "name": "Omnyfy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\StripeSubscription\\": ""
+        }
+    }
+}

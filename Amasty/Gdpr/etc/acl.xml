@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_Gdpr
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Customer::customer">
+                    <resource id="Amasty_Gdpr::gdpr" title="Personal Data Protection">
+                        <resource id="Amasty_Gdpr::action_log" title="Action Log" />
+                        <resource id="Amasty_Gdpr::consent_log" title="Consent Log" />
+<!--                        changes could be restored-->
+<!--                        <resource id="Amasty_Gdpr::with_consent" title="Customers With Consent" />-->
+<!--                        <resource id="Amasty_Gdpr::without_consent" title="Customers Without Consent" />-->
+                        <resource id="Amasty_Gdpr::requests" title="Delete Requests"/>
+                        <resource id="Amasty_Gdpr::policy" title="Privacy Policy"/>
+                        <resource id="Amasty_Gdpr::consents" title="Consent Checkboxes"/>
+                        <resource id="Amasty_Gdpr::personal_data" title="Download Personal Data"/>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Amasty_Gdpr::config" title="Amasty Personal Data Protection Settings" sortOrder="160504" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

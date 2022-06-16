@@ -1,0 +1,70 @@
+{
+  "items": [
+    {
+      "inventory": {
+        "vendor_ids": [1],
+        "items": [
+          {
+            "source_code": "source_code",
+            "qty": 100,
+            "is_in_stock":true
+          }
+        ]
+      },
+      "price": {
+        "value": 15,
+        "currency": "AUD"
+      },
+      "product_data": {
+        "sku": "sweet-strawberry-250gr",
+        "name": "Sweet Strawberry 250gr",
+        "attribute_set_id": 4,
+        "status": 1,
+        "visibility": 4,
+        "type_id": "simple",
+        "weight": 0.5,
+        "website_codes": ["base"],
+        "custom_attributes": [
+          {
+            "attribute_code": "url_key",
+            "value": "sweet-strawberry-250gr"
+          },
+          {
+            "attribute_code": "name",
+            "value": "Sweet Strawberry 250gr"
+          },
+          {
+            "attribute_code": "description",
+            "value": "A pack of 250 grams sweet strawberry."
+          },
+          {
+            "attribute_code": "category_ids",
+            "value": ["2", "3"]
+          }
+        ],
+        "media_gallery_entries": [
+          {
+            "media_type": "image",
+            "label": "Sweet Strawberry 250gr",
+            "position": 1,
+            "disabled": false,
+            "types": [
+              "image",
+              "small_image",
+              "thumbnail"
+            ],
+            "file": "https://image.freepik.com/free-photo/strawberries_1194-2304.jpg",
+            "content": {
+              "name": "sweet-strawberry-250gr_1.jpg"
+            }
+          }
+        ],
+        "extension_attributes": {
+          "stock_item": {
+            "is_in_stock": true
+          }
+        }
+      }
+    }
+  ]
+}

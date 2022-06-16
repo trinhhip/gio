@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="omnyfy_subscription_general_cancel_template_admin" label="Vendor Cancelled Subscription Notification - Admin" file="cancel_admin.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_cancel_template_vendor" label="Vendor Cancelled Subscription Notification - Vendor" file="cancel_vendor.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_invoice_template_vendor" label="Vendor Invoice Notification - Vendor"
+              file="invoice_vendor.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_invoice_template_admin" label="Vendor Invoice Notification - Admin"
+              file="invoice_admin.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_subscription_update_template_vendor" label="Vendor Updated Subscription Notification - Vendor"
+              file="subscription_update_vendor.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_subscription_update_template_admin" label="Vendor Updated Subscription Notification - Admin"
+              file="subscription_update_admin.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_invoice_failed" label="Failed Subscription Payment Notification"
+              file="invoice_failed.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_invoice_failed_vendor" label="Failed Subscription Payment Notification - Vendor"
+              file="invoice_failed_vendor.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_invoice_failed_mo" label="Failed Subscription Payment Notification - Admin"
+              file="invoice_failed_mo.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_subscription_expiry_vendor" label="Subscription Expiry Notification - Vendor"
+              file="subscription_expiry_vendor.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+    <template id="omnyfy_subscription_general_subscription_expiry_mo" label="Subscription Expiry Notification - Admin"
+              file="subscription_expiry_mo.html" type="html" module="Omnyfy_VendorSubscription" area="frontend"/>
+</config>

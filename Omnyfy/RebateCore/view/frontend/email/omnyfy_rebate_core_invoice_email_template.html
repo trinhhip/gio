@@ -1,0 +1,18 @@
+<!--@subject {{trans "Rebate Invoice Email for %paymentfrequency Rebates from %maketplacename," paymentfrequency=$paymentfrequency maketplacename=$maketplacename }} @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr class="email-intro">
+        <td valign="top">
+            <p>
+                <strong>{{trans "Hi %vendorname" vendorname=$vendorname}}</strong>
+                <strong>{{trans "Please find attached your Rebate Invoice for the period of %startPeriod to %endPeriod. This invoice is payable on %dueDate" startPeriod=$startPeriod endPeriod=$endPeriod dueDate=$dueDate}}</strong>
+            </p>
+            <p>{{trans "The amount payable is %amountTax and includes tax of %taxInclude" amountTax=$amountTax
+                taxInclude=$taxInclude}}</p>
+            <p> {{trans "If you have any questions regarding your Rebate Invoice, kindly email us at %contact" contact=$contact}}</p>
+            <p>{{trans "Thank you very much and we appreciate the opportunity to work with you and help grow your sales."}}</p>
+            {{trans "Team at %maketplacename" maketplacename=$maketplacename}}
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

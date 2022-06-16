@@ -1,0 +1,862 @@
+{
+    "omnyfy_vendor_vendor_type": {
+        "column": {
+            "type_id": true,
+            "type_name": true,
+            "search_by": true,
+            "view_mode": true,
+            "vendor_attribute_set_id": true,
+            "location_attribute_set_id": true,
+            "status": true,
+            "location_type": true,
+            "hide_vendor_link_on_product": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_TYPE_TYPE_ID_VENDOR_ATTRIBUTE_SET_ID": true,
+            "OMNYFY_VENDOR_VENDOR_TYPE_TYPE_ID_LOCATION_ATTRIBUTE_SET_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_78502B196E05B8F1F4B37B79F9DEEA83": true,
+            "FK_CD0E5150240C80C5F9BF975E3D9F4507": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity": {
+        "column": {
+            "entity_id": true,
+            "name": true,
+            "status": true,
+            "address": true,
+            "phone": true,
+            "email": true,
+            "created_at": true,
+            "updated_at": true,
+            "fax": true,
+            "social_media": true,
+            "description": true,
+            "type_id": true,
+            "abn": true,
+            "logo": true,
+            "banner": true,
+            "shipping_policy": true,
+            "return_policy": true,
+            "payment_policy": true,
+            "marketing_policy": true,
+            "attribute_set_id": true,
+            "payout_basis_type": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_85807663CD92FB329BAEEF947188D001": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_ATTR_SET_ID_EAV_ATTR_SET_ATTR_SET_ID": true
+        }
+    },
+    "omnyfy_vendor_location_entity": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "priority": true,
+            "location_name": true,
+            "description": true,
+            "address": true,
+            "suburb": true,
+            "region": true,
+            "country": true,
+            "postcode": true,
+            "lat": true,
+            "lon": true,
+            "rad_lon": true,
+            "rad_lat": true,
+            "cos_lat": true,
+            "sin_lat": true,
+            "status": true,
+            "region_id": true,
+            "is_warehouse": true,
+            "vendor_type_id": true,
+            "attribute_set_id": true,
+            "location_contact_name": true,
+            "location_contact_phone": true,
+            "location_contact_email": true,
+            "location_company_name": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_A847A2C672065C0454E52FF8CD7B67E0": true,
+            "FK_E3C736DD00DB9EBDB59508A17E331B29": true
+        }
+    },
+    "quote_item": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "kitstore_id": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "QUOTE_ITEM_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID": true,
+            "QUOTE_ITEM_LOCATION_ID_OMNYFY_VENDOR_LOCATION_ENTITY_ENTITY_ID": true,
+            "QUOTE_ITEM_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true
+        }
+    },
+    "quote_shipping_rate": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "location_hh": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "QUOTE_SHPP_RATE_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID": true,
+            "QUOTE_SHPP_RATE_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true
+        }
+    },
+    "sales_shipment": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "source_stock_id": true,
+            "source_code": true
+        },
+        "constraint": {
+            "SALES_SHIPMENT_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID": true,
+            "SALES_SHIPMENT_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true,
+            "SALES_SHIPMENT_SOURCE_CODE_INVENTORY_SOURCE_SOURCE_CODE": true
+        }
+    },
+    "sales_shipment_grid": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "SALES_SHIPMENT_GRID_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID": true,
+            "FK_624E00010DABBB5F8CA09578CB24280C": true
+        }
+    },
+    "sales_order_item": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "SALES_ORDER_ITEM_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID": true,
+            "SALES_ORDER_ITEM_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true
+        }
+    },
+    "sales_invoice_item": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "SALES_INVOICE_ITEM_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID": true,
+            "FK_48B00E3D47FF7D9347D8A338F144B35F": true,
+            "SALES_INVOICE_ITEM_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_invoice": {
+        "column": {
+            "invoice_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_INVOICE_INVOICE_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "FK_A4DA22600B1BBE07F464670CCF9151BC": true
+        }
+    },
+    "omnyfy_vendor_vendor_order": {
+        "column": {
+            "order_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ORDER_ORDER_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "FK_C1CCCF4EBD9D60429C6A58CD00BE9902": true
+        }
+    },
+    "omnyfy_vendor_vendor_customer": {
+        "column": {
+            "customer_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_CUSTOMER_CUSTOMER_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "FK_9B02A4BBA24FB14E1F2FF5C884F5D305": true
+        }
+    },
+    "omnyfy_vendor_vendor_admin_user": {
+        "column": {
+            "user_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ADMIN_USER_USER_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "FK_95493A7083AD8F11EA375B6B1D72BDC0": true,
+            "OMNYFY_VENDOR_VENDOR_ADMIN_USER_USER_ID_ADMIN_USER_USER_ID": true
+        }
+    },
+    "omnyfy_vendor_profile": {
+        "column": {
+            "profile_id": true,
+            "website_id": true,
+            "vendor_id": true,
+            "updates": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_PROFILE_WEBSITE_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_PROFILE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID": true,
+            "FK_8DB9E6E8A96D96F6EC6871F6D8C88FB7": true
+        }
+    },
+    "omnyfy_vendor_profile_admin_user": {
+        "column": {
+            "profile_id": true,
+            "admin_user_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_PROFILE_ADMIN_USER_PROFILE_ID_ADMIN_USER_ID": true
+        },
+        "constraint": {
+            "FK_CBCA66FCAB0BA51E4C707D9D1747DE81": true,
+            "OMNYFY_VENDOR_PROFILE_ADM_USR_ADM_USR_ID_ADM_USR_USR_ID": true
+        }
+    },
+    "omnyfy_vendor_profile_location": {
+        "column": {
+            "profile_id": true,
+            "location_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_PROFILE_LOCATION_PROFILE_ID_LOCATION_ID": true
+        },
+        "constraint": {
+            "FK_E70D6CBED002F107C0F14217971CD477": true,
+            "FK_1921BE5B5B871FA101F5F24E73F1F2C7": true
+        }
+    },
+    "omnyfy_vendor_vendor_product": {
+        "column": {
+            "product_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_PRODUCT_PRODUCT_ID_VENDOR_ID": true
+        },
+        "constraint": {
+            "OMNYFY_VENDOR_VENDOR_PRD_PRD_ID_CAT_PRD_ENTT_ENTT_ID": true,
+            "FK_FB30F836E5B50A5DDAB04780CFE939B0": true,
+            "OMNYFY_VENDOR_VENDOR_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "omnyfy_vendor_inventory": {
+        "column": {
+            "inventory_id": true,
+            "product_id": true,
+            "location_id": true,
+            "qty": true,
+            "stock_id": true,
+            "source_code": true,
+            "quantity": true,
+            "source_stock_id": true,
+            "notify_stock_qty": true,
+            "notify_stock_qty_use_default": true,
+            "sku": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_INVENTORY_PRODUCT_ID_SOURCE_STOCK_ID": true,
+            "OMNYFY_VENDOR_INVENTORY_PRODUCT_ID_SOURCE_STOCK_ID_SKU": true,
+            "OMNYFY_VENDOR_INVENTORY_SKU": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_INV_PRD_ID_CAT_PRD_ENTT_ENTT_ID": true,
+            "FK_68D83EBBC5A7B8F7FA9F26EB7EAF71C6": true,
+            "OMNYFY_VENDOR_INV_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true,
+            "OMNYFY_VENDOR_INVENTORY_SKU_CATALOG_PRODUCT_ENTITY_SKU": true,
+            "OMNYFY_VENDOR_INVENTORY_SOURCE_CODE_SKU": true
+        }
+    },
+    "quote_address": {
+        "column": {
+            "shipping_method": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "shipping_method": true
+        }
+    },
+    "omnyfy_vendor_order_total": {
+        "column": {
+            "vendor_id": true,
+            "order_id": true,
+            "subtotal": true,
+            "base_subtotal": true,
+            "subtotal_incl_tax": true,
+            "base_subtotal_incl_tax": true,
+            "tax_amount": true,
+            "base_tax_amount": true,
+            "discount_amount": true,
+            "base_discount_amount": true,
+            "shipping_amount": true,
+            "base_shipping_amount": true,
+            "shipping_incl_tax": true,
+            "base_shipping_incl_tax": true,
+            "shipping_tax": true,
+            "base_shipping_tax": true,
+            "grand_total": true,
+            "base_grand_total": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ORDER_TOTAL_VENDOR_ID_ORDER_ID": true
+        },
+        "constraint": {
+            "FK_B890A798D8DF58675A90B02B2DBA6DE6": true,
+            "OMNYFY_VENDOR_ORDER_TOTAL_ORDER_ID_SALES_ORDER_ENTITY_ID": true
+        }
+    },
+    "omnyfy_vendor_invoice_total": {
+        "column": {
+            "vendor_id": true,
+            "invoice_id": true,
+            "subtotal": true,
+            "base_subtotal": true,
+            "subtotal_incl_tax": true,
+            "base_subtotal_incl_tax": true,
+            "tax_amount": true,
+            "base_tax_amount": true,
+            "discount_amount": true,
+            "base_discount_amount": true,
+            "shipping_amount": true,
+            "base_shipping_amount": true,
+            "shipping_incl_tax": true,
+            "base_shipping_incl_tax": true,
+            "shipping_tax": true,
+            "base_shipping_tax": true,
+            "grand_total": true,
+            "base_grand_total": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_INVOICE_TOTAL_VENDOR_ID_INVOICE_ID": true
+        },
+        "constraint": {
+            "FK_36AAF5AF9138B80BDA24663CEECF3977": true,
+            "OMNYFY_VENDOR_INVOICE_TOTAL_INVOICE_ID_SALES_INVOICE_ENTITY_ID": true
+        }
+    },
+    "omnyfy_vendor_eav_attribute": {
+        "column": {
+            "attribute_id": true,
+            "is_global": true,
+            "is_visible": true,
+            "is_searchable": true,
+            "is_filterable": true,
+            "is_visible_on_front": true,
+            "is_html_allowed_on_front": true,
+            "is_filterable_in_search": true,
+            "is_visible_in_advanced_search": true,
+            "is_wysiwyg_enabled": true,
+            "used_in_listing": true,
+            "is_used_in_grid": true,
+            "is_visible_in_grid": true,
+            "is_filterable_in_grid": true,
+            "used_for_sort_by": true,
+            "used_in_form": true,
+            "position": true,
+            "tooltip": true,
+            "show_on_customer_emails": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendor_location_entity_int": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_LOCATION_ENTT_INT_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_INT_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_INT_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_F676849A9D126D0A90FFD450BAB91B36": true,
+            "OMNYFY_VENDOR_LOCATION_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_INT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_location_entity_datetime": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_LOCATION_ENTT_DTIME_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_994BFF2BF1EE135E1C717D7D7DF341DD": true,
+            "OMNYFY_VENDOR_LOCATION_ENTT_DTIME_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_location_entity_decimal": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_LOCATION_ENTT_DEC_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_FD0774D187BCE64BFCBF8E3BBFCC1AEF": true,
+            "OMNYFY_VENDOR_LOCATION_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_location_entity_varchar": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_LOCATION_ENTT_VCHR_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_CC237D24C9080DDC23FE4289C62F47FC": true,
+            "OMNYFY_VENDOR_LOCATION_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_location_entity_text": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_LOCATION_ENTT_TEXT_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_45525F8AFA0F5357A960BA769DA14DFB": true,
+            "OMNYFY_VENDOR_LOCATION_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity_int": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_INT_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_INT_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_C7A8757311FE032B23AA6FB542DC4225": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_INT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity_datetime": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ENTT_DTIME_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_23E5EE5BBC5D0FE05503FD0417044C4F": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_DTIME_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity_decimal": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ENTT_DEC_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_26717DEF2405A0A03BA2A758962E4F8F": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity_varchar": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ENTT_VCHR_ENTT_ID_ATTR_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_7A21BDD1534E5A674AB8B98A0A1DC25C": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_vendor_entity_text": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_404F447B87EA56365387AA62B0844DC8": true,
+            "OMNYFY_VENDOR_VENDOR_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_entity_gallery": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "position": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ENTITY_GALLERY_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true,
+            "OMNYFY_VENDOR_ENTITY_GALLERY_ENTITY_ID": true,
+            "OMNYFY_VENDOR_ENTITY_GALLERY_ATTRIBUTE_ID": true,
+            "OMNYFY_VENDOR_ENTITY_GALLERY_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_ENTT_GLR_ENTT_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID": true,
+            "OMNYFY_VENDOR_ENTT_GLR_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "OMNYFY_VENDOR_ENTITY_GALLERY_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_entity_media_gallery": {
+        "column": {
+            "value_id": true,
+            "attribute_id": true,
+            "entity_id": true,
+            "value": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_ENTITY_ID": true,
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_ATTRIBUTE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_ENTT_MDA_GLR_ATTR_ID_EAV_ATTR_ATTR_ID": true,
+            "FK_1DF12A6E095AABBB2009F248F2118BFF": true
+        }
+    },
+    "omnyfy_vendor_entity_media_gallery_value": {
+        "column": {
+            "value_id": true,
+            "store_id": true,
+            "entity_id": true,
+            "label": true,
+            "position": true,
+            "disabled": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_ENTITY_ID": true,
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_609539BCA2DEDD8C69D9D5D1F8353620": true,
+            "FK_C2FC599F945C9DC6F904AEAF22D44E4D": true,
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_vendor_entity_media_gallery_value_to_entity": {
+        "column": {
+            "value_id": true,
+            "entity_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_TO_ENTITY_ENTITY_ID": true,
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_TO_ENTITY_VALUE_ID": true
+        },
+        "constraint": {
+            "FK_595081151F14B9A950458A1FF9691963": true,
+            "FK_3422E1356CADF0E32958108B63651629": true
+        }
+    },
+    "omnyfy_vendor_entity_media_gallery_value_video": {
+        "column": {
+            "value_id": true,
+            "store_id": true,
+            "provider": true,
+            "url": true,
+            "title": true,
+            "description": true,
+            "metadata": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_VIDEO_VALUE_ID_STORE_ID": true
+        },
+        "constraint": {
+            "FK_C8E66E52E554BE86E029079B9C9E3ABA": true,
+            "OMNYFY_VENDOR_ENTT_MDA_GLR_VAL_VIDEO_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "salesrule": {
+        "column": {
+            "location_id": true,
+            "vendor_id": true,
+            "source_stock_id": true
+        },
+        "constraint": {
+            "SALESRULE_LOCATION_ID_OMNYFY_VENDOR_LOCATION_ENTITY_ENTITY_ID": true,
+            "SALESRULE_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID": true,
+            "SALESRULE_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID": true
+        }
+    },
+    "omnyfy_vendor_customer_favorite_vendor": {
+        "column": {
+            "id": true,
+            "customer_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_CUSTOMER_FAVORITE_VENDOR_CUSTOMER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_CSTR_FAVORITE_VENDOR_CSTR_ID_CSTR_ENTT_ENTT_ID": true,
+            "FK_E64CD88F96B958FDAD30FD70BFCDBD3F": true
+        }
+    },
+    "omnyfy_vendor_related_location": {
+        "column": {
+            "vendor_id": true,
+            "location_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_RELATED_LOCATION_VENDOR_ID_LOCATION_ID": true
+        },
+        "constraint": {
+            "FK_DC634675767CE0830A347893CE0EA090": true,
+            "FK_BA7E3686F44A7047209E272B1BC0D975": true
+        }
+    },
+    "omnyfy_vendor_quote_shipping": {
+        "column": {
+            "quote_id": true,
+            "address_id": true,
+            "location_id": true,
+            "rate_id": true,
+            "method_code": true,
+            "amount": true,
+            "base_amount": true,
+            "carrier": true,
+            "method_title": true,
+            "vendor_id": true,
+            "source_stock_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_QUOTE_SHIPPING_QUOTE_ID_LOCATION_ID": true
+        },
+        "constraint": {
+            "OMNYFY_VENDOR_QUOTE_SHIPPING_QUOTE_ID_QUOTE_ENTITY_ID": true,
+            "FK_39E775E6AF5305506B7418CC25F86EEA": true
+        }
+    },
+    "omnyfy_vendor_customer_favourites": {
+        "column": {
+            "id": true,
+            "customer_id": true,
+            "vendor_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_CUSTOMER_FAVOURITES_CUSTOMER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_CSTR_FAVOURITES_CSTR_ID_CSTR_ENTT_ENTT_ID": true,
+            "FK_C99EC7452EFE7A2F38EF4F36A3BF3049": true
+        }
+    },
+    "omnyfy_vendor_vendor_user_stores": {
+        "column": {
+            "user_id": true,
+            "store_id": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_VENDOR_USER_STORES_USER_ID": true
+        },
+        "constraint": {
+            "OMNYFY_VENDOR_VENDOR_USER_STORES_USER_ID_ADMIN_USER_USER_ID": true
+        }
+    },
+    "authorization_role": {
+        "column": {
+            "is_subvendor": true
+        }
+    },
+    "admin_user": {
+        "column": {
+            "is_subvendor": true,
+            "parent_vendor_id": true
+        }
+    },
+    "inventory_source": {
+        "column": {
+            "vendor_id": true,
+            "name": true,
+            "store_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "inventory_stock": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "omnyfy_vendor_source_stock": {
+        "column": {
+            "source_code": true,
+            "stock_id": true,
+            "id": true,
+            "vendor_id": true,
+            "enabled": true,
+            "source_stock": true,
+            "store_id": true
+        },
+        "constraint": {
+            "OMNYFY_VENDOR_SOURCE_STOCK_SOURCE_CODE_INV_SOURCE_SOURCE_CODE": true,
+            "OMNYFY_VENDOR_SOURCE_STOCK_STOCK_ID_INVENTORY_STOCK_STOCK_ID": true,
+            "PRIMARY": true,
+            "FK_66BF3CD7837549DA78A35126E21ED1AA": true
+        }
+    },
+    "inventory_stock_sales_channel": {
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "sales_order_status_history": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "sales_creditmemo": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "sales_creditmemo_grid": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "amasty_audit_log": {
+        "column": {
+            "vendor_id": true
+        }
+    },
+    "omnyfy_inventory_reservation": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "stock_id": true,
+            "sku": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_migration_location_to_source": {
+        "column": {
+            "location_id": true,
+            "source_id": true
+        },
+        "constraint": {
+            "OMNYFY_MIGRATION_LOCATION_TO_SOURCE_LOCATION_ID_SOURCE_ID": true,
+            "FK_6446D440EDB958704791D200D8F0A96D": true,
+            "FK_D84477E3827CC9E68524E1EAFF53EE06": true
+        }
+    }
+}

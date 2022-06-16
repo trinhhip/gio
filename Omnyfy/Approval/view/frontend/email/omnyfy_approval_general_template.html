@@ -1,0 +1,12 @@
+<!--@subject {{trans "Congratulations, Your product %product_name has passed marketplace review" product_name=$data.getProductName()}} @-->
+{{template config_path="design/email/header_template"}}
+<h1>
+    {{trans "Dear %vendor_name" vendor_name=$data.getVendorName()}}
+</h1>
+<p>
+    {{trans "Your product %product_name" product_name=$data.getProductName()}} {{trans "was approved by the Marketplace Owner on %store_name" store_name=$data.getStoreName()}}
+</p>
+<p>
+    {{trans "MO say: %comment" comment=$data.getComment()}}
+</p>
+{{template config_path="design/email/footer_template"}}

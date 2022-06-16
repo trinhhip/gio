@@ -1,0 +1,48 @@
+{
+    "omnyfy_enquiry_enquiries": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "product_id": true,
+            "customer_id": true,
+            "customer_first_name": true,
+            "customer_last_name": true,
+            "customer_email": true,
+            "customer_mobile": true,
+            "customer_company": true,
+            "created_date": true,
+            "updated_date": true,
+            "status": true,
+            "store_id": true,
+            "summary": true,
+            "location_id": true,
+            "enquiries_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_BB7EB10766CC8D98861D1B120865F61A": true,
+            "OMNYFY_ENQUIRY_ENQUIRIES_PRD_ID_CAT_PRD_ENTT_ENTT_ID": true,
+            "OMNYFY_ENQUIRY_ENQUIRIES_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "OMNYFY_ENQUIRY_ENQUIRIES_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "omnyfy_enquiry_enquiry_messages": {
+        "column": {
+            "enquiry_messages_id": true,
+            "enquiry_id": true,
+            "from_id": true,
+            "from_type": true,
+            "to_id": true,
+            "to_type": true,
+            "send_time": true,
+            "message": true,
+            "is_notify_customer": true,
+            "is_visible_frontend": true,
+            "status": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_276D637FC42E1EB1F6CE2DE95AD8EFD3": true
+        }
+    }
+}

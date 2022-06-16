@@ -1,0 +1,16 @@
+<!--@subject You receive a new message @-->
+{{template config_path="design/email/header_template"}}
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr class="email-intro">
+        <td>
+            <p>Hi {{var vendor_name}},</p>
+            <p><strong>CUSTOMER</strong> Says:</p>
+            <p>"{{var message}}"</p>
+        </td>
+    </tr>
+    <tr>
+        <td><p class="footer-message">To view and manage messages, just log into your dashboard.</p>
+            <p><a href="{{var enquiry_link}}">Respond to message</a></p></td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

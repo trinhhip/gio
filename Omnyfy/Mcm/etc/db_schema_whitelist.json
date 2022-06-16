@@ -1,0 +1,416 @@
+{
+    "omnyfy_mcm_fees_and_charges": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "seller_fee": true,
+            "min_seller_fee": true,
+            "max_seller_fee": true,
+            "disbursement_fee": true,
+            "tax_name": true,
+            "tax_rate": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_507B598E65DAB059138D1B809A67D288": true
+        }
+    },
+    "omnyfy_mcm_vendor_payout": {
+        "column": {
+            "payout_id": true,
+            "fees_charges_id": true,
+            "vendor_id": true,
+            "ewallet_id": true,
+            "ewallet_balance": true,
+            "account_ref": true,
+            "third_party_account_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_7CC0E5E24410C27BA823BFA5D68442FA": true,
+            "FK_2DBB64D10ED8EE6F98E72DC934B0131C": true
+        }
+    },
+    "omnyfy_mcm_vendor_payout_history": {
+        "column": {
+            "id": true,
+            "payout_id": true,
+            "vendor_id": true,
+            "vendor_order_id": true,
+            "payout_ref": true,
+            "payout_amount": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_188D703B08084469A753A70CB32F0D66": true,
+            "FK_2B480EB321BA175246E3867FB89FB169": true
+        }
+    },
+    "omnyfy_mcm_vendor_order": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "vendor_id": true,
+            "total_category_fee": true,
+            "total_category_fee_tax": true,
+            "total_seller_fee": true,
+            "total_seller_fee_tax": true,
+            "disbursement_fee": true,
+            "disbursement_fee_tax": true,
+            "total_tax_onfees": true,
+            "vendor_total": true,
+            "vendor_total_incl_tax": true,
+            "payout_amount": true,
+            "payout_status": true,
+            "payout_action": true,
+            "subtotal": true,
+            "base_subtotal": true,
+            "subtotal_incl_tax": true,
+            "base_subtotal_incl_tax": true,
+            "tax_amount": true,
+            "base_tax_amount": true,
+            "discount_amount": true,
+            "base_discount_amount": true,
+            "shipping_amount": true,
+            "base_shipping_amount": true,
+            "shipping_incl_tax": true,
+            "base_shipping_incl_tax": true,
+            "shipping_tax": true,
+            "base_shipping_tax": true,
+            "shipping_discount_amount": true,
+            "grand_total": true,
+            "base_grand_total": true,
+            "created_at": true,
+            "updated_at": true,
+            "payout_calculated": true,
+            "payout_shipping": true
+        },
+        "index": {
+            "OMNYFY_MCM_VENDOR_ORDER_CREATED_AT": true,
+            "OMNYFY_MCM_VENDOR_ORDER_UPDATED_AT": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_MCM_VENDOR_ORDER_ORDER_ID_SALES_ORDER_ENTITY_ID": true,
+            "FK_BD06D53ACA651534F5DCF9007775FEFC": true
+        }
+    },
+    "omnyfy_mcm_vendor_order_item": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "order_id": true,
+            "order_item_id": true,
+            "seller_fee": true,
+            "seller_fee_tax": true,
+            "category_commission_percentage": true,
+            "category_fee": true,
+            "category_fee_tax": true,
+            "row_total": true,
+            "tax_amount": true,
+            "discount_amount": true,
+            "tax_percentage": true,
+            "row_total_incl_tax": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_MCM_VENDOR_ORDER_ITEM_ORDER_ID_SALES_ORDER_ENTITY_ID": true,
+            "FK_459230A2189CE0AC6AAAE7C2A7E87330": true,
+            "FK_E1C884004F26D02AF3960660BE002587": true
+        }
+    },
+    "omnyfy_mcm_vendor_bank_account_type": {
+        "column": {
+            "id": true,
+            "account_type": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_vendor_bank_account": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "bank_name": true,
+            "account_type_id": true,
+            "country": true,
+            "account_name": true,
+            "account_number": true,
+            "account_type": true,
+            "holder_type": true,
+            "bsb": true,
+            "company_name": true,
+            "bank_address": true,
+            "swift_code": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_4339D14573966CFAFE516C26CBCAB00B": true,
+            "FK_55A8F30E41F4A5183DD6145447C29290": true
+        }
+    },
+
+    "omnyfy_mcm_vendor_invoice": {
+        "column": {
+            "id": true,
+            "invoice_id": true,
+            "vendor_id": true,
+            "order_id": true,
+            "payout_id": true,
+            "total_category_fee": true,
+            "total_category_fee_tax": true,
+            "total_seller_fee": true,
+            "total_seller_fee_tax": true,
+            "disbursement_fee": true,
+            "disbursement_fee_tax": true,
+            "total_tax_onfees": true,
+            "subtotal": true,
+            "base_subtotal": true,
+            "subtotal_incl_tax": true,
+            "base_subtotal_incl_tax": true,
+            "tax_amount": true,
+            "base_tax_amount": true,
+            "discount_amount": true,
+            "base_discount_amount": true,
+            "shipping_amount": true,
+            "base_shipping_amount": true,
+            "shipping_incl_tax": true,
+            "base_shipping_incl_tax": true,
+            "shipping_tax": true,
+            "base_shipping_tax": true,
+            "shipping_discount_amount": true,
+            "grand_total": true,
+            "base_grand_total": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_4B5A29EC712E4F9FAA24DD0F8F70E1E1": true,
+            "OMNYFY_MCM_VENDOR_INVOICE_INVOICE_ID_SALES_INVOICE_ENTITY_ID": true
+        }
+    },
+    "quote": {
+        "column": {
+            "mcm_transaction_fee": true,
+            "mcm_base_transaction_fee": true,
+            "mcm_transaction_fee_tax": true,
+            "mcm_transaction_fee_incl_tax": true
+        }
+    },
+    "quote_address": {
+        "column": {
+            "mcm_transaction_fee": true,
+            "mcm_base_transaction_fee": true,
+            "mcm_transaction_fee_tax": true,
+            "mcm_transaction_fee_incl_tax": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "mcm_transaction_fee": true,
+            "mcm_base_transaction_fee": true,
+            "mcm_transaction_fee_tax": true,
+            "mcm_transaction_fee_incl_tax": true,
+            "mcm_transaction_fee_surcharge": true,
+            "mcm_base_transaction_fee_tax": true,
+            "mcm_base_transaction_fee_incl_tax": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "mcm_transaction_fee": true,
+            "mcm_base_transaction_fee": true,
+            "mcm_transaction_fee_tax": true,
+            "mcm_transaction_fee_incl_tax": true
+        }
+    },
+    "sales_creditmemo": {
+        "column": {
+            "mcm_transaction_fee": true,
+            "mcm_base_transaction_fee": true,
+            "mcm_transaction_fee_tax": true,
+            "mcm_transaction_fee_incl_tax": true
+        }
+    },
+    "omnyfy_mcm_vendor_fee_report_admin": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "item_id": true,
+            "vendor_id": true,
+            "product_sku": true,
+            "product_name": true,
+            "price_paid": true,
+            "shipping_and_hanldling_total": true,
+            "discount": true,
+            "order_total_value": true,
+            "category_commission": true,
+            "seller_fee": true,
+            "disbursement_fee": true,
+            "total_fee": true,
+            "gross_earnings": true,
+            "tax": true,
+            "net_earnings": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_sequence": {
+        "column": {
+            "id": true,
+            "type": true,
+            "prefix": true,
+            "last_value": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_marketplace_fee_report_admin": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "vendor_id": true,
+            "vendor_name": true,
+            "item_id": true,
+            "product_sku": true,
+            "product_name": true,
+            "price_paid": true,
+            "shipping_and_hanldling_total": true,
+            "discount": true,
+            "order_total_value": true,
+            "category_commission": true,
+            "seller_fee": true,
+            "disbursement_fee": true,
+            "transaction_fees": true,
+            "gross_earnings": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_vendor_shipping": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "vendor_id": true,
+            "shipping_amount": true,
+            "base_shipping_amount": true,
+            "shipping_incl_tax": true,
+            "base_shipping_incl_tax": true,
+            "shipping_tax": true,
+            "base_shipping_tax": true,
+            "shipping_discount_amount": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_category_commission_report": {
+        "column": {
+            "id": true,
+            "category_id": true,
+            "category_name": true,
+            "category_commission_percentage": true,
+            "category_commission_earned": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_vendor_payout_invoice": {
+        "column": {
+            "id": true,
+            "payout_ref": true,
+            "increment_id": true,
+            "vendor_id": true,
+            "orders_total_incl_tax": true,
+            "orders_total_tax": true,
+            "fees_total_incl_tax": true,
+            "fees_total_tax": true,
+            "total_earning_incl_tax": true,
+            "shipping_total_for_order": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_6B4722E28A619FF4046CC9107EFDD91D": true
+        }
+    },
+    "omnyfy_mcm_vendor_payout_invoice_order": {
+        "column": {
+            "id": true,
+            "invoice_id": true,
+            "vendor_id": true,
+            "order_id": true,
+            "order_increment_id": true,
+            "order_total_incl_tax": true,
+            "order_total_tax": true,
+            "fees_total_incl_tax": true,
+            "fees_total_tax": true,
+            "shipping_total_for_order": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_069E28AEACFA031EFA3BE814FB1AEEE8": true,
+            "FK_F5C26B6A6A6C89AAD72EBC0597E3E78D": true,
+            "FK_8EC065BA1F7577B608C5F3C31FD2737A": true
+        }
+    },
+    "omnyfy_mcm_shipping_calculation": {
+        "column": {
+            "id": true,
+            "order_id": true,
+            "vendor_id": true,
+            "location_id": true,
+            "ship_by_type": true,
+            "total_charge": true,
+            "customer_paid": true,
+            "type": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_payout_type": {
+        "column": {
+            "id": true,
+            "payout_type": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_mcm_vendor_payout_type": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "payout_type_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_40F0D2A632959399E2A90AFC989A4C33": true,
+            "FK_B61C5B9B44E5C7B3732F5D31DFEEC3FB": true
+        }
+    }
+}

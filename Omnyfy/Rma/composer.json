@@ -1,0 +1,23 @@
+{
+    "name": "omnyfy/rma",
+    "description": "",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "version": "2.3.1",
+    "authors": [
+        {
+            "name": "Omnyfy",
+            "email": "info@omnyfy.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\Rma\\": ""
+        }
+    }
+}

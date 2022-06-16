@@ -1,0 +1,17 @@
+{
+    "name": "omnyfy/dompdf",
+    "description": "Omnyfy DomPDF",
+    "require": {
+        "php": "^7.1.0"
+    },
+    "type": "magento2-module",
+    "version": "2.3.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\DomPDF\\": ""
+        }
+    }
+}

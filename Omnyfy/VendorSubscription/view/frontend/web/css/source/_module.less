@@ -1,0 +1,162 @@
+// /**
+//  * Copyright © Omnyfy, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables for new theme
+//  ---------------------------------------------
+
+@ui-03: #F0F1F3;
+@ui-04: #D3D4D8;
+@narrow-box-width: 800px;
+@panel__background-color: #f5f5f5;
+
+@plan-item__background: @panel__background-color;
+@plan-item__min-width: 250px;
+@plan-item__max-width: 300px;
+@plan-item__position: relative;
+@plan-item__padding: @indent__base @indent__base 55px;
+@plan-item__margin: @indent__base;
+
+@plan-label__display: inline-block;
+@plan-label__background-color: @primary__color;
+@plan-label__color: @color-white;
+@plan-label__padding: @indent__xs @indent__base;
+@plan-label__position: absolute;
+@plan-label__top: 0;
+@plan-label__right: @indent__base;
+@plan-label__transform: translateY(-50%);
+@plan-label__text-align: center;
+
+@plan-title__font-size: @font-size__l;
+@plan-title__font-family: @font-family-name__base;
+@plan-title__font-weight: @font-weight__bold;
+@plan-title__color: @primary__color;
+@plan-title__margin: 0 0 @indent__base;
+
+
+@plan-price-container__padding: 0 0 @indent__base;
+@plan-price-container__border-bottom: 1px solid @border-color__base;
+@plan-price-container__margin: 0 0 @indent__base;
+@plan-price-container__text-align: center;
+
+@plan-price__font-size: @font-size__xl;
+@plan-price__font-family: @font-family-name__base;
+@plan-price__color: @text__color;
+
+@plan-unit__font-size: @font-size__base;
+@plan-unit__font-family: @font-family-name__base;
+@plan-unit__color: @text__color;
+
+@plan-features-list__margin: 0 0 @indent__base;
+
+@plan-feature__font-size: @font-size__base;
+@plan-feature__font-family: @font-family-name__base;
+@plan-feature__color: @text__color;
+@plan-feature__padding: @indent__xs 0;
+
+@plan-description__margin: 0 0 @indent__base;
+
+@plan-actions__position: absolute;
+@plan-actions__bottom: @indent__base;
+@plan-actions__left: 0;
+@plan-actions__width: 100%;
+@plan-actions__padding: 0 @indent__base;
+@plan-actions__text-align: center;
+
+
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+	.plans-list {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.plan-item {
+		background-color: @plan-item__background;
+		min-width: @plan-item__min-width;
+		max-width: @plan-item__max-width;
+		position: @plan-item__position;
+		padding: @plan-item__padding;
+		margin: @plan-item__margin;
+
+		.plan-label {
+			display: @plan-label__display;
+			background-color: @plan-label__background-color;
+			color: @plan-label__color;
+			padding: @plan-label__padding;
+			position: @plan-label__position;
+			top: @plan-label__top;
+			right: @plan-label__right;
+			transform: @plan-label__transform;
+			text-align: @plan-label__text-align;
+		}
+
+		.plan-title {
+			font-size: @plan-title__font-size;
+			font-family: @plan-title__font-family;
+			font-weight: @plan-title__font-weight;
+			color: @plan-title__color;
+			margin: @plan-title__margin;
+		}
+
+		.plan-price-container {
+			padding: @plan-price-container__padding;
+			margin: @plan-price-container__margin;
+			border-bottom: @plan-price-container__border-bottom;
+			text-align: @plan-price-container__text-align;
+		}
+
+		.plan-price {
+			font-size: @plan-price__font-size;
+			font-family: @plan-price__font-family;
+			color: @plan-price__color;
+		}
+
+		.plan-features-list {
+			margin: @plan-features-list__margin;
+		}
+
+		.plan-feature {
+			font-size: @plan-feature__font-size;
+			font-family: @plan-feature__font-family;
+			color: @plan-feature__color;
+			padding: @plan-feature__padding;
+		}
+
+		.plan-description {
+			margin: @plan-description__margin;
+		}
+
+		.plan-actions {
+			position: @plan-actions__position;
+			left: @plan-actions__left;
+			bottom: @plan-actions__bottom;
+			width: @plan-actions__width;
+			padding: @plan-actions__padding;
+			text-align: @plan-actions__text-align;
+			box-sizing: border-box;
+		}
+	}
+}
+
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+	.plans-list {
+		flex-direction: row;
+		justify-content: center;
+		align-items: stretch;
+	}
+
+
+}

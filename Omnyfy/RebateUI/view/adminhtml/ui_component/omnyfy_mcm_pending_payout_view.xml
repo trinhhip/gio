@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="pending_orders">
+        <container name="pending_orders_container" >
+            <insertListing name="pending_orders">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="render_url" xsi:type="url" path="mui/index/render">
+                            <param name="_current">true</param>
+                        </item>
+                    </item>
+                </argument>
+            </insertListing>
+        </container>        
+    </fieldset>        
+</form>

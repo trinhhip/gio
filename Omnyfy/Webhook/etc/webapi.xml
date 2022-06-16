@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route method="GET" url="/V1/omnyfy/webhook_types">
+        <service class="Omnyfy\Webhook\Api\WebhookTypeRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_type_view"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/omnyfy/:storeid/webhooks">
+        <service class="Omnyfy\Webhook\Api\WebhookRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_view"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/omnyfy/webhook/:id">
+        <service class="Omnyfy\Webhook\Api\WebhookRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_view"/>
+        </resources>
+    </route>
+    <route method="POST" url="/V1/omnyfy/webhook">
+        <service class="Omnyfy\Webhook\Api\WebhookRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_save"/>
+        </resources>
+    </route>
+    <route method="PUT" url="/V1/omnyfy/webhook">
+        <service class="Omnyfy\Webhook\Api\WebhookRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_save"/>
+        </resources>
+    </route>
+    <route method="DELETE" url="/V1/omnyfy/webhook/:id">
+        <service class="Omnyfy\Webhook\Api\WebhookRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_delete"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/omnyfy/webhook_schedules">
+        <service class="Omnyfy\Webhook\Api\WebhookEventScheduleRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_schedule_view"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/omnyfy/webhook_history/:webhookId">
+        <service class="Omnyfy\Webhook\Api\WebhookEventHistoryRepositoryInterface" method="getListByWebhookId"/>
+        <resources>
+            <resource ref="Omnyfy_Webhook::webhook_history_view"/>
+        </resources>
+    </route>
+</routes>

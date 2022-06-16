@@ -1,0 +1,113 @@
+// /**
+//  * Copyright © Omnyfy, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Variables
+//  ---------------------------------------------
+@flex-columns-sections__display: block;
+@flex-columns-sections__display__desktop: flex;
+@flex-columns-sections__justify-content: space-between;
+@flex-columns-sections__align-items: flex-start;
+
+@review-main__width: 100%;
+@review-main__width__desktop: 65%;
+
+@review-sidebar__width: 100%;
+@review-sidebar__width__desktop: 33%;
+@review-sidebar__background-color: @panel__background-color;
+@review-sidebar__border: 1px solid @border-color__base;
+@review-sidebar__margin: 0 0 @indent__base;
+@review-sidebar__padding: @indent__l;
+
+@review-wrapper__margin: 0 0 @indent__l;
+
+@review-form-title__margin: 0 0 @indent__base;
+
+@review-rating__margin: 0 0 @indent__xs;
+@rating-name__min-width: 55px;
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+	.flex-columns {
+		display: @flex-columns-sections__display;
+		justify-content: @flex-columns-sections__justify-content;
+		align-items: @flex-columns-sections__align-items;
+	}
+
+	.review-main {
+		width: @review-main__width;
+	}
+
+	.review-sidebar {
+		width: @review-sidebar__width;
+		background-color: @review-sidebar__background-color;
+		border: @review-sidebar__border;
+		margin: @review-sidebar__margin;
+		padding: @review-sidebar__padding;
+	}
+
+	.review-form-title {
+		margin: @review-form-title__margin;
+	}
+
+	.review-wrapper {
+		margin: @review-wrapper__margin;
+	}
+
+	.review-rating-wrapper {
+		margin-bottom: @indent__base;
+	}
+
+	.date {
+		margin-bottom: @indent__base;
+	}
+
+	.rating-stars-wrapper {
+		.lib-rating-summary();
+
+		.omnyfy-vendor-merchant-view & {
+			display: grid;
+			grid-template-columns: minmax(max-content, max-content) minmax(200px, 1fr);
+
+			.rating-result {
+				margin-top: 3px;
+				margin-left: 8px;
+			}
+		}
+	}
+
+	.review-rating {
+		margin: @review-rating__margin;
+	}
+
+	.rating-name {
+		display: inline-block;
+		min-width: @rating-name__min-width;
+	}
+
+	.review-text {
+		overflow-wrap: break-word;
+	}
+}
+
+//
+//    Tablet (from 768px)
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+	.flex-columns {
+		display: @flex-columns-sections__display__desktop;
+	}
+
+	.review-main {
+		width: @review-main__width__desktop;
+	}
+
+	.review-sidebar {
+		width: @review-sidebar__width__desktop;
+	}
+}

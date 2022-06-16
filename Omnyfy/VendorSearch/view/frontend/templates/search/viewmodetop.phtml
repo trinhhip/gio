@@ -1,0 +1,87 @@
+<?php
+/**
+ * Copyright © Omnyfy, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Omnyfy\VendorSearch\Api\MapInterface;
+use Omnyfy\VendorSearch\Helper\MapSearchData;
+
+?>
+<?php
+/**
+ * Vendor Search toolbar
+ *
+ * @var $block \Omnyfy\VendorSearch\Block\Search\Toolbar
+ */
+
+/** @var MapSearchData $helper */
+$helper = $this->helper("\Omnyfy\VendorSearch\Helper\MapSearchData");
+$showMap = $helper->isEnabled();
+$viewMode = $helper->getCurrentVendorSearchViewMode();
+?>
+<div class="filter-viewmode-top">
+    <div class="toolbar toolbar-vendors toolbar-top">
+        <?php if ($block->isExpanded()) :?>
+            <?php if ($block->isEnabledViewSwitcher()) :?>
+                <div class="modes">
+                    <?php $_modes = $block->getModes();
+                    ?>
+                    <?php if ($_modes && count($_modes) > 1) :?>
+                        <strong class="modes-label" id="modes-label"><?= $block->escapeHtml(__('View as')) ?></strong>
+                    <?php foreach ($block->getModes() as $_code => $_label) :?>
+
+                    <?php if ($block->isModeActive($_code)) :?>
+                        <button type="button"
+                           title="<?= $block->escapeHtmlAttr($_label) ?>"
+                           class="action primary mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           data-value="<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           id="top-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           onclick="modeReturn('<?= $block->escapeHtmlAttr(strtolower($_code)) ?>')">
+                            <?= $block->escapeHtml($_label . " View") ?>
+                        </button>
+
+                    <?php else :?>
+                        <button type="button" title="<?= $block->escapeHtmlAttr($_label) ?>"
+                           class="primary in-active mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           data-value="<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           id="top-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                           onclick="modeChange('<?= $block->escapeHtmlAttr(strtolower($_code)) ?>')">
+                            <?= $block->escapeHtml($_label . " View") ?>
+                        </button>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                        <script type="text/javascript">
+                            function modeReturn(code) {
+                                document.getElementById("mode-" + code).click();
+                            }
+                            function modeChange(code) {
+                                let currentUrl = "<?= /** @noEscape */ $helper->getCurrentUrl() ?>",
+                                    urlPaths = currentUrl.split('?'),
+                                    baseUrl = urlPaths[0],
+                                    urlParams = urlPaths[1] ? urlPaths[1].split('&') : [],
+                                    paramData = {},
+                                    parameters;
+
+                                for (let i = 0; i < urlParams.length; i++) {
+                                    parameters = urlParams[i].split('=');
+                                    paramData[parameters[0]] = parameters[1] !== undefined
+                                        ? window.decodeURIComponent(parameters[1].replace(/\+/g, '%20'))
+                                        : '';
+                                }
+                                if(code !== "<?= MapInterface::MODE_NAME?>"){
+                                    delete paramData['<?= MapSearchData::VENDOR_MAP_SEARCH_DISTANCE ?>'];
+                                    document.cookie = "mapSearchData=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+                                }
+                                delete paramData['isAjax'];
+                                paramData['vendor_list_mode'] = code;
+                                paramData = jQuery.param(paramData);
+                                window.location.href = baseUrl + (paramData.length ? '?' + paramData : '');
+                            }
+                        </script>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+"Are you sure you want to do this?","Are you sure you want to do this?"
+Delete,Delete
+"Save and Continue Edit","Save and Continue Edit"
+Save,Save
+Conditions,Conditions
+"The rule has been deleted.","The rule has been deleted."
+"Can't delete rule right now. Please review the log and try again.","Can't delete rule right now. Please review the log and try again."
+"Can't find a rule to delete.","Can't find a rule to delete."
+"New Rule","New Rule"
+"Edit Rule %1","Edit Rule %1"
+Rules,Rules
+"%1 rule(s) has been successfully deleted","%1 rule(s) has been successfully deleted"
+"%1 rule(s) has been failed to delete","%1 rule(s) has been failed to delete"
+"Something went wrong while saving the rule data. Please review the error log.","Something went wrong while saving the rule data. Please review the error log."
+"The rule is saved.","The rule is saved."
+Disabled,Disabled
+Enabled,Enabled
+"Unable to save rule with ID %1. Error: %2","Unable to save rule with ID %1. Error: %2"
+"Unable to save new rule. Error: %1","Unable to save new rule. Error: %1"
+"Rule with specified ID ""%1"" not found.","Rule with specified ID ""%1"" not found."
+"Unable to remove rule with ID %1. Error: %2","Unable to remove rule with ID %1. Error: %2"
+"Unable to remove rule. Error: %1","Unable to remove rule. Error: %1"
+"Customer ID","Customer ID"
+"Conditions Combination","Conditions Combination"
+"Customer attributes","Customer attributes"
+"Order attributes","Order attributes"
+"Number of Completed Orders","Number of Completed Orders"
+"Total Sales Amount","Total Sales Amount"
+"Average Order Value","Average Order Value"
+"Customer Group Assign","Customer Group Assign"
+General,General
+"Customer Groups Update Schedule","Customer Groups Update Schedule"
+"Enter cron expression<br/>
+<br/>
+* * * * *<br/>
+| | | | |<br/>
+| | | | +---- Day of the Week   (range: 0-6, 1 standing for Monday)<br/>
+| | | +------ Month of the Year (range: 1-12)<br/>
+| | +-------- Day of the Month  (range: 1-31)<br/>
+| +---------- Hour              (range: 0-23)<br/>
++------------ Minute            (range: 0-59)<br/>
+Example: 0 0 * * * Daily at midnight<br/>
+<br/>
+Read more about cron expressions - <a href=""https://en.wikipedia.org/wiki/Cron"">here</a>","Enter cron expression<br/>
+<br/>
+* * * * *<br/>
+| | | | |<br/>
+| | | | +---- Day of the Week   (range: 0-6, 1 standing for Monday)<br/>
+| | | +------ Month of the Year (range: 1-12)<br/>
+| | +-------- Day of the Month  (range: 1-31)<br/>
+| +---------- Hour              (range: 0-23)<br/>
++------------ Minute            (range: 0-59)<br/>
+Example: 0 0 * * * Daily at midnight<br/>
+<br/>
+Read more about cron expressions - <a href=""https://en.wikipedia.org/wiki/Cron"">here</a>"
+Back,Back
+"General Settings","General Settings"
+"Rule Name","Rule Name"
+Priority,Priority
+"Destination Group","Destination Group"
+"Add New Rule","Add New Rule"
+Status,Status
+"Select status..","Select status.."
+"Delete Rules","Delete Rules"
+"Are you sure you want to delete selected rules?","Are you sure you want to delete selected rules?"
+Edit,Edit

@@ -1,0 +1,46 @@
+<?php
+/**
+ * Project: Vendor Subscription
+ * User: jing
+ * Date: 2019-08-01
+ * Time: 16:13
+ */
+
+/** @var \Omnyfy\VendorSubscription\Block\Form\Basic $block */
+
+$plan = $block->getPlan();
+$planRoleId = $block->getPlanRoleId();
+
+//Even all plans are free for this type, still need plan_id and role_id
+$roleIds = $block->getRoleIdsMap();
+$freePlans = [];
+?>
+
+<div class="group-item payment-field field" id="subscription">
+    <?php if (empty($plan)): ?>
+        <input type="hidden" name="is_free" id="is_free" value="1"/>
+    <?php else: ?>
+        <?php if (!empty($plan) && !$plan->getIsFree()): ?>
+            <label class="label"><?= __('Subscription')?></label>
+        <?php endif ?>
+        <input type="hidden" name="is_free" id="is_free" value="<?= intval($plan->getIsFree())?>"/>
+    <?php endif ?>
+
+    <div class="subscription-wrapper">
+        <?php if (!empty($planRoleId)): ?>
+            <input type="hidden" name="plan_role_id" id="plan_role_id" value="<?= $planRoleId; ?>" />
+        <?php else: ?>
+            <?php $requestParams = $this->request->getParams(); ?>
+            <?php if ($planId = $this->request->getParam('plan_id')): ?>
+                <input type="hidden" name="plan_role_id" id="plan_role_id" value="<?= $planId.'_'.$roleIds[$planId]; ?>" />
+            <?php endif ?>
+        <?php endif ?>
+
+        <?php if (!empty($plan) && !$plan->getIsFree()): ?>
+            <div id="subscription-child">
+                <?= $block->getChildHtml();?>
+            </div>
+        <?php endif ?>
+    </div>
+</div>
+ 

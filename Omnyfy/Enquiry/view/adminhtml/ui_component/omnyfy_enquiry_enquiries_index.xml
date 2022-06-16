@@ -1,0 +1,188 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_grid_data_source</item>
+			<item name="deps" xsi:type="string">omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_grid_data_source</item>
+		</item>
+		<item name="spinner" xsi:type="string">omnyfy_enquiry_enquiries_columns</item>
+		<item name="buttons" xsi:type="array">
+
+		</item>
+	</argument>
+	<dataSource name="omnyfy_enquiry_enquiries_grid_data_source">
+		<argument name="dataProvider" xsi:type="configurableObject">
+			<argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+			<argument name="name" xsi:type="string">omnyfy_enquiry_enquiries_grid_data_source</argument>
+			<argument name="primaryFieldName" xsi:type="string">enquiries_id</argument>
+			<argument name="requestFieldName" xsi:type="string">id</argument>
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+					<item name="update_url" path="mui/index/render" xsi:type="url"/>
+					<item name="storageConfig" xsi:type="array">
+						<item name="indexField" xsi:type="string">enquiries_id</item>
+					</item>
+				</item>
+			</argument>
+		</argument>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="sticky" xsi:type="boolean">false</item>
+			</item>
+		</argument>
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		<filters name="listing_filters"/>
+		<paging name="listing_paging"/>
+	</listingToolbar>
+	<columns name="omnyfy_enquiry_enquiries_columns">
+		<argument name="data" xsi:type="array">
+			<item name="config" xsi:type="array">
+				<item name="editorConfig" xsi:type="array">
+					<item name="selectProvider" xsi:type="string">omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_columns.ids</item>
+					<item name="enabled" xsi:type="boolean">true</item>
+					<item name="indexField" xsi:type="string">enquiries_id</item>
+					<item name="clientConfig" xsi:type="array">
+						<item name="saveUrl" path="omnyfy_enquiry/enquiries/inlineEdit" xsi:type="url"/>
+						<item name="validateBeforeSave" xsi:type="boolean">false</item>
+					</item>
+				</item>
+				<item name="childDefaults" xsi:type="array">
+					<item name="fieldAction" xsi:type="array">
+						<item name="provider" xsi:type="string">omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_index.omnyfy_enquiry_enquiries_columns_editor</item>
+						<item name="target" xsi:type="string">startEdit</item>
+						<item name="params" xsi:type="array">
+							<item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+							<item name="1" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</item>
+		</argument>
+		<column name="enquiries_id">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="sorting" xsi:type="string">asc</item>
+					<item name="label" translate="true" xsi:type="string">Enquiry ID</item>
+				</item>
+			</argument>
+		</column>
+		<column name="product_id"  class="Omnyfy\Enquiry\Ui\Component\Listing\Column\ProductName">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="sorting" xsi:type="string">asc</item>
+					<item name="label" translate="true" xsi:type="string">Product Name</item>
+				</item>
+			</argument>
+		</column>
+		<column name="vendor_name">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Vendor</item>
+				</item>
+			</argument>
+		</column>
+		<!-- column name="attribute_value">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Product</item>
+					<item name="editor" xsi:type="array">
+						<item name="editorType" xsi:type="string">text</item>
+						<item name="validation" xsi:type="array">
+							<item name="required-entry" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</argument>
+		</column -->
+		<column name="created_date">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Enquiry Date</item>
+				</item>
+			</argument>
+		</column>
+		<column name="full_name">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Sent By</item>
+				</item>
+			</argument>
+		</column>
+		<column name="customer_email">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Email</item>
+					<item name="editor" xsi:type="array">
+						<item name="editorType" xsi:type="string">text</item>
+						<item name="validation" xsi:type="array">
+							<item name="required-entry" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</argument>
+		</column>
+		<column name="customer_mobile">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Mobile</item>
+					<item name="editor" xsi:type="array">
+						<item name="editorType" xsi:type="string">text</item>
+						<item name="validation" xsi:type="array">
+							<item name="required-entry" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</argument>
+		</column>
+		<column name="customer_company">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Company</item>
+					<item name="editor" xsi:type="array">
+						<item name="editorType" xsi:type="string">text</item>
+						<item name="validation" xsi:type="array">
+							<item name="required-entry" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</argument>
+		</column>
+		<column name="status">
+			<argument name="data" xsi:type="array">
+				<item name="options" xsi:type="object">Omnyfy\Enquiry\Model\Enquiries\Source\Status</item>
+				<item name="config" xsi:type="array">
+					<item name="filter" xsi:type="string">select</item>
+					<item name="label" translate="true" xsi:type="string">Status</item>
+					<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+					<item name="dataType" xsi:type="string">select</item>
+					<item name="editor" xsi:type="array">
+						<item name="editorType" xsi:type="string">select</item>
+						<item name="validation" xsi:type="array">
+							<item name="required-entry" xsi:type="boolean">true</item>
+						</item>
+					</item>
+				</item>
+			</argument>
+		</column>
+		<actionsColumn class="Omnyfy\Enquiry\Ui\Component\Listing\Column\EnquiriesActions" name="actions">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="sortOrder" xsi:type="number">9999</item>
+					<item name="indexField" xsi:type="string">enquiries_id</item>
+				</item>
+			</argument>
+		</actionsColumn>
+	</columns>
+</listing>

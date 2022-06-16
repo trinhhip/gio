@@ -1,0 +1,62 @@
+<?php 
+	$rebates = $block->getRebateVendorActive();
+	$listPaymentFrequency = $block->listPaymentFrequency();
+ ?>
+<div class="container-report-vendor">
+	<div class="total-rebate-paid content">
+		<h1><?=__('Total Rebates Paid')?></h1>
+		<?php foreach ($rebates as $rebate):?>
+			<div class="item-rebate">
+				<div class="title-rebate">
+					<p><?=$rebate->getLockName()?></p>
+					<p class="frequency"><?= $listPaymentFrequency[$rebate->getLockPaymentFrequency()]?></p>
+				</div>
+				<div class="amount-rebate">
+                    <p><?= __('Rebates %')?></p>
+                    <p class="price"><?= $rebate->getLockedRebatePercentage() . '%' ?></p>
+                </div>
+				<div class="amount-rebate">
+					<p><?= __('Total')?></p>
+					<p class="price"><?= $block->getSumTotalRebatePaidByRebateVendor($rebate); ?></p>
+				</div>
+				<div class="amount-rebate">
+					<p><?= __('Net Amount')?></p>
+					<p class="price"><?= $block->getSumNetRebatePaidByRebateVendor($rebate); ?></p>
+				</div>
+				<div class="amount-rebate">
+					<p><?= __('Tax')?></p>
+					<p class="price"><?= $block->getSumTaxRebatePaidByRebateVendor($rebate); ?></p>
+				</div>
+			</div>
+		<?php endforeach; ?>
+		
+	</div>
+	<div class="total-rebate-payable content">
+		<h1><?=__('Rebates Payable')?></h1>
+		<?php foreach ($rebates as $rebate):?>
+			<div class="item-rebate">
+				<div class="title-rebate">
+					<p><?=$rebate->getLockName()?></p>
+					<p class="frequency"><?= $listPaymentFrequency[$rebate->getLockPaymentFrequency()]?></p>
+				</div>
+				<div class="amount-rebate">
+                    <p><?= __('Rebates %')?></p>
+                    <p class="price"><?= $rebate->getLockedRebatePercentage() . '%' ?></p>
+                </div>
+				<div class="amount-rebate">
+					<p><?= __('Total')?></p>
+					<p class="price"><?= $block->getSumTotalRebateByRebateVendor($rebate->getId()); ?></p>
+				</div>
+				<div class="amount-rebate">
+					<p><?= __('Net Amount')?></p>
+					<p class="price"><?= $block->getSumNetRebateByRebateVendor($rebate->getId()); ?></p>
+				</div>
+				<div class="amount-rebate">
+					<p><?= __('Tax')?></p>
+					<p class="price"><?= $block->getSumTaxRebateByRebateVendor($rebate->getId()); ?></p>
+				</div>
+			</div>
+		<?php endforeach; ?>
+	</div>
+	
+</div>

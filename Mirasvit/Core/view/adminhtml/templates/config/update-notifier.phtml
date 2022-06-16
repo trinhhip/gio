@@ -1,0 +1,13 @@
+<?php
+/** @var \Mirasvit\Core\Block\Adminhtml\Config\UpdateNotifier $block */
+$n = $block->getNumberOfOutDates();
+?>
+<style>
+    .mirasvit-tab .admin__page-nav-title strong:after {
+        content: "<?=$n ?>";
+    }
+
+    .mirasvit-tab .admin__page-nav-item:last-child span:after {
+        content: "<?=$n ?>";
+    }
+</style>

@@ -1,0 +1,225 @@
+{
+    "omnyfy_vendorsubscription_plan": {
+        "column": {
+            "plan_id": true,
+            "plan_name": true,
+            "is_free": true,
+            "price": true,
+            "interval": true,
+            "status": true,
+            "gateway_id": true,
+            "show_on_front": true,
+            "description": true,
+            "benefits": true,
+            "button_label": true,
+            "promo_text": true,
+            "trial_days": true,
+            "product_limit": true,
+            "kit_store_limit": true,
+            "request_for_quote_limit": true,
+            "enquiry_limit": true,
+            "is_delete": true,
+            "is_limit_product": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_PLAN_GATEWAY_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendorsubscription_subscription": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "vendor_name": true,
+            "vendor_email": true,
+            "plan_id": true,
+            "plan_name": true,
+            "plan_price": true,
+            "billing_interval": true,
+            "trial_days": true,
+            "status": true,
+            "plan_gateway_id": true,
+            "gateway_id": true,
+            "customer_gateway_id": true,
+            "vendor_type_id": true,
+            "role_id": true,
+            "show_on_front": true,
+            "next_billing_at": true,
+            "cancelled_at": true,
+            "expiry_at": true,
+            "description": true,
+            "extra_info": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_SUBSCRIPTION_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_9F88292C712C197BE520D81495BDB568": true
+        }
+    },
+    "omnyfy_vendorsubscription_history": {
+        "column": {
+            "id": true,
+            "plan_id": true,
+            "plan_name": true,
+            "vendor_id": true,
+            "vendor_name": true,
+            "subscription_id": true,
+            "sub_gateway_id": true,
+            "customer_gateway_id": true,
+            "invoice_gateway_id": true,
+            "billing_date": true,
+            "start_date": true,
+            "end_date": true,
+            "billing_account_name": true,
+            "plan_price": true,
+            "billing_amount": true,
+            "status": true,
+            "stainvoice_linktus": true,
+            "invoice_link": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendorsubscription_vendor_type_plan": {
+        "column": {
+            "type_id": true,
+            "plan_id": true,
+            "role_id": true,
+            "config": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_VENDOR_TYPE_PLAN_TYPE_ID_PLAN_ID": true,
+            "OMNYFY_VENDORSUBSCRIPTION_VENDOR_TYPE_PLAN_TYPE_ID": true
+        },
+        "constraint": {
+            "FK_96D78B639A244D3242EDB2B056FF572B": true,
+            "FK_47603EE126BAAA4C1188BB291B6AEF47": true,
+            "FK_883F9A0DA5DE4B2DE9534E93021B7226": true
+        }
+    },
+    "omnyfy_vendorsubscription_usage": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "usage_type_id": true,
+            "package_id": true,
+            "plan_id": true,
+            "is_one_off": true,
+            "usage_limit": true,
+            "usage_count": true,
+            "start_date": true,
+            "end_date": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_USAGE_VENDOR_ID_USAGE_TYPE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_7224A18508045261688BBC6F92A9BB84": true
+        }
+    },
+    "omnyfy_vendorsubscription_usage_log": {
+        "column": {
+            "vendor_id": true,
+            "usage_type_id": true,
+            "object_id": true,
+            "is_deleted": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_USAGE_LOG_VENDOR_ID_USAGE_TYPE_ID": true,
+            "IDX_A271F3D5B605AE5D03F740B1D701DEA1": true
+        },
+        "constraint": {
+            "UNQ_A271F3D5B605AE5D03F740B1D701DEA1": true
+        }
+    },
+    "omnyfy_vendorsubscription_update": {
+        "column": {
+            "update_id": true,
+            "vendor_id": true,
+            "vendor_type_id": true,
+            "subscription_id": true,
+            "from_plan_id": true,
+            "from_plan_name": true,
+            "to_plan_id": true,
+            "to_plan_name": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_UPDATE_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendorsubscription_package": {
+        "column": {
+            "package_id": true,
+            "name": true,
+            "price": true,
+            "gateway_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendorsubscription_package_usage": {
+        "column": {
+            "id": true,
+            "package_id": true,
+            "usage_type_id": true,
+            "usage_limit": true,
+            "interval": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_PACKAGE_USAGE_PACKAGE_ID_USAGE_TYPE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_471582A0D03BF78F5D0807BB1B9F6475": true
+        }
+    },
+    "omnyfy_vendorsubscription_plan_usage": {
+        "column": {
+            "id": true,
+            "plan_id": true,
+            "usage_type_id": true,
+            "usage_limit": true
+        },
+        "index": {
+            "OMNYFY_VENDORSUBSCRIPTION_PLAN_USAGE_PLAN_ID_USAGE_TYPE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_FD2A857050F3F66D2DF3B1CCA1D56CBA": true
+        }
+    },
+    "omnyfy_vendorsubscription_topup": {
+        "column": {
+            "topup_id": true,
+            "vendor_id": true,
+            "vendor_name": true,
+            "package_id": true,
+            "package_gateway_id": true,
+            "price": true,
+            "gateway_id": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

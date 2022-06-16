@@ -1,0 +1,15 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+$helper = $this->helper(\Omnyfy\Vendor\Helper\Data::class);
+?>
+<?php if($helper->getSupportLink()) : ?>
+<div class="support-link-wrapper">
+    <a href="<?= $helper->getSupportLink(); ?>"
+       title="<?= __("Get Support") ?>"
+       class="support-link"
+       target="_blank"
+    >
+        <span><?= __("Get Support") ?></span>
+    </a>
+</div>
+<?php endif; ?>

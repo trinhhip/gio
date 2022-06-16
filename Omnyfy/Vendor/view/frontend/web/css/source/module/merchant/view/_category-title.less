@@ -1,0 +1,84 @@
+//
+//  Variables
+//  ---------------------------------------------
+@vendor-category-title-wrapper__margin-bottom: @indent__base;
+
+@vendor-category-title-logo__width: 176px;
+@vendor-category-title-logo__height: auto;
+@vendor-category-title-logo__border-radius: 8px;
+@vendor-category-title-logo__margin-right__tablet: @indent__xl;
+@vendor-category-title-logo__margin__mobile: 0 auto @indent__base;
+
+@vendor-category-title-info__text-align: center;
+
+@vendor-category-title-name__margin: 0 0 @indent__s;
+@vendor-category-title-sub-line__color: @primary__color;
+@vendor-category-title-sub-line__text-transform: uppercase;
+@vendor-category-title-sub-line__font-weight: 700;
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+
+    .vendor-category-title-wrapper {
+        margin-bottom: @vendor-category-title-wrapper__margin-bottom;
+    }
+
+    .vendor-category-title {
+        &:hover {
+            text-decoration: none;
+        }
+        .logo-container {
+            width: @vendor-category-title-logo__width;
+            height: @vendor-category-title-logo__height;
+            border-radius: @vendor-category-title-logo__border-radius;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+        .vendor-info {
+            .vendor-name {
+                margin: @vendor-category-title-name__margin;
+            }
+            .sub-line {
+                color: @vendor-category-title-sub-line__color;
+                text-transform: @vendor-category-title-sub-line__text-transform;
+                font-weight: @vendor-category-title-sub-line__font-weight;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .vendor-category-title {
+        .logo-container {
+            margin: @vendor-category-title-logo__margin__mobile;
+        }
+
+        .vendor-info {
+            text-align: @vendor-category-title-info__text-align;
+        }
+    }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .vendor-category-title {
+        display: inline-flex;
+        align-items: center;
+        .logo-container {
+            margin-right: @vendor-category-title-logo__margin-right__tablet;
+        }
+    }
+}

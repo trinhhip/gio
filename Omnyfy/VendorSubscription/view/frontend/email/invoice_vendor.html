@@ -1,0 +1,16 @@
+<!--@subject Invoice success @-->
+<!--@vars {
+    "template config_path=\"design\/email\/footer_template\"":"Email Footer Template",
+    "template config_path=\"design\/email\/header_template\"":"Email Header Template"
+    }
+ @-->
+{{template config_path="design/email/header_template"}}
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr class="email-intro">
+        <td>
+            <p>The {{var vendor_name}}. Invoice have created successful. This is details invoice: </p>
+            <p>{{var invoice_link}}</p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

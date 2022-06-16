@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="enquiry_enquiry_vendor_template" label="Receive a New Enquiry - Vendor" file="new_enquiry_vendor.html" type="html" module="Omnyfy_Enquiry" area="frontend"/>
+    <template id="enquiry_enquiry_customer_template" label="Receive a New Enquiry - Customer" file="new_enquiry_customer.html" type="html" module="Omnyfy_Enquiry" area="frontend"/>
+    <template id="enquiry_message_vendor_template" label="Receive a New Message - Vendor" file="new_message_vendor.html" type="html" module="Omnyfy_Enquiry" area="frontend"/>
+    <template id="enquiry_message_customer_template" label="Receive a New Message - Customer" file="new_message_customer.html" type="html" module="Omnyfy_Enquiry" area="adminhtml"/>
+</config>

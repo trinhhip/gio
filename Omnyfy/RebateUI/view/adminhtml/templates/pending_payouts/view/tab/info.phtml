@@ -1,0 +1,37 @@
+<div class="payout-wrapper">
+    <div class="payout-row">
+        <label class="payout-label">
+            <span>Total Payout Amount</span>
+        </label>
+        <div class="payout-currency" >
+            <span><?php echo $block->escapeHtml($block->getTotalPayoutAmount()); ?></span>
+        </div>
+    </div>
+    <div class="payout-row">
+        <label class="payout-label">
+            <span>Total Fees Charges</span>
+        </label>
+        <div class="payout-currency">
+            <span><?php echo $block->escapeHtml($block->getTotalFeesCharged()); ?></span>
+
+        </div>
+    </div>
+    <?php if($block->isEnable()): ?>
+        <div class="payout-row">
+            <label class="payout-label">
+                <span>Total Rebates Receivable</span>
+            </label>
+            <div class="payout-currency">
+                <a href="<?= $block->getUrlViewReportRebate() ?>"><span><?php echo $block->escapeHtml($block->getTotalRebate()); ?></span></a>
+            </div>
+        </div>
+        <div class="payout-row">
+            <label class="payout-label">
+                <span>Total Rebates to be received on Payout</span>
+            </label>
+            <div class="payout-currency">
+                <a href="<?= $block->getUrlViewReportRebate() ?>"><span><?php echo $block->escapeHtml($block->getTotalReadyRebate()); ?></span></a>   
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

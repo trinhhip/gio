@@ -1,0 +1,23 @@
+{
+    "name": "omnyfy/vendorsignup",
+    "description": "Vendor Sign Up",
+    "type": "magento2-module",
+    "version": "4.0.4",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@omnyfy.com",
+            "name": "Omnyfy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Omnyfy\\VendorSignUp\\": ""
+        }
+    }
+}

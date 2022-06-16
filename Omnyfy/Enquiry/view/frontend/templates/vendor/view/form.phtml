@@ -1,0 +1,100 @@
+<?php
+/**
+* @var $block \Omnyfy\Enquiry\Block\Location\View\Form
+ */
+?>
+<?php
+if($this->helper('\Omnyfy\Enquiry\Helper\Data')->isVendorEnabled($this->getRequest()->getParam('id'))): ?>
+
+    <div class="enquiry-form-wrapper" data-bind="scope: 'customer_logged_in'">
+        <h2 class="enquiry-form-title"><?= __('Make Enquiry') ?></h2>
+
+        <!-- ko ifnot: isLoaded -->
+        <div><?= __('Loading...')?></div>
+        <!-- /ko -->
+
+        <!-- ko if: isLoaded -->
+            <!-- ko if: isLoggedIn  -->
+            <form class="form enquiry-form" style="display: none;" data-bind="visible: isLoggedIn, mageInit: {'validation': {}}" action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>" id="enquiry-form1" method="post" novalidate="novalidate">
+                <?php echo $block->getBlockHtml('formkey'); ?>
+                <input type="hidden" name="vendor_id" value="<?php echo $this->getRequest()->getParam('id');?>" />
+                <div class="fieldset">
+                    <div class="field">
+                        <label for="firstname" class="label"><?= __('First Name')?></label>
+                        <div class="control">
+                            <input placeholder="First Name" type="text" class="input-text validate-alpha" data-validate="{required:true}" data-msg-required="<?= __('Please enter a valid First Name.')?>" id="firstname" name="firstname"> <!--validate-alpha-->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="lastname" class="label"><?= __('Last Name')?></label>
+                        <div class="control">
+                            <input placeholder="Last Name" type="text" class="validate-alpha" data-validate="{required:true}" data-msg-required="<?= __('Please enter a valid Last Name.')?>" id="lastname" name="lastname"><!--validate-alpha-->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="emailaddress" class="label"><?= __('Email address')?></label>
+                        <div class="control">
+                            <input placeholder="Email" type="email" data-validate="{required:true, 'validate-email':true}" data-msg-required="<?= __('Please enter a valid email address.')?>" id="emailaddress" name="emailaddress">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="company" class="label"><?= __('Company')?></label>
+                        <div class="control">
+                            <input placeholder="Company" type="text" data-validate="{required:true}" data-msg-required="<?= __('Please enter a Company.')?>" data-msg-pattern="<?= __('Please enter a valid Company.')?>" id="company" name="company">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="mobilenumber" class="label"><?= __('Mobile number')?></label>
+                        <div class="control">
+                            <input placeholder="Mobile Number" type="text" data-validate="{required:true}" data-msg-required="<?= __('Please enter a valid phone number.')?>" data-msg-pattern="<?= __('Please enter a valid phone number. For example 01 2345 6789 or 1234 457 890.')?>" id="mobilenumber" name="mobilenumber"><!--validate-length maximum-length-20 -->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="summary" class="label"><?= __('Subject')?></label>
+                        <div class="control">
+                            <input placeholder="Subject" type="text" data-validate="{required:true}" data-msg-required="<?= __('Please enter a Subject.')?>" data-msg-pattern="<?= __('Please enter a valid Subject.')?>" id="summary" name="summary">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="message" class="label"><?= __('Message')?></label>
+                        <div class="control">
+                            <textarea placeholder="Message" id="message" name="message" data-validate="{required:true}" data-msg-required="<?= __('Please enter a valid Message.')?>" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="action primary" type="submit"><?= __('Submit enquiry')?></button>
+                </div>
+            </form>
+        <!-- /ko -->
+
+        <!-- ko if: isNotLoggedIn  -->
+            <div class="enquiry-form" style="display: none;" data-bind="visible: isNotLoggedIn">
+                <div class="actions">
+                    <a href="<?php echo $block->getLoginUrl()?>" class="action primary">
+                        <?php echo __("Login to Make an enquiry") ?>
+                    </a>
+                </div>
+            </div>
+        <!-- /ko -->
+    <!-- /ko -->
+
+    </div>
+
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer_logged_in": {
+                        "component": "Omnyfy_Enquiry/js/customer-loggedin"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+
+<?php endif; ?>
+
+

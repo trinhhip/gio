@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Omnyfy::vendor_featured" module="Omnyfy_VendorFeatured" resource="Magento_Backend::content" sortOrder="9999" title="Featured Vendors" parent="Omnyfy_Vendor::base" dependsOnConfig="omnyfy_vendor_featured/vendor_featured/is_enabled"/>
+		<add action="omnyfy_vendorfeatured/vendorfeatured/index" id="Omnyfy_VendorFeatured::omnyfy_vendorfeatured_vendor_featured" module="Omnyfy_VendorFeatured" parent="Omnyfy::vendor_featured" resource="Magento_Backend::content" sortOrder="9999" title="Featured Vendors" dependsOnConfig="omnyfy_vendor_featured/vendor_featured/is_enabled"/>
+		<add action="omnyfy_vendorfeatured/vendortag/index" id="Omnyfy_VendorFeatured::omnyfy_vendorfeatured_vendor_tag" module="Omnyfy_VendorFeatured" parent="Omnyfy::vendor_featured" resource="Magento_Backend::content" sortOrder="9999" title="Vendor tags" dependsOnConfig="omnyfy_vendor_featured/vendor_featured/is_tag_enabled"/>
+		<add action="omnyfy_vendorfeatured/promowidget/index" id="Omnyfy_VendorFeatured::promo_widget" module="Omnyfy_VendorFeatured" parent="Omnyfy::vendor_featured" resource="Magento_Backend::content" sortOrder="9999" title="Promotional Vendor Widget" dependsOnConfig="omnyfy_vendor_featured/promo_widget/is_enabled"/>
+		<add action="omnyfy_vendorfeatured/spotlightbanner/index" id="Omnyfy_VendorFeatured::spotlight_banner" module="Omnyfy_VendorFeatured" parent="Omnyfy::vendor_featured" resource="Magento_Backend::content" sortOrder="9999" title="Manage Spotlight Banner" dependsOnConfig="omnyfy_vendor_featured/spotlight_banner/is_enabled"/>
+		<add action="omnyfy_vendorfeatured/vendorspotlight/index" id="Omnyfy_VendorFeatured::vendor_spotlight" module="Omnyfy_VendorFeatured" parent="Omnyfy::vendor_featured" resource="Magento_Backend::content" sortOrder="9999" title="Manage Vendor Spotlight Banner Ads" dependsOnConfig="omnyfy_vendor_featured/spotlight_banner/is_enabled"/>
+	</menu>
+</config>

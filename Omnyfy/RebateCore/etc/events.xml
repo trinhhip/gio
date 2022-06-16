@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_invoice_save_commit_after">
+        <observer name="omnyfy_vendor_rebate_invoice_pay"
+                  instance="Omnyfy\RebateCore\Observer\PayInvoiceRebateCalculate"/>
+    </event>
+    <event name="omnyfy_invoice_rebate_save_after">
+        <observer name="omnyfy_invoice_rebate_save"
+                  instance="Omnyfy\RebateCore\Observer\InvoiceRebateAfterSave"/>
+    </event>
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="omnyfy_sales_creditmemo_save_after_refund"
+                  instance="Omnyfy\RebateCore\Observer\AfterCreditmemoSave"/>
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="omnyfy_sales_order_save_after_refund"
+                  instance="Omnyfy\RebateCore\Observer\RefundOrderAfterSave"/>
+    </event>
+</config>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <update handle="sales_order_info_links"/>
+    <body>
+        <referenceContainer name="page.main.title">
+            <block class="Magento\Sales\Block\Order\Info" name="order.status" template="Magento_Sales::order/order_status.phtml"/>
+            <block class="Magento\Sales\Block\Order\Info" name="order.date" template="Magento_Sales::order/order_date.phtml"/>
+            <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
+                <block class="Magento\Sales\Block\Order\Info\Buttons" as="buttons" name="sales.order.info.buttons" cacheable="false"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Omnyfy\VendorReview\Block\Order\Review" name="sales.order.review" cacheable="false" after="sales.order.info.links">
+                <block name="review.enhancement.vendor.list" class="Omnyfy\VendorReview\Block\Vendor\Listing" template="vendor/list.phtml"/>
+            </block>
+            <block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info" after="-"/>
+        </referenceContainer>
+        <referenceContainer name="sales.order.info.buttons">
+            <block class="Magento\Sales\Block\Order\Info\Buttons\Rss" as="buttons.rss" name="sales.order.info.buttons.rss" cacheable="false"/>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

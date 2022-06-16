@@ -1,0 +1,17 @@
+{
+    "omnyfy_vendorauth_log": {
+        "column": {
+            "log_id": true,
+            "loggedin_vendor_id": true,
+            "module": true,
+            "route": true,
+            "controller": true,
+            "action": true,
+            "requested_entity_id": true,
+            "date": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

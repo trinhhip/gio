@@ -1,0 +1,51 @@
+//
+//  Base Styles
+//  ______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .amxmlsitemap-fieldset-block .admin__fieldset-wrapper-content .admin__fieldset {
+        padding: 0;
+    }
+
+    .amxmlsitemap-fieldset-block.-amxmlsitemap-lite {
+        &,
+        .admin__scope-old .fieldset-wrapper & {
+            border: none;
+        }
+
+        > .fieldset-wrapper-title {
+            display: none;
+        }
+    }
+
+    .amxmlsitemap-fieldset-block .admin__control-table {
+        & > thead,
+        & > tbody {
+            th,
+            td {
+                &:first-child {
+                    padding-left: 3rem;
+                }
+                &:nth-child(3) {
+                    padding-right: 2rem;
+                }
+            }
+        }
+
+        & > tfoot button {
+            margin-left: 2rem;
+        }
+
+        & > tbody td .admin__field-control .admin__control-select {
+            width: 100%;
+        }
+
+        .action-delete:before {
+            color: #aaa;
+        }
+    }
+}

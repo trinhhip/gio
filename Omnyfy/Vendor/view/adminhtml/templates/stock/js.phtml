@@ -1,0 +1,46 @@
+<?php
+$stockId = $this->getRequest()->getParam('stock_id');
+$vendorId = $this->getRequest()->getParam('vendor_id');
+$backendHelper = $this->helper('Omnyfy\Vendor\Helper\Backend');
+$urlEdit = $backendHelper->getUrl('inventory/stock/edit', ['stock_id' => $stockId]);
+$urlNew =  $backendHelper->getUrl('inventory/stock/new');
+$currentUrl = $backendHelper->getBackendUrlBuilder()->getCurrentUrl();
+?>
+<script>
+    require([
+        "jquery"
+    ], function($) {
+        $(document).ready(function() {
+            var x = setInterval(function() {
+                var vendor;
+                vendor = $('.vendor-select');
+                count = vendor.length;
+                if (count > 0) {
+                    clearInterval(x);
+
+                    vendor.change(function() {
+                        let vendorSelectedId = $('.vendor-select option:selected').val();
+                        let currentUrl = "<?php echo $currentUrl ?>";
+                        isNewStock = currentUrl.includes('inventory/stock/new');
+
+                        if (isNewStock) {
+                            let url = "<?php echo $urlNew . 'vendor_id/' ?>" + vendorSelectedId;
+                            window.location.replace(url);
+                        } else {
+                            let url = "<?php echo $urlEdit . 'vendor_id/' ?>" + vendorSelectedId;
+                            window.location.replace(url);
+                        }
+                    });
+
+                    let vendorValue = "<?php echo $vendorId; ?>";
+                    if (vendorValue.length > 0) {
+                        vendor.val(vendorValue);
+                        require(['jquery', 'reloadGrid'], function($, reloadGrid) {
+                            reloadGrid.reloadUIComponent("index = assign_sources_grid", vendorValue);
+                        });
+                    }
+                }
+            }, 1000);
+        });;
+    });
+</script>

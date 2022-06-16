@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="omnyfy_rebate_core_admin_email_template"
+              label="Change to Rebate Email Template Vendor Email"
+              file="omnyfy_rebate_core_admin_email_template.html"
+              type="html"
+              module="Omnyfy_RebateCore"
+              area="frontend"
+    />
+    <template id="omnyfy_rebate_core_mo_email_template"
+              label="Change to Rebate Email Template MO Email"
+              file="omnyfy_rebate_core_mo_email_template.html"
+              type="html"
+              module="Omnyfy_RebateCore"
+              area="frontend"
+    />
+
+    <template id="omnyfy_rebate_core_invoice_email_template"
+              label="Invoice Rebate Email Template Email"
+              file="omnyfy_rebate_core_invoice_email_template.html"
+              type="html"
+              module="Omnyfy_RebateCore"
+              area="frontend"
+    />
+</config>

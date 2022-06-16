@@ -1,0 +1,123 @@
+.container-rebate{
+	margin-top: 20px;
+	.admin__page-section{
+		background-color: #f1f1f1;
+    	padding: 20px 20px;
+    	margin-bottom: 10px;
+	}
+	a{
+		text-decoration: underline;
+	}
+	.rebate-section-content{
+		display: flex;
+		.rebate-description{
+			width: 60%;
+		}
+		.rebate-option{
+			width: 20%;
+			.request-change-of-rebate {
+				cursor: pointer;
+			}
+		}
+		.change-request-action{
+			width: 20%;
+			font-weight: bold;
+			.change-request-reponse {
+				text-align: center;
+				&.active {
+					color: #00EE00;
+				}
+				&.decline {
+					color: #B22222;
+				}
+			}
+			.percentage-change {
+				padding-left: 10px;
+				color: #4682B4;
+			}
+			.button-action {
+				display: flex;
+				margin-top: 20px;
+				.action {
+					cursor: pointer;
+					padding: 10px 20px;
+					color: #fff;
+					&.action-active {
+						background-color: #00aeef;
+					}
+					&.action-cancel {
+						margin-left: 20px;
+						background-color: #B22222;
+					}
+				}
+			}
+		}
+	}
+}
+
+.container-report-vendor{
+	display: flex;
+	margin-bottom: 40px;
+	.content{
+		border: 1px solid;
+	    border-radius: 5px;
+	    padding: 15px;
+	    background-color: #f1f1f1;
+		width: 45%;
+		&.total-rebate-paid{
+			margin-right: 10%
+		}
+		.item-rebate{
+			display: flex;
+			padding-bottom: 15px;
+			.title-rebate{
+				width: 28%;
+				.frequency{
+					font-weight: bold;
+				}
+			}
+			.amount-rebate{
+				padding-left: 30px;
+				width: 24%;
+				.price{
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
+
+#popup-modal-change-request{
+	.change-request-container{
+		.submit-change-rebate{
+		    float: right;
+			margin-top: 35px;
+			padding: 15px;
+		}
+		.content{
+			display: flex;
+			margin-top: 35px;
+			.value-change-rebate{
+				width: 275px;
+				padding-left: 50px;
+				p{
+					padding-top: 15px;
+				}
+				input{
+					width: 275px;
+				}
+			}
+		}
+		.err{
+			color: red;
+		}
+	}
+}
+
+.rebate_ui-index-edit{
+	.admin__control-table{
+		.action-delete{
+			color: #41362f;
+		}
+	}
+}

@@ -1,0 +1,57 @@
+{
+    "omnyfy_vendor_signup": {
+        "column": {
+            "id": true,
+            "business_name": true,
+            "first_name": true,
+            "last_name": true,
+
+            "business_address": true,
+            "city": true,
+            "state": true,
+            "country": true,
+            "postcode": true,
+            "country_code": true,
+            "telephone": true,
+            "email": true,
+            "legal_entity": true,
+            "government_number": true,
+            "tax_number": true,
+            "abn": true,
+            "description": true,
+            "created_by": true,
+            "status": true,
+            "email_sent": true,
+            "created_at": true,
+            "vendor_type_id": true,
+            "extra_info": true,
+            "extend_attribute": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_vendor_kyc_details": {
+        "column": {
+            "id": true,
+            "vendor_id": true,
+            "signup_id": true,
+            "kyc_status": true,
+            "status_code": true,
+            "kyc_user_id": true,
+            "kyc_company_id": true,
+            "assembly_response": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_KYC_DETAILS_VENDOR_ID": true,
+            "OMNYFY_VENDOR_KYC_DETAILS_SIGNUP_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_2F04D1F675B86D3B90AF74D52D423953": true,
+            "OMNYFY_VENDOR_KYC_DETAILS_SIGNUP_ID_OMNYFY_VENDOR_SIGNUP_ID": true
+        }
+    }
+}

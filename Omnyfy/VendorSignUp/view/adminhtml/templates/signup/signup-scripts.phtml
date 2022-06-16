@@ -1,0 +1,181 @@
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$signUpData = $objectManager->create('Omnyfy\VendorSignUp\Model\SignUp')->load($this->getRequest()->getParam('id'));
+
+$taxName = $signUpData->getTaxNumber();
+$countryId = $signUpData->getCountry();
+?>
+
+<script>
+    require(['jquery'], function ($) {
+
+		$('select[name="country"]').on("change",function(e) {
+            console.log('xxxx');
+		var countryVal = $(this).val();
+			var taxNumber  = {
+				US: ["EIN"],
+				AU: ["ABN", "ACN", "Not registered for GST"],
+				NZ: ["NZBN", "NZCN"],
+				ZA: ["CIPC", "SARSNZ"]
+			}
+			var taxNumberArr = ["US", "AU", "NZ", "ZA"];
+
+            if (taxNumberArr.includes(countryVal)){
+                var divsToHide = document.getElementsByClassName("field-tax_number"); //divsToHide is an array
+                for(var i = 0; i < divsToHide.length; i++){
+                    divsToHide[i].style.display = "block"; // depending on what you're doing
+                }
+
+                if(countryVal=='US'){
+                    var taxNumberOptions = "<option value=''>Tax Name</option><option value='EIN'>EIN</option>";
+                } else if(countryVal=='AU'){
+                    var taxNumberOptions = "<option value=''>Tax Name</option><option value='ABN'>ABN</option><option value='ACN'>ACN</option><option value='Not registered for GST'>Not registered for GST</option>";
+                } else if(countryVal=='NZ'){
+                    var taxNumberOptions = "<option value=''>Tax Name</option><option value='NZBN'>NZBN</option><option value='NZCN'>NZCN</option>";
+                } else if(countryVal=='ZA'){
+                    var taxNumberOptions = "<option value=''>Tax Name</option><option value='CIPC'>CIPC</option><option value='SARSNZ'>SARSNZ</option>";
+                }
+                document.getElementById("tax_number").innerHTML = taxNumberOptions;
+                $("#tax_number").addClass("required-entry");
+                $(".field-tax_number").show();
+            }
+            else {
+                var divsToHide = document.getElementsByClassName("field-tax_number"); //divsToHide is an array
+                for(var i = 0; i < divsToHide.length; i++){
+                    divsToHide[i].style.display = "none"; // depending on what you're doing
+                    divsToHide[i].classList.remove("required-entry");
+                }
+                var element = document.getElementById("tax_number");
+                $("#tax_number").removeClass("required-entry");
+                $(".field-tax_number").hide();
+            }
+            $('#tax_number').on('change', function () {
+                console.log('aaaaa');
+                if ($(this).val() == "Not registered for GST") {
+                    $('#abn').removeClass('required-entry');
+                    $('#abn').removeClass('_required');
+                    $('#abn').removeAttr("aria-required");
+                } else {
+                    $('#abn').addClass('required-entry');
+                    $('#abn').addClass('_required');
+                    $('#abn').attr("aria-required", "true");
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">// <![CDATA[
+    window.onload = function () {
+        initialize();
+    };
+    var placeSearch, autocomplete, autocomplete_textarea;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'long_name',
+        country: 'short_name',
+        postal_code: 'short_name'
+    };
+    function initialize() {
+        // Create the autocomplete object, restricting the search
+        // to geographical location types.
+        setTimeout(function () {
+            autocomplete = new google.maps.places.Autocomplete(
+                (document.getElementsByName("business_address")[0]),
+                {types: ['geocode']});
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                var place = autocomplete.getPlace();
+
+
+                var addressDetail = {};
+                // Get each component of the address from the place details
+                // and fill the corresponding field on the form.
+                for (var i = 0; i < place.address_components.length; i++) {
+                    var addressType = place.address_components[i].types[0];
+
+                    if (componentForm[addressType]) {
+                        //alert(addressType);
+                        var val = place.address_components[i][componentForm[addressType]];
+                        //alert(val);
+                        addressDetail[addressType] = val;
+                    }
+                }
+
+                console.log(addressDetail);
+                document.getElementsByName("city")[0].value = (typeof addressDetail.locality === 'undefined') ? '' : addressDetail.locality;
+                document.getElementsByName("postcode")[0].value = (typeof addressDetail.postal_code === 'undefined') ? '' : addressDetail.postal_code;
+                document.getElementsByName("state")[0].value = (typeof addressDetail.administrative_area_level_1 === 'undefined') ? '' : addressDetail.administrative_area_level_1;
+				if(document.getElementsByName("country")[0].getAttribute("id")){
+					document.getElementById(document.getElementsByName("country")[0].getAttribute("id")).value = (typeof addressDetail.country == 'undefined') ? '' : addressDetail.country;
+				}	
+				
+				var taxNumber  = {
+					US: ["EIN"],
+					AU: ["ABN", "ACN", "Not registered for GST"],
+					NZ: ["NZBN", "NZCN"],
+					ZA: ["CIPC", "SARSNZ"]
+				}
+				var taxNumberArr = ["US", "AU", "NZ", "ZA"];
+				
+				if (taxNumberArr.includes(addressDetail.country)){
+					/* var divsToHide = document.getElementsByClassName("field-tax_number"); //divsToHide is an array
+					for(var i = 0; i < divsToHide.length; i++){
+						divsToHide[i].style.display = "block"; // depending on what you're doing
+					} */
+					
+					if(addressDetail.country=='US'){
+						var taxNumberOptions = "<option value=''>Tax Name</option><option value='EIN'>EIN</option>";
+					} else if(addressDetail.country=='AU'){
+						var taxNumberOptions = "<option value=''>Tax Name</option><option value='ABN'>ABN</option><option value='ACN'>ACN</option><option value='Not registered for GST'>Not registered for GST</option>";
+					} else if(addressDetail.country=='NZ'){
+						var taxNumberOptions = "<option value=''>Tax Name</option><option value='NZBN'>NZBN</option><option value='NZCN'>NZCN</option>";
+					} else if(addressDetail.country=='ZA'){
+						var taxNumberOptions = "<option value=''>Tax Name</option><option value='CIPC'>CIPC</option><option value='SARSNZ'>SARSNZ</option>";
+					}
+                    document.getElementById("tax_number").innerHTML = taxNumberOptions;
+                    var divsToHide = document.getElementsByClassName("field-tax_number"); //divsToHide is an array
+                    for(var i = 0; i < divsToHide.length; i++){
+                        divsToHide[i].style.display = "block"; // depending on what you're doing
+                    }
+                    document.getElementById("tax_number").className = "required-entry";
+				} else {
+                    var divsToHide = document.getElementsByClassName("field-tax_number"); //divsToHide is an array
+                    for(var i = 0; i < divsToHide.length; i++){
+                        divsToHide[i].style.display = "none"; // depending on what you're doing
+                    }
+                    var element = document.getElementById("tax_number");
+                    element.classList.remove("required-entry");
+                }
+                $('#tax_number').on('change', function () {
+                    if ($(this).val() == "Not registered for GST") {
+                        $('#abn').removeClass('required-entry');
+                        $('#abn').removeClass('_required');
+                        $('#abn').removeAttr("aria-required");
+                    } else {
+                        $('#abn').addClass('required-entry');
+                        $('#abn').addClass('_required');
+                        $('#abn').attr("aria-required", "true");
+                    }
+                });
+            });
+            <?php
+            /* if($countryId=='US'){?>
+                var taxNumberOptions = "<option value='EIN' slected>EIN</option>";
+                document.getElementById(document.getElementsByName("tax_number")[0].getAttribute("id")).innerHTML = taxNumberOptions;
+            <?php } else if($countryId=='AU'){ ?>
+                var taxNumberOptions = "<option value='ABN'<?php echo ($taxName == 'ABN') ? " selcted" : null?>>ABN</option><option value='ACN'<?php echo ($taxName == 'ACN') ? " selcted" : null?>>ACN</option>";
+                document.getElementById(document.getElementsByName("tax_number")[0].getAttribute("id")).innerHTML = taxNumberOptions;
+            <?php } else if($countryId=='NZ'){ ?>
+                var taxNumberOptions = "<option value='NZBN' <?php echo ($taxName == 'NZBN') ? " selcted" : null?>>NZBN</option><option value='NZCN' <?php echo ($taxName == 'NZCN') ? " selcted" : null?>>NZCN</option>";
+                document.getElementById(document.getElementsByName("tax_number")[0].getAttribute("id")).innerHTML = taxNumberOptions;
+            <?php } else if($countryId=='ZA'){ ?>
+                var taxNumberOptions = "<option value='CIPC' <?php echo ($taxName == 'CIPC') ? " selcted" : null?>>CIPC</option><option value='SARSNZ' <?php echo ($taxName == 'SARSNZ') ? " selcted" : null?>>SARSNZ</option>";
+                document.getElementById(document.getElementsByName("tax_number")[0].getAttribute("id")).innerHTML = taxNumberOptions;
+            <?php }  */?>
+        }, 8000);
+    }
+    // ]]>
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUwRqmez5aRoaF8E1k6MB5QCEjWNTPmTM&v=3.exp&libraries=places" type="text/javascript"></script>

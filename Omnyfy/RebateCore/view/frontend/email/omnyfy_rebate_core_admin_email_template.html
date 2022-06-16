@@ -1,0 +1,25 @@
+<!--@subject {{trans "You have requested a change to rebate for %rebatename," rebatename=$rebatename}} @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr class="email-intro">
+        <td valign="top">
+            <p>
+                {{trans "Hi " vendorname=$vendorname}}<strong>{{trans "%vendorname," vendorname=$vendorname}}</strong>
+            </p>
+            <p>
+                {{trans "Thank you for your request to change the rebate amount for "}}
+                <strong>{{trans "%rebatename" rebatename=$rebatename}}</strong>
+                {{trans ". We are reviewing your request and will be in touch to discuss this change. Once confirmed,
+                your rebate will be modified and all new rebates calculated for orders following the change date, will
+                carry the new rebate amount."}}
+            </p>
+            <p>{{trans "Current Rebate %: %rebatecurent% (Rebate ID: %rebateId)" rebatecurent=$rebatecurent
+                rebateId=$rebateId}}
+            </p>
+            <p> {{trans "New Rebate % Requested: %rebatenew% (Rebate ID: %rebateId)" rebatenew=$rebatenew
+                rebateId=$rebateId}}</p>
+            <p>{{trans "Please login to your marketplace account to make the requested Rebate Change."}}</p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_GroupAssign
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="amasty_groupassign" translate="label" type="text" sortOrder="71801" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Customer Group Assign</label>
+            <tab>amasty</tab>
+            <resource>Amasty_GroupAssign::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_expr" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Customer Groups Update Schedule</label>
+                    <comment><![CDATA[Enter cron expression<br/>
+<br/>
+* * * * *<br/>
+| | | | |<br/>
+| | | | +---- Day of the Week   (range: 0-6, 1 standing for Monday)<br/>
+| | | +------ Month of the Year (range: 1-12)<br/>
+| | +-------- Day of the Month  (range: 1-31)<br/>
+| +---------- Hour              (range: 0-23)<br/>
++------------ Minute            (range: 0-59)<br/>
+Example: 0 0 * * * Daily at midnight<br/>
+<br/>
+Read more about cron expressions - <a href="https://en.wikipedia.org/wiki/Cron">here</a>]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

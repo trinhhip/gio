@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="omnyfy" translate="label" sortOrder="400">
+            <label>Omnyfy</label>
+        </tab>
+        <section id="vendorreview" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Vendor Reviews Management</label>
+            <tab>omnyfy</tab>
+            <resource>Omnyfy_VendorReview::configurations</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Setting</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow Vendor Reviews</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="vendor_types" translate="label" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Assign Vendor Types</label>
+                    <source_model>Omnyfy\Vendor\Model\Config\Source\VendorTypes</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+                <field id="rating_overall" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Overall Rating </label>
+                    <source_model>Omnyfy\VendorReview\Model\Config\Source\Ratings</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+                <field id="restrict_vendor_review" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Restrict Vendor Reviews only to customers who place orders</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                    <comment>Select Yes, if you want customers to leave reviews for Vendors only if they purchase from them. Select No, if you want customers to leave reviews for Vendors at any time. All reviews are moderated.</comment>
+                </field>
+
+                <field id="title_feedback_header_tab" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Leave Review / Feedback Tab Header</label>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                    <comment>Set the title to display on the Review / Feedback Header Tab</comment>
+                </field>
+
+                <field id="feedback_title_button" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Leave Review / Feedback Button</label>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                    <comment>Set the Button Title on Leave Review / Feedback button</comment>
+                </field>
+
+                <field id="restrict_product_review" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Restrict Product Reviews only to Customers who place orders</label>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

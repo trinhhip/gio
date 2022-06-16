@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">omnyfy_vendorfeatured_vendor_spotlight_form.vendor_spotlight_form_data_source</item>
+            <item name="deps" xsi:type="string">omnyfy_vendorfeatured_vendor_spotlight_form.vendor_spotlight_form_data_source</item>
+        </item>
+        <item name="label" translate="true" xsi:type="string">General Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">omnyfy_vendorfeatured_vendor_spotlight_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Omnyfy\VendorFeatured\Block\Adminhtml\Vendor\VendorSpotlight\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">Omnyfy\VendorFeatured\Block\Adminhtml\Vendor\VendorSpotlight\Edit\RemoveButton</item>
+            <item name="save" xsi:type="string">Omnyfy\VendorFeatured\Block\Adminhtml\Vendor\VendorSpotlight\Edit\SaveButton</item>
+        </item>
+    </argument>
+    <dataSource name="vendor_spotlight_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Omnyfy\VendorFeatured\Model\VendorSpotlight\DataProvider</argument>
+            <argument name="name" xsi:type="string">vendor_spotlight_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">main_table.vendor_id</argument>
+            <argument name="requestFieldName" xsi:type="string">vendor_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" path="*/*/save" xsi:type="url"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="General">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string"/>
+            </item>
+        </argument>
+        <field name="main_vendor_id">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="dataType" xsi:type="string">text</item>
+					<item name="label" translate="true" xsi:type="string">Main Vendor ID</item>
+					<item name="formElement" xsi:type="string">hidden</item>
+					<item name="dataScope" xsi:type="string">main_vendor_id</item>
+				</item>
+			</argument>
+		</field>
+        <container name="vendor_spotlight_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                    <item name="template" xsi:type="string">ui/dynamic-rows/templates/default</item>
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                    <item name="recordTemplate" xsi:type="string">record</item>
+                    <item name="addButton" xsi:type="boolean">false</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+            <container name="record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Dynamic Rows</item>
+                        <item name="component" xsi:type="string" translate="true">Magento_Ui/js/dynamic-rows/record</item>
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="showFallbackReset" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="banner_name">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Banner Name</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">banner_name</item>
+                            <item name="showFallbackReset" xsi:type="boolean">false</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">10</item>
+                            <item name="notice" xsi:type="string" translate="true">Removing this banner then clicking the Save Button will permanently delete the record. It cannot be undone.</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="clicks_per_banner">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Clicks per Banner</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">clicks_per_banner</item>
+                            <item name="showFallbackReset" xsi:type="boolean">false</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="sortOrder" xsi:type="string">20</item>
+                        </item>
+                    </argument>
+                </field>
+                
+                <actionDelete>
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="componentType" xsi:type="string">actionDelete</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="label" xsi:type="string">Actions</item>
+                            <item name="additionalClasses" xsi:type="string">data-grid-actions-cell</item>
+                            <item name="template" xsi:type="string">Magento_Backend/dynamic-rows/cells/action-delete</item>
+                        </item>
+                    </argument>
+                </actionDelete>
+                
+                <field name="position">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">number</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="componentType" xsi:type="string">field</item>
+                            <item name="label" xsi:type="string" translate="true">Position</item>
+                            <item name="dataScope" xsi:type="string">position</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                </field>
+            </container>
+        </container>
+    </fieldset>
+</form>

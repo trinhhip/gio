@@ -1,0 +1,11 @@
+<?php
+/** @var $block Omnyfy\VendorDashBoard\Block\Adminhtml\Dashboard */
+$admin = $block->isUserAdmin();
+?>
+<?php if($admin) : ?>
+<style>
+    .dashboard-dashboard-index .Polaris-Stack > .Polaris-Stack__Item:last-child{
+        display: none;
+    }
+</style>
+<?php endif; ?>

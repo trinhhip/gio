@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<update handle="styles"/>
+	<head>
+		<title>Manage Enquiry</title>
+		<css src="Omnyfy_Enquiry::css/enquiries_edit.css"/>
+		<script src="Omnyfy_Enquiry::js/enquiries_edit.js"/>
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block class="Omnyfy\Enquiry\Block\Adminhtml\ManageEnquiry"
+				   name="omnyfy_enquiry_enquiry.manage_enquiry"
+				   template="Omnyfy_Enquiry::manageenquiry.phtml" />
+		</referenceContainer>
+	</body>
+</page>

@@ -1,0 +1,308 @@
+<?php
+/**
+ * @var $block \Omnyfy\VendorSearch\Block\Search\Result
+ */
+
+use Omnyfy\VendorSearch\Api\MapInterface;
+use Omnyfy\VendorSearch\Helper\MapSearchData;
+
+?>
+<?php $vendorType = $block->getVendorType();?>
+<?php $viewMode = $block->getVendorViewMode() ?>
+<?php $isSearchByLocation = $block->isSearchByLocation(); ?>
+<?php /** @var Omnyfy\VendorSearch\Helper\MapSearchData $mapSearchHelper */
+$mapSearchHelper = $this->helper('Omnyfy\VendorSearch\Helper\MapSearchData') ?>
+
+<?php
+/**
+ * View mode settings
+ *
+ * View mode is set on Vendor Type page in Dashboard
+ *
+ */
+if ($viewMode == 'grid') {
+    $viewModeName = 'grid';
+    $image = 'vendor_page_grid';
+    $showDescription = false;
+    // Update rating functionality here
+    //$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+} elseif ($viewMode === 'map') {
+    $viewMode = 'map';
+    $image = 'vendor_page_grid';
+    $showDescription = false;
+} else {
+    $viewModeName = 'list';
+    $image = 'vendor_page_list';
+    $showDescription = true;
+    // Update rating functionality here
+    //$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+}
+$vendors = $block->getVendors();
+$pos = $block->getPositioned();
+$showMap = $block->isMapSearchEnable();
+$locsid = [];
+?>
+<?= $block->getToolbarHtml() ?>
+
+<?php if ($viewMode == MapInterface::MODE_NAME): ?>
+    <?php if ($vendors->count()): ?>
+        <?php
+        foreach($vendors as $vendor){
+            $latitude = $vendor->getLatitude();
+            $longitude = $vendor->getLongitude();
+            $vendorIdMap = $vendor->getId();
+            $locsid[] = [$vendorIdMap, $latitude, $longitude];
+        }
+        ?>
+        <div id="google-map-js" class="vendor google-map">
+            <div id="map_show"></div>
+        </div>
+
+        <?php foreach($vendors as $vendor): ?>
+            <?php
+            if ($isSearchByLocation){
+                $vendorLink = $block->getLocationUrl($vendor->getId());
+                $logoLink = $block->getImage($vendor->getData('vendor_id'));
+                $attrData = $block->getLocationVendorData($vendor->getData('vendor_id'));
+            } else {
+                $vendorLink = $block->getUrl("shop/brands/view/id/".$vendor->getId());
+                $logoLink = $block->getImage($vendor->getId());
+                $attrData = $block->getVendorData($vendor);
+            }
+            $description = substr($vendor->getData("description"),0, 20);
+            ?>
+
+            <div class="vendor-item vendor item" id ="popup_<?= /* @noEscape */ $vendor->getId() ?>">
+                <div class="vendor-item-info">
+                    <div class="vendor-item-photo photo">
+                        <a href="<?php echo $vendorLink ?>" class="vendor-item-link">
+                            <img src="<?php echo $logoLink ?>" class="photo-image">
+                        </a>
+                    </div>
+
+                    <div class="vendor vendor-item-details details">
+                        <a href="<?php echo $vendorLink ?>" class="vendor-item-link">
+                            <h5 class="vendor-name"><?php echo $vendor->getData("entity_name") ?></h5>
+                        </a>
+                        
+                        <p class="vendor-location">
+                            <?php echo $vendor->getData("address") ?>
+                        </p>
+
+                        <?php if ($attrData): ?>
+                            <?php foreach($attrData as $attr): ?>
+                                <?php if ($attr["type"] == "multiselect"):?>
+                                    <?php if (!empty($attr["data"])): ?>
+                                        <?php if (is_array($attr["data"])): ?>
+                                            <ul class="vendor-tags-list">
+                                                <?php foreach($attr["data"] as $data): ?>
+                                                    <li class="vendor-tag"><?php echo $data ?></li>
+                                                <?php endforeach;?>
+                                            </ul>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <?php if(isset($attr["data"])): ?>
+                                        <ul class="vendor-attributes-list">
+                                            <li class="vendor-attribute">
+                                                <span class="vendor-attribute-label"><?= $attr["label"] ?></span>
+                                                <span class="vendor-attribute-value"><?= $attr["data"] ?></span>
+                                            </li>
+                                        </ul>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach;?>
+                        <?php endif; ?>
+
+                        <?php if (!$viewMode): ?>
+                            <?php if ($isSearchByLocation): ?>
+                                <p class="vendor-location">
+                                    <?php echo $vendor->getData("address") ?>,
+                                    <?php echo $vendor->getData("suburb") ?>,
+                                    <?php echo $vendor->getData("region") ?>,
+                                    <?php echo $vendor->getData("country") ?>,
+                                    <?php echo $vendor->getData("postcode") ?>
+                                </p>
+                            <?php else: ?>
+                                <p class="vendor-location">
+                                    <?php echo $vendor->getData("address") ?>
+                                </p>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <div class="info-left">
+                            <span class="info-text"><?php echo $vendor->getData("location_name") ?></span>
+                            <?php if ($vendor->getData("location_count") >0 ):?>
+                                <span class="more">and <?php echo $vendor->getData("location_count") ?> more locations</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="info-right">
+                            <span class="info-text"><?php echo $vendor->getData("suburb") ?></span>
+                            <?php /* <span class="more">and 1 more suburbs</span> */?>
+                        </div>
+
+                        <?php if ($viewMode == 'list'): ?>
+                            <div class="vendor-footer">
+                                <button href="<?php echo $vendorLink ?>" class="vendor-view-link"><?= __("View")?></button>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    <?php else: ?>
+        <div class="vendors wrapper <?= /* @noEscape */ $viewMode ?> vendors-<?= /* @noEscape */ $viewMode ?>">
+            <div class="message info empty">
+                <div><?= $block->escapeHtml(__('No matching results - please change your search and try again')) ?></div>
+            </div>
+        </div>
+        <div class="all-vendor-map">
+            <div id="google-map-js" class="vendor google-map">
+                <div class="" id="map_show"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div id="infowindow-content">
+        <span id="place-name" class="title"></span><br />
+        <span id="place-address"></span>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#google-map-js": {
+                "Omnyfy_VendorSearch/js/googlemap":{
+                    "mapZoomDefault":"<?= /** @noEscape */ $mapSearchHelper->getGmapDefaultZoom() ?>",
+                    "mapTypeId":"<?= /** @noEscape */ $mapSearchHelper->getGmapType() ?>",
+                    "mapStyle": <?= /** @noEscape */ $mapSearchHelper->getGmapStyle()?>,
+                    "mapLatLng": "<?= /** @noEscape */ $mapSearchHelper->getGmapSearchCenter() ?>",
+                    "vendorIcon": "<?= /** @noEscape */ $mapSearchHelper->getGmapMakerIcon() ?>",
+                    "addressIcon": "<?= /** @noEscape */ $block->getAddressMarkerIcon() ?>",
+                    "locs": <?php echo json_encode($locsid); ?>,
+                    "btnSearchThis": "<?= $block->escapeHtml(__('Search this area')) ?>",
+                    "currentUrl": "<?= /** @noEscape */ $mapSearchHelper->getCurrentUrl() ?>",
+                    "contentMapArea": "<?= /** @noEscape */ $mapSearchHelper->getContentMapArea() ?>",
+                    "layerContainer": "<?= /** @noEscape */ $mapSearchHelper->getLayerContainer() ?>",
+                    "vendorCounterContainer": "<?= /** @noEscape */ $mapSearchHelper->getVendorCounterContainer() ?>",
+                    "markerHeight": "<?= /** @noEscape */ $mapSearchHelper->getMarkerHeight() ?>",
+                    "defaultDistance": "<?= /** @noEscape */ $mapSearchHelper->getDefaultDistance() ?>",
+                    "mapSearchDistanceAttr": "<?= /** @noEscape */ MapSearchData::VENDOR_MAP_SEARCH_DISTANCE ?>",
+                    "allowedCountries": "<?= /** @noEscape */ $mapSearchHelper->getAllowCountries()?>"
+                }
+            }
+        }
+    </script>
+<?php else: ?>
+    <div class="vendors-wrapper vendors-<?= $viewModeName ?>">
+        <ol class="vendors <?= $viewModeName ?> items vendor-items">
+            <?php foreach($vendors as $vendor): ?>
+                <?php
+                if ($isSearchByLocation){
+                    $vendorLink = $block->getLocationUrl($vendor->getId());
+                    $logoLink = $block->getImage($vendor->getData('vendor_id'));
+                    $attrData = $block->getLocationVendorData($vendor->getData('vendor_id'));
+                } else {
+                    $vendorLink = $block->getUrl("shop/brands/view/id/".$vendor->getId());
+                    $logoLink = $block->getImage($vendor->getId());
+                    $attrData = $block->getVendorData($vendor);
+                }
+                $description = substr($vendor->getData("description"),0, 20);
+                ?>
+
+                <li class="vendor-item vendor item">
+                    <a href="<?php echo $vendorLink ?>" class="vendor-item-link">
+                        <div class="vendor-item-info">
+                        <div class="vendor-item-photo photo">
+                            <img src="<?php echo $logoLink ?>" class="photo-image">
+                        </div>
+
+                        <div class="vendor vendor-item-details details">
+                            <h5 class="vendor-name"><?php echo $vendor->getData("entity_name") ?></h5>
+                            <?php if ($viewMode == 'list'): ?>
+                                <?php if ($isSearchByLocation): ?>
+                                    <p class="vendor-location">
+                                        <?php echo $vendor->getData("address") ?>,
+                                        <?php echo $vendor->getData("suburb") ?>,
+                                        <?php echo $vendor->getData("region") ?>,
+                                        <?php echo $vendor->getData("country") ?>,
+                                        <?php echo $vendor->getData("postcode") ?>
+                                    </p>
+                                <?php else: ?>
+                                    <p class="vendor-location">
+                                        <?php echo $vendor->getData("address") ?>
+                                    </p>
+                                <?php endif; ?>
+
+                                <?php if ($description): ?>
+                                    <div class="vendor-description">
+                                        <?php echo $description; ?>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif; ?>
+
+                            <?php if ($attrData): ?>
+                                <?php foreach($attrData as $attr): ?>
+                                    <?php if ($attr["type"] == "multiselect"):?>
+                                        <?php if (!empty($attr["data"])): ?>
+                                            <?php if (is_array($attr["data"])): ?>
+                                                <ul class="vendor-tags-list">
+                                                    <?php foreach($attr["data"] as $data): ?>
+                                                        <li class="vendor-tag"><?php echo $data ?></li>
+                                                    <?php endforeach;?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <?php if(isset($attr["data"])): ?>
+                                            <ul class="vendor-attributes-list">
+                                                <li class="vendor-attribute">
+                                                    <span class="vendor-attribute-label"><?= $attr["label"] ?></span>
+                                                    <span class="vendor-attribute-value"><?= $attr["data"] ?></span>
+                                                </li>
+                                            </ul>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endforeach;?>
+                            <?php endif; ?>
+
+                            <?php if (!$viewMode): ?>
+                                <?php if ($isSearchByLocation): ?>
+                                    <p class="vendor-location">
+                                        <?php echo $vendor->getData("address") ?>,
+                                        <?php echo $vendor->getData("suburb") ?>,
+                                        <?php echo $vendor->getData("region") ?>,
+                                        <?php echo $vendor->getData("country") ?>,
+                                        <?php echo $vendor->getData("postcode") ?>
+                                    </p>
+                                <?php else: ?>
+                                    <p class="vendor-location">
+                                        <?php echo $vendor->getData("address") ?>
+                                    </p>
+                                <?php endif; ?>
+                            <?php endif; ?>
+
+                            <div class="info-left">
+                                <span class="info-text"><?php echo $vendor->getData("location_name") ?></span>
+                                <?php if ($vendor->getData("location_count") >0 ):?>
+                                    <span class="more">and <?php echo $vendor->getData("location_count") ?> more locations</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="info-right">
+                                <span class="info-text"><?php echo $vendor->getData("suburb") ?></span>
+                                <?php /* <span class="more">and 1 more suburbs</span> */?>
+                            </div>
+
+                            <?php if ($viewMode == 'list'): ?>
+                                <div class="vendor-footer">
+                                    <button href="<?php echo $vendorLink ?>" class="vendor-view-link"><?= __("View")?></button>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+<?php endif; ?>

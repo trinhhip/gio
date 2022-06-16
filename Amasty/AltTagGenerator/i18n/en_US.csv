@@ -1,0 +1,107 @@
+"We can't change item right now. Please review the log and try again.","We can't change item right now. Please review the log and try again."
+"A total of %1 record(s) have been changed.","A total of %1 record(s) have been changed."
+"No records have been changed.","No records have been changed."
+"Rule was deleted successfully.","Rule was deleted successfully."
+"Something went wrong. Please review the error log.","Something went wrong. Please review the error log."
+"New Rule","New Rule"
+"Edit Rule","Edit Rule"
+"Alt Tag Rules (Products)","Alt Tag Rules (Products)"
+"A total of %1 record(s) have been deleted.","A total of %1 record(s) have been deleted."
+"No records have been deleted.","No records have been deleted."
+"Rule was saved successfully.","Rule was saved successfully."
+"The ""%1"" value doesn't exist. Enter the value and try again.","The ""%1"" value doesn't exist. Enter the value and try again."
+"Replace Filled Alt Text","Replace Filled Alt Text"
+"Only Replace Empty Alt Text","Only Replace Empty Alt Text"
+"Append to Existing Alt Text","Append to Existing Alt Text"
+Disabled,Disabled
+Enabled,Enabled
+"Unable to remove template with ID %1. Error: %2","Unable to remove template with ID %1. Error: %2"
+"Unable to remove template. Error: %1","Unable to remove template. Error: %1"
+"Could not save Rule","Could not save Rule"
+"Rule with id ""%value"" does not exist.","Rule with id ""%value"" does not exist."
+Delete,Delete
+"Are you sure you want to delete this rule?","Are you sure you want to delete this rule?"
+Reset,Reset
+"Save and Continue Edit","Save and Continue Edit"
+Save,Save
+Edit,Edit
+"Amasty AltTagGenerator","Amasty AltTagGenerator"
+"Mass Delete Alt Tag Rules","Mass Delete Alt Tag Rules"
+"Edit Alt Tag Rules","Edit Alt Tag Rules"
+"Create Alt Tag Rules","Create Alt Tag Rules"
+"Amasty AltTagGenerator Template Products","Amasty AltTagGenerator Template Products"
+"Indexed rule/product association","Indexed rule/product association"
+"Indexed product/rule association","Indexed product/rule association"
+ID,ID
+Thumbnail,Thumbnail
+Name,Name
+Type,Type
+"Attribute Set","Attribute Set"
+SKU,SKU
+Price,Price
+Visibility,Visibility
+Status,Status
+Qty,Qty
+Back,Back
+General,General
+Yes,Yes
+No,No
+Title,Title
+Priority,Priority
+"If a product meets conditions in several templates, the alt tag template with the highest priority will be applied. 0 is the highest priority.","If a product meets conditions in several templates, the alt tag template with the highest priority will be applied. 0 is the highest priority."
+Stores,Stores
+"Alt Tag Replacement Logic","Alt Tag Replacement Logic"
+"Alt Tag Template","Alt Tag Template"
+"
+                        Example: Buy {name} [by {manufacturer|brand}] [of {color} color] [for only {price}] [in {categories}] at [{store},] {website}.
+                        Available variables:
+                        <ul>
+                        <li>Image Number Increment (for products with several images) - {N}</li>
+                        <li>Name - {name}</li>
+                        <li>Category - {category}</li>
+                        <li>All Categories - {categories}</li>
+                        <li>Store View - {store_view}</li>
+                        <li>Store - {store}</li>
+                        <li>Website - {website}</li>
+                        <li>Price - {price}</li>
+                        <li>Special Price - {special_price}</li>
+                        <li>Final Price - {final_price}</li>
+                        <li>Final Price with Tax - {final_price_incl_tax}</li>
+                        <li>Price From (bundle) - {startingfrom_price}</li>
+                        <li>Price To (bundle) - {startingto_price}</li>
+                        <li>Brand - {brand}</li>
+                        <li>Color - {color}</li>
+                        <li>You can use any product code as a variable {attribute_code} to display its value. Please make sure that the attribute is used in the <a href=""https://docs.magento.com/user-guide/stores/attributes-product.html#storefront-properties"" target=""_blank"">product listing</a>.</li>
+                        </ul>
+                    ","
+                        Example: Buy {name} [by {manufacturer|brand}] [of {color} color] [for only {price}] [in {categories}] at [{store},] {website}.
+                        Available variables:
+                        <ul>
+                        <li>Image Number Increment (for products with several images) - {N}</li>
+                        <li>Name - {name}</li>
+                        <li>Category - {category}</li>
+                        <li>All Categories - {categories}</li>
+                        <li>Store View - {store_view}</li>
+                        <li>Store - {store}</li>
+                        <li>Website - {website}</li>
+                        <li>Price - {price}</li>
+                        <li>Special Price - {special_price}</li>
+                        <li>Final Price - {final_price}</li>
+                        <li>Final Price with Tax - {final_price_incl_tax}</li>
+                        <li>Price From (bundle) - {startingfrom_price}</li>
+                        <li>Price To (bundle) - {startingto_price}</li>
+                        <li>Brand - {brand}</li>
+                        <li>Color - {color}</li>
+                        <li>You can use any product code as a variable {attribute_code} to display its value. Please make sure that the attribute is used in the <a href=""https://docs.magento.com/user-guide/stores/attributes-product.html#storefront-properties"" target=""_blank"">product listing</a>.</li>
+                        </ul>
+                    "
+"Products Subselection","Products Subselection"
+"Product Conditions","Product Conditions"
+"Preview Products","Preview Products"
+"Hide Products","Hide Products"
+"Please click here to preview the product list.","Please click here to preview the product list."
+"Add New","Add New"
+"All Store Views","All Store Views"
+"Store View","Store View"
+"Are you sure you want to delete selected Rules?","Are you sure you want to delete selected Rules?"
+Store,Store

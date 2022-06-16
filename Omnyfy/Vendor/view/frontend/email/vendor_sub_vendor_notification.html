@@ -1,0 +1,14 @@
+<!--@subject {{trans "You have been added as a Sub Vendor to the Vendor Account %name" name=$vendor.company}} @-->
+{{template config_path="design/email/header_template"}}
+    <div class="email-intro">
+        {{trans "Hi %subvendor" subvendor=$sub_vendor.firstname}},
+        <br/>
+        {{trans "You have been added as a Sub-Vendor by %vendor_name to the %company_name account." vendor_name=$vendor.name company_name=$vendor.company}}
+    </div>
+    <div>{{trans "To accept this invitation, please click here"}}</div>
+    <div>{{store url="admin/auth/resetpassword/" _query_id=$user.id _query_token=$user.rp_token _nosid=1}}</div>
+    <div>{{trans "to re-set your password and login."}}</div>
+    <div>{{trans "Your Username is: %username" username=$sub_vendor.username}}</div>
+    <div>{{trans "Thank you"}}</div>
+    <div>{{config path="general/store_information/name"}} {{trans " Support"}}</div>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Setup table omnyfy_vendorfeatured_vendor_featured -->
+    <table name="omnyfy_vendorfeatured_vendor_featured" resource="default" engine="innodb">
+        <column name="vendor_featured_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="vendor_id" xsi:type="int" padding="11" nullable="false" comment="Entity ID" />
+        <column name="added_date" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Added Date" />
+        <column name="updated_date" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated Date" />
+        <column name="source_code" xsi:type="varchar" length="244" nullable="true" comment="Source Code" />
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="true"/>
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="vendor_featured_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_vendorfeatured_vendor_featured_tag -->
+    <table name="omnyfy_vendorfeatured_vendor_featured_tag" resource="default" engine="innodb">
+        <column name="vendor_featured_tag_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="vendor_featured_id" xsi:type="int" padding="10" nullable="false" comment="Vendor Featured ID" />
+        <column name="vendor_tag_id" xsi:type="int" padding="10" nullable="false" comment="Tag ID" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="vendor_featured_tag_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_vendorfeatured_vendor_tag -->
+    <table name="omnyfy_vendorfeatured_vendor_tag" resource="default" engine="innodb">
+        <column name="vendor_tag_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="name" xsi:type="varchar" length="255" nullable="true" comment="Name" />
+        
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="vendor_tag_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_vendorfeatured_promo_widget -->
+    <table name="omnyfy_vendorfeatured_promo_widget" resource="default" engine="innodb">
+        <column name="entity_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column name="description" xsi:type="text" nullable="true" comment="Description" />
+        <column name="link_label_1" xsi:type="varchar" length="255" nullable="false" comment="Link Label 1" />
+        <column name="link_url_1" xsi:type="varchar" length="255" nullable="false" comment="Link URL 1" />
+        <column name="link_label_2" xsi:type="varchar" length="255" nullable="false" comment="Link Label 2" />
+        <column name="link_url_2" xsi:type="varchar" length="255" nullable="false" comment="Link URL 2" />
+        <column name="background_colour" xsi:type="varchar" length="255" nullable="false" comment="Background Colour" />
+        <column name="text_colour" xsi:type="varchar" length="255" nullable="false" comment="Text Colour" />
+        <column name="vendor_id" xsi:type="int" padding="10" nullable="false" comment="Vendor ID" />
+        <column name="sort_order" xsi:type="int" padding="10" nullable="false" default="999" comment="Sort Order" />
+        <column name="created_at" xsi:type="timestamp" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Created At" />
+
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_spotlight_banner_placement -->
+    <table name="omnyfy_spotlight_banner_placement" resource="default" engine="innodb">
+        <column name="banner_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Banner ID" />
+        <column name="banner_name" xsi:type="varchar" length="255" nullable="false" comment="Banner Name" />
+        <column name="category_ids" xsi:type="text" nullable="true" comment="Category Ids" />
+        <column name="vendor_ids" xsi:type="text" nullable="true" comment="Vendor Ids" />
+
+        <column name="created_at" xsi:type="timestamp" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Created At" />
+
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="banner_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_spotlight_banner_vendor -->
+    <table name="omnyfy_spotlight_banner_vendor" resource="default" engine="innodb">
+        <column name="banner_vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Banner Vendor ID" />
+        <column name="banner_id" xsi:type="int" padding="10" nullable="false" comment="Banner ID" />
+        <column name="vendor_id" xsi:type="int" padding="10" nullable="false" comment="Vendor ID" />
+        <column name="sort_order" xsi:type="int" padding="10" nullable="false" comment="Sort Order" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="banner_vendor_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup table omnyfy_spotlight_clicks -->
+    <table name="omnyfy_spotlight_clicks" resource="default" engine="innodb">
+        <column name="click_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Click ID" />
+        <column name="banner_vendor_id" xsi:type="int" padding="10" nullable="false" comment="Banner Vendor ID" />
+        <column name="created_at" xsi:type="timestamp" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Created At" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="click_id" />
+        </constraint>
+    </table>
+</schema>

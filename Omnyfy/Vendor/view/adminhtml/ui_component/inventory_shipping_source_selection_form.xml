@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" component="Magento_InventoryShippingAdminUi/js/form/form" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <settings>
+        <dataScope>data</dataScope>
+        <namespace>inventory_shipping_source_selection_form</namespace>
+        <deps>
+            <dep>inventory_shipping_source_selection_form.inventory_shipping_source_selection_form_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="back" class="Magento\InventoryShippingAdminUi\Ui\Component\Control\SourceSelection\BackButton" />
+            <button name="save">
+                <class>save primary</class>
+                <label translate="true">Proceed to Shipment</label>
+            </button>
+            <button name="source_selection_algorithms" class="Omnyfy\Vendor\Plugin\InventoryShippingAdminUi\AlgorithmSelectionButtonPlugin" />
+        </buttons>
+    </settings>
+    <dataSource name="inventory_shipping_source_selection_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <validateUrl path="*/*/validate" />
+            <submitUrl path="admin/order_shipment/new" />
+        </settings>      
+        <dataProvider class="Omnyfy\Vendor\Ui\DataProvider\SourceSelectionDataProvider" name="inventory_shipping_source_selection_form_data_source">
+            <settings>
+                <requestFieldName>order_id</requestFieldName>
+                <primaryFieldName>order_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+</form>

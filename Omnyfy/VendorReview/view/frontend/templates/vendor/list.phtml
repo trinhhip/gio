@@ -1,0 +1,216 @@
+<?php
+$result = $block->getVendorListWithProduct();
+
+if($block->getOrderStatus() == 'complete') {
+    $vendorList = $result['vendors'];
+} else {
+    $vendorList = $block->getVendorListOnly();
+}
+
+$productList = $result['products'];
+
+$helper = $this->helper('Omnyfy\VendorReview\Helper\Data');
+
+$buttonLabel = __('Review Product');
+$buttonVendorReviewLabel = $helper->getButtonReviewTitle() ? $helper->getButtonReviewTitle() : __('Review Supplier');
+?>
+
+<?php if(count($vendorList)): ?>
+    <?php foreach($vendorList as $vendor): ?>
+        <div class="vendor-block vendor">
+            <?php if($helper->isDisplayVendorReviewOnOrder()): ?>
+                <div class="vendor-item">
+                    <?php $vendorLink = $block->getUrl("shop/brands/view/id/".$vendor->getId()) ?>
+                    <a class="vendor-name" href="<?= $vendorLink ?>"><?= $vendor->getName() ?></a>
+
+                    
+                    <?php $vendorReview = $block->getReviewByVendorId($vendor->getId()) ?>
+                    <?php if(!$vendorReview): ?>
+                        <button class="vendor-review action primary" data-vendor="<?= $vendor->getId() ?>">
+                            <span><?= $buttonVendorReviewLabel ?></span>
+                        </button>
+                    <?php else: ?>
+                        
+                        <?php $statusVendor = $vendorReview->getStatusId(); ?>
+
+                        <?php if($statusVendor == 1): ?>
+                            <a class="review-status approved" href="<?php /* @escapeNotVerified */ echo $block->getReviewVendorLink() ?>id/<?php /* @escapeNotVerified */ echo $vendorReview->getOmnyfyVendorReviewId() ?>"><span><?= $block->escapeHtml(__('View Your Vendor Review')) ?></span></a>
+                        <?php else: ?>
+                            <?php if($statusVendor == 2): ?>
+                                <p class="review-status pending"><span><?= $block->escapeHtml(__('Pending Moderation')) ?></span></p>
+                            <?php else: ?>
+                                <p class="review-status not-approved">><span><?= $block->escapeHtml(__('Not Approved')) ?></span></p>
+                            <?php endif ?>
+                        <?php endif ?>
+                    <?php endif ?>
+                    
+                </div>
+            <?php endif; ?>
+
+            <?php if($helper->isDisplayProductReviewOnOrder()): ?>
+                <?php if(count($productList)): ?>
+                <div class="product-list">
+                    <?php foreach($productList[$vendor->getId()] as $product): ?>
+                        <div class="product-item">
+                            <?php $productUrl =  $helper->getProductById($product->getProductId())->getProductUrl(); ?>
+                            <div class="product-info">
+                                <img src="<?= $helper->getImageProduct($product->getProductId()) ?>" />
+                                <a class="product-name" href="<?= $productUrl ?>"><?= $product->getName() ?></a>
+                            </div>
+                            <?php if ($helper->isDisplayProductReviewOnOrder()): ?>
+
+                                <?php $productReview = $block->getReviewByProductId($product->getProductId()) ?>
+                                <?php if(!$productReview): ?>
+                                    <button class="product-review action primary" data-product="<?= $product->getProductId() ?>">
+                                        <span><?= $buttonLabel ?></span>
+                                    </button>
+                                <?php else: ?>
+                                    
+                                    <?php $statusProduct = $productReview->getStatusId(); ?>
+                                    <?php if($statusProduct == 1): ?>
+                                        <a class="review-status approved" href="<?php /* @escapeNotVerified */ echo $block->getReviewProductLink() ?>id/<?php /* @escapeNotVerified */ echo $productReview->getReviewId() ?>">
+                                            <span><?= $block->escapeHtml(__('View Your Review')) ?></span>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php if($statusProduct == 2): ?>
+                                            <p class="review-status pending"><span><?= $block->escapeHtml(__('Pending Moderation')) ?></span></p>
+                                        <?php else: ?>
+                                            <p class="review-status not-approved"><span><?= $block->escapeHtml(__('Not Approved')) ?></span></p>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                <?php endif ?>
+                            <?php endif ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<?php if(array_key_exists('no-vendor', $productList) && count($productList['no-vendor'])): ?>
+    <?php if($helper->isDisplayProductReviewOnOrder()): ?>
+        <div class="vendor-block product-list no-vendor">
+            <?php foreach($productList['no-vendor'] as $product): ?>
+                <div class="product-item">
+                    <?php $productUrl =  $helper->getProductById($product->getProductId())->getProductUrl(); ?>
+                    <div class="product-info">
+                        <img src="<?= $helper->getImageProduct($product->getProductId()) ?>" />
+                        <a class="product-name" href="<?= $productUrl ?>"><?= $product->getName() ?></a>
+                    </div>
+
+                    <?php if ($helper->isDisplayProductReviewOnOrder()): ?>
+                        <?php $productReview = $block->getReviewByProductId($product->getProductId()) ?>
+                        <?php if(!$productReview): ?>
+                            <button class="product-review action primary" data-product="<?= $product->getProductId() ?>">
+                                <span><?= $buttonLabel ?></span>
+                            </button>
+                        <?php else: ?>
+                            <?php $statusProduct = $productReview->getStatusId(); ?>
+                            <?php if($statusProduct == 1): ?>
+                                <a class="review-status approved" href="<?php /* @escapeNotVerified */ echo $block->getReviewProductLink() ?>id/<?php /* @escapeNotVerified */ echo $productReview->getReviewId() ?>">
+                                    <span><?= $block->escapeHtml(__('View Your Review')) ?></span>
+                                </a>
+                            <?php else: ?>
+                                <?php if($statusProduct == 2): ?>
+                                    <p class="review-status pending"><span><?= $block->escapeHtml(__('Pending Moderation')) ?></span></p>
+                                <?php else: ?>
+                                    <p class="review-status not-approved"><span><?= $block->escapeHtml(__('Not Approved')) ?></span></p>
+                                <?php endif ?>
+                            <?php endif ?>
+                        <?php endif ?>
+                    <?php endif ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
+
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/modal",
+        'mage/url'
+    ],function($, modal, url) {
+
+        $(".vendor-review").click(function() {
+            var vendorId = $(this).attr("data-vendor");
+            var linkurl = url.build('vendorreview/vendor/review');
+
+            $.ajax({
+                url: linkurl,
+                dataType: 'json',
+                data: { id: vendorId },
+                error: function () {
+
+                },
+                success: function (result) {
+                    if(result) {
+                        $('body').append('<div id="review_vendor_form_popup'+vendorId+'" class="vendor_review_content"></div>');
+                        var content = '<div class="vendor-info"><div class="vendor-item-photo photo"><img src="'+result.vendor_logo+'" class="photo-image"></div><div class="vendor-name"><h5 class="vendor-name">'+result.vendor_name+'</h5></div></div>';
+                        content += '<div class="vendor-review-form">'+result.vendor_review_form+'</div>'
+
+                        var options = {
+                            type: 'popup',
+                            modalClass: "vendorReviewForm viewBox",
+                            responsive: true,
+                            title: 'Create Review',
+                            innerScroll: true,
+                            buttons: false
+                        };
+
+                        var popup = modal(options, $('#review_vendor_form_popup'+vendorId));
+                        $('#review_vendor_form_popup'+vendorId).html(content);
+                        $('#review_vendor_form_popup'+vendorId).trigger('contentUpdated');
+
+                        $('#review_vendor_form_popup'+vendorId).modal('openModal');
+                        $('#review_vendor_form_popup'+vendorId).modal('openModal').on('modalclosed', function() { 
+                            $('#review_vendor_form_popup'+vendorId).parents('.vendorReviewForm').remove();
+                        });
+                    }
+                }
+            });
+        });
+
+        $(".product-review").click(function() {
+            var productId = $(this).attr("data-product");
+            var linkurl = url.build('vendorreview/product/review');
+
+            $.ajax({
+                url: linkurl,
+                dataType: 'json',
+                data: { id: productId },
+                error: function () {
+
+                },
+                success: function (result) {
+                    if(result) {
+                        $('body').append('<div id="review_product_form_popup'+productId+'" class="product_review_content"></div>');
+                        var content = '<div class="product-info"><div class="product-item-photo photo"><img src="'+result.product_image+'" class="photo-image"></div><div class="product-name"><h5 class="product-name">'+result.product_name+'</h5></div></div>';
+                        content += '<div class="product-review-form">'+result.product_review_form+'</div>'
+
+                        var options = {
+                            type: 'popup',
+                            modalClass: "productReviewForm viewBox",
+                            responsive: true,
+                            title: 'Create Review',
+                            innerScroll: true,
+                            buttons: false
+                        };
+
+                        var popup = modal(options, $('#review_product_form_popup'+productId));
+                        $('#review_product_form_popup'+productId).html(content);
+                        $('#review_product_form_popup'+productId).trigger('contentUpdated');
+
+                        $('#review_product_form_popup'+productId).modal('openModal');
+                        $('#review_product_form_popup'+productId).modal('openModal').on('modalclosed', function() { 
+                            $('#review_product_form_popup'+productId).parents('.productReviewForm').remove();
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>

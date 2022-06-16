@@ -1,0 +1,46 @@
+<?php
+/**
+ * @var \Amasty\RegenerateUrlRewrites\Block\Adminhtml\StartRegeneration $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<!-- This is raw dirty implementation that allows to control process regeneration. Will be revised -->
+<div class="amregenerateurl-button-container" data-bind="scope: 'start-regenerate'">
+    <?php if (!$block->isInProgress()): ?>
+        <button data-bind="click: initRegeneration.bind($data, true), disable: isStartDisable"
+                title="<?= $escaper->escapeHtml(__('Start Regeneration')) ?>"
+                aria-label="<?= $escaper->escapeHtml(__('Start Regeneration')) ?>">
+            <?= $escaper->escapeHtml(__('Start Regeneration')) ?>
+        </button>
+    <?php else: ?>
+        <button data-bind="text: processStatus"
+                title="<?= $escaper->escapeHtml(__('Regenerating...')) ?>"
+                aria-label="<?= $escaper->escapeHtml(__('Regenerating...')) ?>"
+                disabled>
+            <?= $escaper->escapeHtml(__('Regenerating...')) ?>
+        </button>
+        <button data-bind="click: stop.bind($data, true), disable: isStopDisable"
+                title="<?= $escaper->escapeHtml(__('Stop Regeneration')) ?>"
+                aria-label="<?= $escaper->escapeHtml(__('Stop Regeneration')) ?>">
+            <?= $escaper->escapeHtml(__('Stop Regeneration')) ?>
+        </button>
+    <?php endif; ?>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "start-regenerate": {
+                            "component": "Amasty_RegenerateUrlRewrites/js/start-regeneration",
+                            "startUrl": "<?= $escaper->escapeUrl($block->getStartUrl()) ?>",
+                            "statusUrl": "<?= $escaper->escapeUrl($block->getStatusUrl()) ?>",
+                            "terminateUrl": "<?= $escaper->escapeUrl($block->getTerminateUrl()) ?>"
+                        }
+                    }
+                }
+            }
+        }
+</script>

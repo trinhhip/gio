@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <container name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="stripe">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">stripe</item>
+                        <item name="label" xsi:type="string" translate="true">Process Stripe Payouts</item>
+                        <item name="url" xsi:type="url" path="stripe_payout/pendingpayouts/massProcessStripePayouts"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Process Stripe Payouts</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to process Stripe for selected payouts?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </container>
+</listing>

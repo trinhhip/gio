@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Omnyfy_VendorAuth::/css/disabled-vendor-interaction.css"/>
+    </head>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="left">
+            <block class="Magento\Integration\Block\Adminhtml\Integration\Edit\Tabs" name="integration_edit_tabs">
+                <block class="Omnyfy\VendorAuth\Block\Adminhtml\Integration\Edit\Tab\Info" name="integration_edit_tab_info">
+                    <block class="Magento\Integration\Block\Adminhtml\Integration\Tokens" name="integration_tokens"/>
+                </block>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">info_section</argument>
+                    <argument name="block" xsi:type="string">integration_edit_tab_info</argument>
+                </action>
+                <block class="Omnyfy\VendorAuth\Block\Adminhtml\Integration\Vendor\OmnyfyWebapi" name="integration_edit_tab_webapi" template="Omnyfy_VendorAuth::resourcetree.phtml"/>
+                <action method="addTabAfter">
+                    <argument name="name" xsi:type="string">api_section</argument>
+                    <argument name="block" xsi:type="string">integration_edit_tab_webapi</argument>
+                    <argument name="after" xsi:type="string">info_section</argument>
+                </action>
+                <block class="Magento\Integration\Block\Adminhtml\Integration\Activate\Permissions\Tab\Webapi" name="integration_config_edit_tab_webapi" template="Magento_Integration::integration/activate/permissions/tab/webapi.phtml"/>
+                <action method="addTabAfter">
+                    <argument name="name" xsi:type="string">api_config_section</argument>
+                    <argument name="block" xsi:type="string">integration_config_edit_tab_webapi</argument>
+                    <argument name="after" xsi:type="string">api_section</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Omnyfy\VendorAuth\Block\Adminhtml\Integration\Edit" name="integration_edit_content"/>
+        </referenceContainer>
+        <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" name="adminhtml.integration.webapi.tree.js" template="Magento_User::user/roles_grid_js.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

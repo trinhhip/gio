@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="admin-2columns-left">
+    <update handle="omnyfy_vendor_vendor_edit"/>
+    <body>
+        <referenceContainer name="left">
+            <referenceBlock name="omnyfy_vendor_vendor_edit_tabs">
+                <block class="Omnyfy\RebateUI\Block\Adminhtml\Vendor\Edit\Tab\VendorRebate" name="omnyfy_vendor_vendor_edit_tab_vendor_rebate" template="Omnyfy_RebateUI::vendor/rebate.phtml" ifconfig="omnyfy_rebate_core/general/enable"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">vendor_edit_rebate</argument>
+                    <argument name="block" xsi:type="string">omnyfy_vendor_vendor_edit_tab_vendor_rebate</argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+    </body>
+</page>

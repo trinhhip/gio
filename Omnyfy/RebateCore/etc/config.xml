@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <omnyfy_rebate_core>
+            <general>
+                <enable><![CDATA[1]]></enable>
+                <payment_term><![CDATA[60]]></payment_term>
+                <prefix_invoice><![CDATA[RB]]></prefix_invoice>
+            </general>
+            <admin_email>
+                <template><![CDATA[omnyfy_rebate_core_admin_email_template]]></template>
+            </admin_email>
+            <mo_email>
+                <template><![CDATA[omnyfy_rebate_core_mo_email_template]]></template>
+            </mo_email>
+            <invoice_email>
+                <template><![CDATA[omnyfy_rebate_core_invoice_email_template]]></template>
+            </invoice_email>
+        </omnyfy_rebate_core>
+    </default>
+</config>

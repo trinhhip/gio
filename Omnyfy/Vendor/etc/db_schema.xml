@@ -1,0 +1,927 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- Setup omnyfy_vendor_vendor_type table -->
+    <table name="omnyfy_vendor_vendor_type" resource="default" engine="innodb">
+        <column xsi:type="int" name="type_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Type ID" />
+        <column xsi:type="varchar" name="type_name" length="255" nullable="false" comment="Type Name" />
+        <column xsi:type="smallint" name="search_by" padding="5" unsigned="true" nullable="false" comment="Search By" />
+        <column xsi:type="smallint" name="view_mode" padding="5" unsigned="true" nullable="false" comment="View Mode" />
+        <column xsi:type="smallint" name="vendor_attribute_set_id" padding="5" unsigned="true" nullable="false" comment="Vendor Attribute Set ID" />
+        <column xsi:type="smallint" name="location_attribute_set_id" padding="5" unsigned="true" nullable="false" comment="Location Attribute Set ID" />
+        <column xsi:type="smallint" name="status" padding="5" unsigned="true" nullable="false" comment="Status" />
+        <column xsi:type="int" name="location_type" padding="10" unsigned="true" nullable="false" default="1" comment="Location Type" />
+        <column xsi:type="boolean" name="hide_vendor_link_on_product" nullable="false" default="true" comment="Hide Vendor Link On Product"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="type_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_TYPE_TYPE_ID_VENDOR_ATTRIBUTE_SET_ID" indexType="btree">
+            <column name="type_id" />
+            <column name="vendor_attribute_set_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_TYPE_TYPE_ID_LOCATION_ATTRIBUTE_SET_ID" indexType="btree">
+            <column name="type_id" />
+            <column name="location_attribute_set_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_78502B196E05B8F1F4B37B79F9DEEA83" table="omnyfy_vendor_vendor_type" column="vendor_attribute_set_id" referenceTable="eav_attribute_set" referenceColumn="attribute_set_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_CD0E5150240C80C5F9BF975E3D9F4507" table="omnyfy_vendor_vendor_type" column="location_attribute_set_id" referenceTable="eav_attribute_set" referenceColumn="attribute_set_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup vendor_entity table -->
+    <table name="omnyfy_vendor_vendor_entity" resource="default" engine="innodb">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column xsi:type="varchar" name="name" length="255" nullable="false" comment="Business Name" />
+        <column xsi:type="smallint" name="status" padding="6" default="0" nullable="false" comment="Status" />
+        <column xsi:type="varchar" name="address" length="255" nullable="false" comment="Business Address" />
+        <column xsi:type="varchar" name="phone" length="255" nullable="false" comment="Business Contact Number" />
+        <column xsi:type="varchar" name="email" length="255" nullable="false" comment="Business Email Address" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created Time" />
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated Time" />
+        <column xsi:type="varchar" name="fax" length="255" nullable="true" comment="Business Fax Number" />
+        <column xsi:type="varchar" name="social_media" length="255" nullable="true" comment="Business Social Media" />
+        <column xsi:type="text" name="description" nullable="true" comment="Business Description" />
+        <column xsi:type="int" name="type_id" padding="10" unsigned="true" nullable="true" comment="Vendor Type ID" />
+        <column xsi:type="varchar" name="abn" length="255" nullable="false" comment="ABN" />
+        <column xsi:type="varchar" name="logo" length="255" nullable="true" comment="Business Logo" />
+        <column xsi:type="varchar" name="banner" length="255" nullable="true" comment="Business Background Banner" />
+        <column xsi:type="text" name="shipping_policy" nullable="true" comment="Shipping Policy" />
+        <column xsi:type="text" name="return_policy" nullable="true" comment="Return Policy" />
+        <column xsi:type="text" name="payment_policy" nullable="true" comment="Payment Policy" />
+        <column xsi:type="text" name="marketing_policy" nullable="true" comment="Marketing Policy" />
+        <column xsi:type="smallint" name="attribute_set_id" padding="5" unsigned="true" nullable="true" comment="Attribute Set ID" />
+        <column xsi:type="int" name="payout_basis_type" unsigned="false" nullable="true" comment="Vendor Payout Basis Type" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_85807663CD92FB329BAEEF947188D001" table="omnyfy_vendor_vendor_entity" column="type_id" referenceTable="omnyfy_vendor_vendor_type" referenceColumn="type_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_ATTR_SET_ID_EAV_ATTR_SET_ATTR_SET_ID" table="omnyfy_vendor_vendor_entity" column="attribute_set_id" referenceTable="eav_attribute_set" referenceColumn="attribute_set_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup location_entity table -->
+    <table name="omnyfy_vendor_location_entity" resource="default" engine="innodb">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" default="0" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="priority" padding="11" default="9999" nullable="false" comment="Priority" />
+        <column xsi:type="varchar" name="location_name" length="255" nullable="false" comment="Location Name" />
+        <column xsi:type="text" name="description" nullable="true" comment="Description" />
+        <column xsi:type="varchar" name="address" length="255" nullable="false" comment="Location Address" />
+        <column xsi:type="varchar" name="suburb" length="255" nullable="false" comment="Suburb" />
+        <column xsi:type="varchar" name="region" length="255" nullable="false" comment="Region" />
+        <column xsi:type="varchar" name="country" length="255" nullable="false" comment="Country" />
+        <column xsi:type="varchar" name="postcode" length="255" nullable="false" comment="Postcode" />
+        <column xsi:type="decimal" name="lat" scale="6" nullable="false" comment="Lat" />
+        <column xsi:type="decimal" name="lon" scale="6" nullable="false" comment="Lon" />
+        <column xsi:type="decimal" name="rad_lon" scale="6" default="0.000000" nullable="false" comment="Radians of longitude" />
+        <column xsi:type="decimal" name="rad_lat" scale="6" default="0.000000" nullable="false" comment="Radians of latitude" />
+        <column xsi:type="decimal" name="cos_lat" scale="6" default="0.000000" nullable="false" comment="Cosine of latitude" />
+        <column xsi:type="decimal" name="sin_lat" scale="6" default="0.000000" nullable="false" comment="Sine of latitude" />
+        <column xsi:type="smallint" name="status" padding="5" default="1" unsigned="true" nullable="false" comment="Status" />
+        <column xsi:type="int" name="region_id" padding="10" default="0" unsigned="true" nullable="false" comment="Region ID" />
+        <column xsi:type="smallint" name="is_warehouse" padding="5" default="0" unsigned="true" nullable="false" comment="Is Warehouse" />
+        <column xsi:type="int" name="vendor_type_id" padding="11" unsigned="true" nullable="true" comment="Vendor Type ID" />
+        <column xsi:type="smallint" name="attribute_set_id" padding="5" unsigned="true" nullable="true" comment="Attribute Set ID" />
+        <column xsi:type="varchar" name="location_contact_name" length="255" nullable="false" comment="Location Contact Name" />
+        <column xsi:type="varchar" name="location_contact_phone" length="255" nullable="false" comment="Location Contact Phone" />
+        <column xsi:type="varchar" name="location_contact_email" length="255" nullable="false" comment="Location Contact Email" />
+        <column xsi:type="varchar" name="location_company_name" length="255" nullable="false" comment="Location Contact Name" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_A847A2C672065C0454E52FF8CD7B67E0" table="omnyfy_vendor_location_entity" column="vendor_type_id" referenceTable="omnyfy_vendor_vendor_type" referenceColumn="type_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_C7BD11AE80DCC3A8F882F5720273F1C2" table="omnyfy_vendor_location_entity" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update quote_item table -->
+    <table name="quote_item" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <column xsi:type="int" name="kitstore_id" padding="10" unsigned="true" default="0" nullable="true" comment="Kitstore Page Id" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="QUOTE_ITEM_VENDOR_ID_1_OMNYFY_VENDOR_VENDOR_ENTT_ID" table="quote_item" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="QUOTE_ITEM_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="quote_item" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update quote_shipping_rate table -->
+    <table name="quote_shipping_rate" resource="default" engine="innodb">
+       <column xsi:type="int" name="location_id" padding="10" default="0" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="FK_91E7BCA6C9C171E4E0CE5EA0BDFB9ADF" table="quote_shipping_rate" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="QUOTE_SHPP_RATE_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="quote_shipping_rate" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update sales_shipment table -->
+    <table name="sales_shipment" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" default="0" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+        <column xsi:type="varchar" name="source_code" nullable="false" length="255" comment="source_code"/>
+
+        <constraint xsi:type="foreign" referenceId="FK_46D776C72CD00EB6F4DFE99879394E74" table="sales_shipment" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="SALES_SHIPMENT_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="sales_shipment" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="SALES_SHIPMENT_SOURCE_CODE_INVENTORY_SOURCE_SOURCE_CODE" table="sales_shipment" column="source_code" referenceTable="inventory_source" referenceColumn="source_code" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update sales_shipment_grid table -->
+    <table name="sales_shipment_grid" resource="default" engine="innodb">
+        <column name="location_id" xsi:type="int" padding="10" unsigned="true" nullable="true" default="0" comment="Location ID" />
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" default="0" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="SALES_SHIPMENT_GRID_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID" table="sales_shipment_grid" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+         <constraint xsi:type="foreign" referenceId="FK_624E00010DABBB5F8CA09578CB24280C" table="sales_shipment_grid" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update sales_order_item table -->
+    <table name="sales_order_item" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" default="0" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" nullable="true" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="SALES_ORDER_ITEM_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID" table="sales_order_item" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="SALES_ORDER_ITEM_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="sales_order_item" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update sales_invoice_item table -->
+    <table name="sales_invoice_item" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" default="0" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" nullable="true" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="FK_B638478958915E6B7DAAFF6B02C0C5DA" table="sales_invoice_item" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_48B00E3D47FF7D9347D8A338F144B35F" table="sales_invoice_item" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_invoice table -->
+    <table name="omnyfy_vendor_vendor_invoice" resource="default" engine="innodb">
+        <column xsi:type="int" name="invoice_id" padding="10" unsigned="true" nullable="true" comment="Invoice ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <index referenceId="OMNYFY_VENDOR_VENDOR_INVOICE_INVOICE_ID_VENDOR_ID" indexType="btree">
+            <column name="invoice_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_A4DA22600B1BBE07F464670CCF9151BC" table="omnyfy_vendor_vendor_invoice" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_order table -->
+    <table name="omnyfy_vendor_vendor_order" resource="default" engine="innodb">
+        <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" comment="Order ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ORDER_ORDER_ID_VENDOR_ID" indexType="btree">
+            <column name="order_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_C1CCCF4EBD9D60429C6A58CD00BE9902" table="omnyfy_vendor_vendor_order" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_customer table -->
+    <table name="omnyfy_vendor_vendor_customer" resource="default" engine="innodb">
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="true" comment="Customer ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <index referenceId="OMNYFY_VENDOR_VENDOR_CUSTOMER_CUSTOMER_ID_VENDOR_ID" indexType="btree">
+            <column name="customer_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_9B02A4BBA24FB14E1F2FF5C884F5D305" table="omnyfy_vendor_vendor_customer" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_admin_user table -->
+    <table name="omnyfy_vendor_vendor_admin_user" resource="default" engine="innodb">
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" comment="User ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ADMIN_USER_USER_ID_VENDOR_ID" indexType="btree">
+            <column name="user_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_95493A7083AD8F11EA375B6B1D72BDC0" table="omnyfy_vendor_vendor_admin_user" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ADMIN_USER_USER_ID_ADMIN_USER_USER_ID" table="omnyfy_vendor_vendor_admin_user" column="user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_profile table -->
+    <table name="omnyfy_vendor_profile" resource="default" engine="innodb">
+        <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile ID" />
+        <column xsi:type="smallint" name="website_id" padding="5" unsigned="true" nullable="false" comment="Website ID	" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="text" name="updates" nullable="false" comment="Updates JSON" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="profile_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_PROFILE_WEBSITE_ID_VENDOR_ID" indexType="btree">
+            <column name="website_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_PROFILE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID" table="omnyfy_vendor_profile" column="website_id" referenceTable="store_website" referenceColumn="website_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_8DB9E6E8A96D96F6EC6871F6D8C88FB7" table="omnyfy_vendor_profile" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_profile_admin_user table -->
+    <table name="omnyfy_vendor_profile_admin_user" resource="default" engine="innodb">
+        <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile ID" />
+        <column xsi:type="int" name="admin_user_id" padding="10" unsigned="true" nullable="false" comment="Admin User ID" />
+        <index referenceId="OMNYFY_VENDOR_PROFILE_ADMIN_USER_PROFILE_ID_ADMIN_USER_ID" indexType="btree">
+            <column name="profile_id" />
+            <column name="admin_user_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_CBCA66FCAB0BA51E4C707D9D1747DE81" table="omnyfy_vendor_profile_admin_user" column="profile_id" referenceTable="omnyfy_vendor_profile" referenceColumn="profile_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_PROFILE_ADM_USR_ADM_USR_ID_ADM_USR_USR_ID" table="omnyfy_vendor_profile_admin_user" column="admin_user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_profile_location table -->
+    <table name="omnyfy_vendor_profile_location" resource="default" engine="innodb">
+        <column xsi:type="int" name="profile_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Profile ID" />
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="false" comment="Location ID" />
+        <index referenceId="OMNYFY_VENDOR_PROFILE_LOCATION_PROFILE_ID_LOCATION_ID" indexType="btree">
+            <column name="profile_id" />
+            <column name="location_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_E70D6CBED002F107C0F14217971CD477" table="omnyfy_vendor_profile_location" column="profile_id" referenceTable="omnyfy_vendor_profile" referenceColumn="profile_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_1921BE5B5B871FA101F5F24E73F1F2C7" table="omnyfy_vendor_profile_location" column="location_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_product table -->
+    <table name="omnyfy_vendor_vendor_product" resource="default" engine="innodb">
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Product ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <index referenceId="OMNYFY_VENDOR_VENDOR_PRODUCT_PRODUCT_ID_VENDOR_ID" indexType="btree">
+            <column name="product_id" />
+            <column name="vendor_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_PRD_PRD_ID_CAT_PRD_ENTT_ENTT_ID" table="omnyfy_vendor_vendor_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_FB30F836E5B50A5DDAB04780CFE939B0" table="omnyfy_vendor_vendor_product" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="unique" referenceId="OMNYFY_VENDOR_VENDOR_PRODUCT_UNIQUE_PRODUCT_ID"><column name="product_id"/></constraint>
+    </table>
+
+    <!-- Setup omnyfy_vendor_inventory table -->
+    <table name="omnyfy_vendor_inventory" resource="default" engine="innodb">
+        <column xsi:type="int" name="inventory_id" padding="10" unsigned="true" identity="true" nullable="false" comment="ID" />
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Product ID" />
+        <column xsi:type="varchar" name="sku" nullable="true" length="64" comment="SKU"/>
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="false" onCreate="migrateDataFrom(location_id)"/>
+        <column xsi:type="decimal" name="quantity" precision="12" unsigned="false" nullable="true" default="0" onCreate="migrateDataFrom(qty)"/>
+        <column xsi:type="varchar" name="source_code" nullable="false" length="255" comment="source_code"/>
+        <!-- <column xsi:type="decimal" name="notify_stock_qty" scale="4" precision="12" unsigned="false" default="1" nullable="true" comment="Notify Stock Qty" />
+        <column xsi:type="decimal" name="notify_stock_qty_use_default" scale="4" precision="12" default="1" unsigned="false" nullable="true" comment="Notify Stock Qty Use Default" /> -->
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="inventory_id" />
+        </constraint>
+        <constraint xsi:type="unique" referenceId="OMNYFY_INVENTORY_SOURCE_ITEM_SOURCE_CODE_SKU">
+            <column name="source_code"/>
+            <column name="sku"/>
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_INVENTORY_PRODUCT_ID_SOURCE_STOCK_ID_LOCATION_ID" indexType="btree">
+            <column name="product_id" />
+            <column name="source_stock_id" />
+            <column name="sku" />
+        </index>
+        <index referenceId="sku" indexType="btree">
+            <column name="sku" />
+        </index>
+        <!-- <constraint xsi:type="foreign" referenceId="FK_68D83EBBC5A7B8F7FA9F26EB7EAF71C6" table="omnyfy_vendor_inventory" column="location_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" /> -->
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_INV_PRD_ID_CAT_PRD_ENTT_ENTT_ID" table="omnyfy_vendor_inventory" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_INV_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="omnyfy_vendor_inventory" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update quote_address table -->
+    <table name="quote_address" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="shipping_method" length="1024" nullable="true" />
+    </table>
+
+    <!-- Update sales_order table -->
+    <table name="sales_order" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="shipping_method" length="1024" nullable="true" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_order_total table -->
+    <table name="omnyfy_vendor_order_total" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="false" comment="Order ID" />
+        <column xsi:type="decimal" name="subtotal" precision="12" scale="4" default="0.0000" nullable="false" comment="Total" />
+        <column xsi:type="decimal" name="base_subtotal" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Subtotal" />
+        <column xsi:type="decimal" name="subtotal_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Subtotal including Tax" />
+        <column xsi:type="decimal" name="base_subtotal_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Subtotal including Tax" />
+        <column xsi:type="decimal" name="tax_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Tax" />
+        <column xsi:type="decimal" name="base_tax_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Tax Amount" />
+        <column xsi:type="decimal" name="discount_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Discount" />
+        <column xsi:type="decimal" name="base_discount_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Discount Amount" />
+        <column xsi:type="decimal" name="shipping_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping Total" />
+        <column xsi:type="decimal" name="base_shipping_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping Amount" />
+        <column xsi:type="decimal" name="shipping_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping including Tax" />
+        <column xsi:type="decimal" name="base_shipping_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping including Tax" />
+        <column xsi:type="decimal" name="shipping_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping Tax" />
+        <column xsi:type="decimal" name="base_shipping_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping Tax" />
+        <column xsi:type="decimal" name="grand_total" precision="12" scale="4" default="0.0000" nullable="false" comment="Grand Total" />
+        <column xsi:type="decimal" name="base_grand_total" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Grand Total" />
+        <index referenceId="OMNYFY_VENDOR_ORDER_TOTAL_VENDOR_ID_ORDER_ID" indexType="btree">
+            <column name="vendor_id" />
+            <column name="order_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_B890A798D8DF58675A90B02B2DBA6DE6" table="omnyfy_vendor_order_total" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ORDER_TOTAL_ORDER_ID_SALES_ORDER_ENTITY_ID" table="omnyfy_vendor_order_total" column="order_id" referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_invoice_total table -->
+    <table name="omnyfy_vendor_invoice_total" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="invoice_id" padding="10" unsigned="true" nullable="false" comment="Invoice ID" />
+        <column xsi:type="decimal" name="subtotal" precision="12" scale="4" default="0.0000" nullable="false" comment="Total" />
+        <column xsi:type="decimal" name="base_subtotal" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Subtotal" />
+        <column xsi:type="decimal" name="subtotal_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Subtotal including Tax" />
+        <column xsi:type="decimal" name="base_subtotal_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Subtotal including Tax" />
+        <column xsi:type="decimal" name="tax_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Tax" />
+        <column xsi:type="decimal" name="base_tax_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Tax Amount" />
+        <column xsi:type="decimal" name="discount_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Discount" />
+        <column xsi:type="decimal" name="base_discount_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Discount Amount" />
+        <column xsi:type="decimal" name="shipping_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping Total" />
+        <column xsi:type="decimal" name="base_shipping_amount" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping Amount" />
+        <column xsi:type="decimal" name="shipping_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping including Tax" />
+        <column xsi:type="decimal" name="base_shipping_incl_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping including Tax" />
+        <column xsi:type="decimal" name="shipping_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Shipping Tax" />
+        <column xsi:type="decimal" name="base_shipping_tax" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Shipping Tax" />
+        <column xsi:type="decimal" name="grand_total" precision="12" scale="4" default="0.0000" nullable="false" comment="Grand Total" />
+        <column xsi:type="decimal" name="base_grand_total" precision="12" scale="4" default="0.0000" nullable="false" comment="Base Grand Total" />
+        <index referenceId="OMNYFY_VENDOR_INVOICE_TOTAL_VENDOR_ID_INVOICE_ID" indexType="btree">
+            <column name="vendor_id" />
+            <column name="invoice_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_36AAF5AF9138B80BDA24663CEECF3977" table="omnyfy_vendor_invoice_total" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_INVOICE_TOTAL_INVOICE_ID_SALES_INVOICE_ENTITY_ID" table="omnyfy_vendor_invoice_total" column="invoice_id" referenceTable="sales_invoice" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_eav_attribute table -->
+    <table name="omnyfy_vendor_eav_attribute" resource="default" engine="innodb" comment="omnyfy_vendor_eav_attribute">
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" comment="Attribute ID" />
+        <column xsi:type="smallint" name="is_global" unsigned="true" nullable="false" default="1" comment="Is Global" />
+        <column xsi:type="smallint" name="is_visible" unsigned="true" nullable="false" default="1" comment="s Visible" />
+        <column xsi:type="smallint" name="is_searchable" unsigned="true" nullable="false" default="0" comment="Is Searchable" />
+        <column xsi:type="smallint" name="is_filterable" unsigned="true" nullable="false" default="0" comment="Is Filterable" />
+        <column xsi:type="smallint" name="is_visible_on_front" unsigned="true" nullable="false" default="0" comment="Is Visible On Front" />
+        <column xsi:type="smallint" name="is_html_allowed_on_front" unsigned="true" nullable="false" default="0" comment="Is HTML Allowed On Front" />
+        <column xsi:type="smallint" name="is_filterable_in_search" unsigned="true" nullable="false" default="0" comment="Is Filterable In Search" />
+        <column xsi:type="smallint" name="is_visible_in_advanced_search" unsigned="true" nullable="false" default="0" comment="Is Visible in Advanced Search" />
+        <column xsi:type="smallint" name="is_wysiwyg_enabled" unsigned="true" nullable="false" default="0" comment="Is WYSIWYG Enabled" />
+        <column xsi:type="smallint" name="used_in_listing" unsigned="true" nullable="false" default="0" comment="Is Used in Listing" />
+        <column xsi:type="smallint" name="is_used_in_grid" unsigned="true" nullable="false" default="0" comment="Is Used in Grid" />
+        <column xsi:type="smallint" name="is_visible_in_grid" unsigned="true" nullable="false" default="0" comment="Is Visible in Grid" />
+        <column xsi:type="smallint" name="is_filterable_in_grid" unsigned="true" nullable="false" default="0" comment="Is Filterable in Grid" />
+        <column xsi:type="smallint" name="used_for_sort_by" unsigned="true" nullable="false" default="0" comment="Is Used For Sorting" />
+        <column xsi:type="smallint" name="used_in_form" unsigned="true" nullable="false" default="0" comment="Is Used In Form" />
+        <column xsi:type="int" name="position" padding="11" nullable="true" comment="Position" />
+        <column xsi:type="varchar" name="tooltip" length="255" nullable="true" comment="Tooltip" />
+        <column xsi:type="smallint" name="show_on_customer_emails" unsigned="true" nullable="true" default="0" comment="Show On Customer Emails" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="attribute_id" />
+        </constraint>
+    </table>
+
+    <!-- Setup omnyfy_vendor_location_entity_int table -->
+    <table name="omnyfy_vendor_location_entity_int" resource="default" engine="innodb" comment="Omnyfy Location Integer Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="int" name="value" padding="11" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTT_INT_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_INT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_INT_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_F676849A9D126D0A90FFD450BAB91B36" table="omnyfy_vendor_location_entity_int" column="entity_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_location_entity_int" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_INT_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_location_entity_int" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_location_entity_datetime table -->
+    <table name="omnyfy_vendor_location_entity_datetime" resource="default" engine="innodb" comment="Omnyfy Location Datetime Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="datetime" name="value" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTT_DTIME_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_994BFF2BF1EE135E1C717D7D7DF341DD" table="omnyfy_vendor_location_entity_datetime" column="entity_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTT_DTIME_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_location_entity_datetime" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_DATETIME_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_location_entity_datetime" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_location_entity_decimal table -->
+    <table name="omnyfy_vendor_location_entity_decimal" resource="default" engine="innodb" comment="Omnyfy Location Decimal Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="decimal" name="value" precision="12" scale="4" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTT_DEC_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATOMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_STORE_IDION_ENTITY_DATETIME_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_FD0774D187BCE64BFCBF8E3BBFCC1AEF" table="omnyfy_vendor_location_entity_decimal" column="entity_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_location_entity_decimal" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_DECIMAL_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_location_entity_decimal" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_location_entity_varchar table -->
+    <table name="omnyfy_vendor_location_entity_varchar" resource="default" engine="innodb" comment="Omnyfy Location Varchar Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="varchar" name="value" length="255" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTT_VCHR_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_CC237D24C9080DDC23FE4289C62F47FC" table="omnyfy_vendor_location_entity_varchar" column="entity_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_location_entity_varchar" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_location_entity_varchar" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_location_entity_text table -->
+    <table name="omnyfy_vendor_location_entity_text" resource="default" engine="innodb" comment="Omnyfy Location Text Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="text" name="value" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTT_TEXT_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_45525F8AFA0F5357A960BA769DA14DFB" table="omnyfy_vendor_location_entity_text" column="entity_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_location_entity_text" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_LOCATION_ENTITY_TEXT_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_location_entity_text" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup Vendor EAV Table -->
+    <!-- Setup omnyfy_vendor_vendor_entity_int table -->
+    <table name="omnyfy_vendor_vendor_entity_int" resource="default" engine="innodb" comment="Omnyfy Vendor Integer Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="int" name="value" padding="11" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_INT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_INT_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_C7A8757311FE032B23AA6FB542DC4225" table="omnyfy_vendor_vendor_entity_int" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_vendor_entity_int" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_INT_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_vendor_entity_int" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_entity_datetime table -->
+    <table name="omnyfy_vendor_vendor_entity_datetime" resource="default" engine="innodb" comment="Omnyfy Vendor Datetime Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="datetime" name="value" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTT_DTIME_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_23E5EE5BBC5D0FE05503FD0417044C4F" table="omnyfy_vendor_vendor_entity_datetime" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_DTIME_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_vendor_entity_datetime" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DATETIME_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_vendor_entity_datetime" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_entity_decimal table -->
+    <table name="omnyfy_vendor_vendor_entity_decimal" resource="default" engine="innodb" comment="Omnyfy Vendor Decimal Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="decimal" name="value" precision="12" scale="4" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTT_DEC_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_26717DEF2405A0A03BA2A758962E4F8F" table="omnyfy_vendor_vendor_entity_decimal" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_vendor_entity_decimal" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_DECIMAL_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_vendor_entity_decimal" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_entity_varchar table -->
+    <table name="omnyfy_vendor_vendor_entity_varchar" resource="default" engine="innodb" comment="Omnyfy Vendor Varchar Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="varchar" name="value" length="255" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTT_VCHR_ENTT_ID_ATTR_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_7A21BDD1534E5A674AB8B98A0A1DC25C" table="omnyfy_vendor_vendor_entity_varchar" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_vendor_entity_varchar" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_vendor_entity_varchar" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_entity_text table -->
+    <table name="omnyfy_vendor_vendor_entity_text" resource="default" engine="innodb" comment="Omnyfy Vendor Text Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="text" name="value" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_404F447B87EA56365387AA62B0844DC8" table="omnyfy_vendor_vendor_entity_text" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTT_TEXT_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_vendor_entity_text" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_ENTITY_TEXT_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_vendor_entity_text" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_entity_gallery table -->
+    <table name="omnyfy_vendor_entity_gallery" resource="default" engine="innodb" comment="Omnyfy Vendor Gallery Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="11" nullable="false" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="attribute_id" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="int" name="position" padding="11" nullable="false" default="0" comment="Position" />
+        <column xsi:type="varchar" name="value" length="255" nullable="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_GALLERY_ENTITY_ID_ATTRIBUTE_ID_STORE_ID" indexType="btree">
+            <column name="entity_id" />
+            <column name="attribute_id" />
+            <column name="store_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_GALLERY_ENTITY_ID" indexType="btree">
+            <column name="entity_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_GALLERY_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_GALLERY_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTT_GLR_ENTT_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID" table="omnyfy_vendor_entity_gallery" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTT_GLR_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_entity_gallery" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTITY_GALLERY_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_entity_gallery" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_entity_media_gallery table -->
+    <table name="omnyfy_vendor_entity_media_gallery" resource="default" engine="innodb" comment="Omnyfy Vendor Media Gallery Attribute Backend Table">
+        <column name="value_id" xsi:type="int" padding="10" nullable="false" identity="true" unsigned="true" comment="Value ID" />
+        <column name="attribute_id" xsi:type="smallint" padding="5" nullable="false" unsigned="true" default="0" comment="Attribute ID" />
+        <column name="entity_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column name="value" xsi:type="varchar" length="255" nullable="true" comment="Value" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_ENTITY_ID" indexType="btree">
+            <column name="entity_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_ATTRIBUTE_ID" indexType="btree">
+            <column name="attribute_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTT_MDA_GLR_ATTR_ID_EAV_ATTR_ATTR_ID" table="omnyfy_vendor_entity_media_gallery" column="attribute_id" referenceTable="eav_attribute" referenceColumn="attribute_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_1DF12A6E095AABBB2009F248F2118BFF" table="omnyfy_vendor_entity_media_gallery" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_entity_media_gallery_value table -->
+    <table name="omnyfy_vendor_entity_media_gallery_value" resource="default" engine="innodb" comment="Omnyfy Vendor Media Gallery Attribute Backend Table">
+        <column xsi:type="int" name="value_id" padding="10" nullable="false" unsigned="true" identity="true" comment="Value ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" comment="Entity ID" />
+        <column xsi:type="varchar" name="label" length="255" nullable="true" comment="Label" />
+        <column xsi:type="int" name="position" padding="10" unsigned="true" nullable="false" default="0" comment="Position" />
+        <column xsi:type="smallint" name="disabled" padding="5" nullable="true" unsigned="true" comment="Value" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="value_id" />
+            <column name="store_id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_ENTITY_ID" indexType="btree">
+            <column name="entity_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_STORE_ID" indexType="btree">
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_609539BCA2DEDD8C69D9D5D1F8353620" table="omnyfy_vendor_entity_media_gallery_value" column="value_id" referenceTable="omnyfy_vendor_entity_media_gallery" referenceColumn="value_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_C2FC599F945C9DC6F904AEAF22D44E4D" table="omnyfy_vendor_entity_media_gallery_value" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_entity_media_gallery_value" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_entity_media_gallery_value_to_entity table -->
+    <table name="omnyfy_vendor_entity_media_gallery_value_to_entity" resource="default" engine="innodb" comment="Omnyfy Vendor Media Gallery Attribute Backend Table">
+        <column name="value_id" xsi:type="int" padding="10" nullable="false" unsigned="true" comment="Value ID" />
+        <column xsi:type="int" name="entity_id" padding="10" nullable="false" unsigned="true" comment="Entity ID" />
+
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_TO_ENTITY_ENTITY_ID" indexType="btree">
+            <column name="entity_id" />
+        </index>
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_TO_ENTITY_VALUE_ID" indexType="btree">
+            <column name="value_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_595081151F14B9A950458A1FF9691963" table="omnyfy_vendor_entity_media_gallery_value_to_entity" column="value_id" referenceTable="omnyfy_vendor_entity_media_gallery" referenceColumn="value_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_3422E1356CADF0E32958108B63651629" table="omnyfy_vendor_entity_media_gallery_value_to_entity" column="entity_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_entity_media_gallery_value_video table -->
+    <table name="omnyfy_vendor_entity_media_gallery_value_video" resource="default" engine="innodb" comment="Omnyfy Vendor Media Gallery Attribute Backend Table">
+        <column name="value_id" xsi:type="int" padding="10" nullable="false" unsigned="true" comment="Value ID" />
+        <column name="store_id" xsi:type="smallint" padding="5" nullable="false" unsigned="true" default="0" comment="Store ID" />
+        <column name="provider" xsi:type="varchar" length="32" nullable="true" comment="Video provider ID" />
+        <column name="url" xsi:type="text" nullable="true" comment="Video URL" />
+        <column name="title" xsi:type="varchar" length="255" nullable="true" comment="Title" />
+        <column name="description" xsi:type="text" nullable="true" comment="Page Meta Description" />
+        <column name="metadata" xsi:type="text" nullable="true" comment="Video meta data" />
+
+        <index referenceId="OMNYFY_VENDOR_ENTITY_MEDIA_GALLERY_VALUE_VIDEO_VALUE_ID_STORE_ID" indexType="btree">
+            <column name="value_id" />
+            <column name="store_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_C8E66E52E554BE86E029079B9C9E3ABA" table="omnyfy_vendor_entity_media_gallery_value_video" column="value_id" referenceTable="omnyfy_vendor_entity_media_gallery" referenceColumn="value_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_ENTT_MDA_GLR_VAL_VIDEO_STORE_ID_STORE_STORE_ID" table="omnyfy_vendor_entity_media_gallery_value_video" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update salesrule table -->
+    <table name="salesrule" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="true" comment="Vendor ID" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <constraint xsi:type="foreign" referenceId="SALESRULE_LOCATION_ID_OMNYFY_VENDOR_LOCATION_ENTITY_ENTITY_ID" table="salesrule" column="location_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="SALESRULE_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID" table="salesrule" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+         <constraint xsi:type="foreign" referenceId="SALESRULE_SOURCE_STOCK_ID_OMNYFY_VENDOR_SOURCE_STOCK_ID" table="salesrule" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_customer_favorite_vendor table -->
+    <table name="omnyfy_vendor_customer_favorite_vendor" resource="default" engine="innodb">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="SEQ ID" />
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" comment="Customer ID" />
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_CUSTOMER_FAVORITE_VENDOR_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_CSTR_FAVORITE_VENDOR_CSTR_ID_CSTR_ENTT_ENTT_ID" table="omnyfy_vendor_customer_favorite_vendor" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_E64CD88F96B958FDAD30FD70BFCDBD3F" table="omnyfy_vendor_customer_favorite_vendor" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_related_location table -->
+    <table name="omnyfy_vendor_related_location" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="false" comment="Location ID" />
+        <index referenceId="OMNYFY_VENDOR_RELATED_LOCATION_VENDOR_ID_LOCATION_ID" indexType="btree">
+            <column name="vendor_id" />
+            <column name="location_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="FK_DC634675767CE0830A347893CE0EA090" table="omnyfy_vendor_related_location" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_BA7E3686F44A7047209E272B1BC0D975" table="omnyfy_vendor_related_location" column="location_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_quote_shipping table -->
+    <table name="omnyfy_vendor_quote_shipping" resource="default" engine="innodb">
+        <column name="quote_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Quote ID" />
+        <column name="address_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Address ID" />
+        <column name="location_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Location ID" />
+        <column name="rate_id" xsi:type="int" padding="10" unsigned="true" nullable="true" comment="Rate ID" />
+        <column name="method_code" xsi:type="varchar" length="255" nullable="false" comment="Method Code" />
+        <column name="amount" xsi:type="decimal" precision="12" scale="4" nullable="false" default="0.0000" comment="Amount" />
+        <column name="base_amount" xsi:type="decimal" precision="12" scale="4" nullable="false" default="0.0000" comment="Base Amount" />
+        <column name="carrier" xsi:type="varchar" length="255" nullable="false" comment="Carrier" />
+        <column name="method_title" xsi:type="varchar" length="255" nullable="false" comment="Method Title" />
+        <column xsi:type="int" name="source_stock_id" padding="10" unsigned="true" nullable="true" onCreate="migrateDataFrom(location_id)"/>
+
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="true" default="0" comment="Vendor Id" />
+        <index referenceId="OMNYFY_VENDOR_QUOTE_SHIPPING_QUOTE_ID_LOCATION_ID" indexType="btree">
+            <column name="quote_id" />
+            <column name="location_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_QUOTE_SHIPPING_QUOTE_ID_QUOTE_ENTITY_ID" table="omnyfy_vendor_quote_shipping" column="quote_id" referenceTable="quote" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_39E775E6AF5305506B7418CC25F86EEA" table="omnyfy_vendor_quote_shipping" column="source_stock_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" disabled="true"/>
+    </table>
+
+    <!-- Setup omnyfy_vendor_customer_favourites table -->
+    <table name="omnyfy_vendor_customer_favourites" resource="default" engine="innodb">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="SEQ ID" />
+        <column name="customer_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Customer ID" />
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+        <index referenceId="OMNYFY_VENDOR_CUSTOMER_FAVOURITES_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_CSTR_FAVOURITES_CSTR_ID_CSTR_ENTT_ENTT_ID" table="omnyfy_vendor_customer_favourites" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_C99EC7452EFE7A2F38EF4F36A3BF3049" table="omnyfy_vendor_customer_favourites" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Setup omnyfy_vendor_vendor_user_stores table -->
+    <table name="omnyfy_vendor_vendor_user_stores" resource="default" engine="innodb">
+        <column name="user_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Admin User ID" />
+        <column name="store_id" xsi:type="text" nullable="true" comment="User Stores" />
+
+        <index referenceId="OMNYFY_VENDOR_VENDOR_USER_STORES_USER_ID" indexType="btree">
+            <column name="user_id" />
+        </index>
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_VENDOR_USER_STORES_USER_ID_ADMIN_USER_USER_ID" table="omnyfy_vendor_vendor_user_stores" column="user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE" />
+    </table>
+
+    <!-- Update authorization_role table -->
+    <table name="authorization_role" resource="default" engine="innodb">
+        <column name="is_subvendor" xsi:type="int" padding="10" unsigned="true" nullable="true" default="0" comment="Is Subvendor Role" />
+    </table>
+
+    <!-- Update authorization_role table -->
+    <table name="admin_user" resource="default" engine="innodb">
+        <column name="is_subvendor" xsi:type="int" padding="10" unsigned="true" nullable="true" default="0" comment="Is Subvendor Role" />
+        <column name="parent_vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="true" default="0" comment="Parent Vendor ID" />
+    </table>
+
+    <table name="inventory_source" resource="default" engine="innodb">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" default="0" nullable="false" comment="Vendor ID" />
+        <column name="store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="true" />
+
+        <!-- <constraint xsi:type="foreign" referenceId="INVENTORY_SOURCE_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID" table="inventory_source" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" /> -->
+    </table>
+    <table name="inventory_stock" resource="default" engine="innodb">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" comment="Vendor ID" />
+        <!-- <constraint xsi:type="foreign" referenceId="INVENTORY_STOCK_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTITY_ENTITY_ID" table="inventory_stock" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" /> -->
+    </table>
+
+    <table name="omnyfy_vendor_source_stock" resource="default" engine="innodb">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" identity="true" nullable="false" />
+        <column xsi:type="int" name="stock_id" unsigned="true" nullable="false" />
+        <column xsi:type="varchar" name="source_code" nullable="false" length="255" />
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" nullable="false" />
+        <column name="store_id" xsi:type="smallint" padding="5" unsigned="true" nullable="true" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_66BF3CD7837549DA78A35126E21ED1AA" table="omnyfy_vendor_source_stock" column="vendor_id" referenceTable="omnyfy_vendor_vendor_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_SOURCE_STOCK_SOURCE_CODE_INV_SOURCE_SOURCE_CODE" table="omnyfy_vendor_source_stock" column="source_code" referenceTable="inventory_source" referenceColumn="source_code" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="OMNYFY_VENDOR_SOURCE_STOCK_STOCK_ID_INVENTORY_STOCK_STOCK_ID" table="omnyfy_vendor_source_stock" column="stock_id" referenceTable="inventory_stock" referenceColumn="stock_id" onDelete="CASCADE" />
+    </table>
+
+    <table name="inventory_stock_sales_channel" resource="default" engine="innodb">
+        <constraint xsi:type="primary" referenceId="IDX_PRIMARY">
+            <column name="type"/>
+            <column name="code"/>
+            <!-- <column name="stock_id"/> -->
+        </constraint>
+    </table>
+
+    <table name="sales_order_status_history" resource="default" engine="innodb">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" comment="Vendor ID" />
+    </table>
+
+    <table name="sales_creditmemo" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" comment="Vendor ID" />
+    </table>
+
+    <table name="sales_creditmemo_grid" resource="default" engine="innodb">
+        <column name="vendor_id" xsi:type="int" padding="10" unsigned="true" default="0" comment="Vendor ID" />
+    </table>
+
+    <table name="sales_invoice" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10" default="0" unsigned="true" comment="Vendor ID" />
+    </table>
+
+    <table name="amasty_audit_log" resource="default" engine="innodb">
+        <column xsi:type="int" name="vendor_id" padding="10"  unsigned="true" default="0" comment="Vendor ID" />
+    </table>
+
+    <!-- Store deduct qty when invoice -->
+    <table name="omnyfy_inventory_reservation" resource="default" engine="innodb">
+        <column xsi:type="int" name="id" padding="10"  unsigned="true" identity="true" comment="Reservation ID" />
+        <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" comment="Order ID" />
+        <column xsi:type="int" name="stock_id" unsigned="true" nullable="false" identity="false"/>
+        <column xsi:type="varchar" name="sku" nullable="true" length="64" comment="SKU"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id" />
+        </constraint>
+    </table>
+
+    <table name="omnyfy_migration_location_to_source" resource="default" engine="innodb">
+        <column xsi:type="int" name="location_id" padding="10" unsigned="true" nullable="true" comment="Location ID" />
+        <column xsi:type="int" name="source_id" padding="10" unsigned="true" nullable="true" />
+
+        <constraint xsi:type="unique" referenceId="OMNYFY_MIGRATION_LOCATION_TO_SOURCE_LOCATION_ID_SOURCE_ID">
+            <column name="location_id"/>
+            <column name="source_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_6446D440EDB958704791D200D8F0A96D" table="omnyfy_migration_location_to_source" column="source_id" referenceTable="omnyfy_vendor_source_stock" referenceColumn="id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FK_D84477E3827CC9E68524E1EAFF53EE06" table="omnyfy_migration_location_to_source" column="location_id" referenceTable="omnyfy_vendor_location_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+    </table>
+</schema>

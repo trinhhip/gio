@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirasvit\Rma\Service\Rma\RmaManagement\Save"
+                type="Omnyfy\Rma\Service\Rma\RmaManagement\Save" />
+
+
+    <preference for="Mirasvit\Rma\Helper\Item\Html"
+                type="Omnyfy\Rma\Helper\Item\Html" />
+
+    <preference for="Mirasvit\Rma\Service\Item\ItemManagement\Product"
+                type="Omnyfy\Rma\Service\Item\ItemManagement\Product" />
+</config>

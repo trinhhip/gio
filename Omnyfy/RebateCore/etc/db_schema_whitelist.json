@@ -1,0 +1,210 @@
+{
+    "omnyfy_rebate": {
+        "column": {
+            "entity_id": true,
+            "status": true,
+            "name": true,
+            "description": true,
+            "payment_frequency": true,
+            "calculation_based_on": true,
+            "tax_amount": true,
+            "threshold_value": true,
+            "tax_title": true,
+            "start_date": true,
+            "end_date": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_NAME": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "omnyfy_rebate_contribution": {
+        "column": {
+            "entity_id": true,
+            "rebate_percentage": true,
+            "rebate_id": true
+        },
+        "index": {
+            "OMNYFY_REBATE_CONTRIBUTION_REBATE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_REBATE_CONTRIBUTION_REBATE_ID_OMNYFY_REBATE_ENTITY_ID": true
+        }
+    },
+    "omnyfy_vendor_rebate": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "rebate_id": true,
+            "lock_name": true,
+            "lock_description": true,
+            "lock_payment_frequency": true,
+            "lock_calculation_based_on": true,
+            "lock_tax_amount": true,
+            "lock_start_date": true,
+            "lock_end_date": true,
+            "lock_threshold_value": true,
+            "lock_tax_title": true,
+            "locked_rebate_percentage": true,
+            "status": true
+        },
+        "index": {
+            "OMNYFY_VENDOR_REBATE_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_VENDOR_REBATE_VENDOR_ID_OMNYFY_VENDOR_VENDOR_ENTT_ENTT_ID": true
+        }
+    },
+    "omnyfy_rebate_order_invoice": {
+        "column": {
+            "entity_id": true,
+            "invoice_id": true,
+            "order_id": true,
+            "vendor_id": true,
+            "order_increment_id": true,
+            "order_date": true,
+            "customer_email": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_ORDER_INVOICE_INVOICE_ID": true,
+            "OMNYFY_REBATE_ORDER_INVOICE_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "OMNYFY_REBATE_ORDER_INVOICE_INVOICE_ID_SALES_INVOICE_ENTITY_ID": true,
+            "FK_589B018B3F24E6C63635C1DBAA5D7C28": true
+        }
+    },
+    "omnyfy_rebate_transaction": {
+        "column": {
+            "entity_id": true,
+            "rebate_order_invoice_id": true,
+            "status": true,
+            "payment_frequency": true,
+            "vendor_id": true,
+            "vendor_rebate_id": true,
+            "order_id": true,
+            "rebate_total_amount": true,
+            "rebate_net_amount": true,
+            "rebate_tax_amount": true,
+            "rebate_percentage": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_TRANSACTION_REBATE_ORDER_INVOICE_ID": true,
+            "OMNYFY_REBATE_TRANSACTION_VENDOR_REBATE_ID": true,
+            "OMNYFY_REBATE_TRANSACTION_VENDOR_ID": true,
+            "OMNYFY_REBATE_TRANSACTION_ORDER_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_7EA50F6A566FBA2BAD668F95A9D66162": true,
+            "FK_F91E81BF70E1CBE5A60F46A6A8234F39": true,
+            "FK_D26005C443C97F1E0024544EF9941294": true,
+            "OMNYFY_REBATE_TRANSACTION_ORDER_ID_SALES_ORDER_ENTITY_ID": true
+        }
+    },
+    "omnyfy_rebate_order_accumulation": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "order_total_amount": true,
+            "rebate_vendor_id": true,
+            "start_date": true,
+            "payout_date": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_ORDER_ACCUMULATION_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_03AEC522686A8EE80E947EDE1F40DEC1": true
+        }
+    },
+    "omnyfy_rebate_accumulation_threshold_status": {
+        "column": {
+            "entity_id": true,
+            "order_accumulcation_id": true,
+            "datetime_exceeding_threshold": true,
+            "throushold_value": true,
+            "total_amount_trigger": true,
+            "created_at": true,
+            "updated_at": true,
+            "rebate_vendor_id": true,
+            "order_id": true
+        },
+        "index": {
+            "OMNYFY_REBATE_ACCUMULATION_THRESHOLD_STS_ORDER_ACCUMULCATION_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_9F6A1F790F583F0531E4FF550AFECA3A": true
+        }
+    },
+    "omnyfy_rebate_invoice": {
+        "column": {
+            "entity_id": true,
+            "vendor_id": true,
+            "rebate_total_amount": true,
+            "invoice_number": true,
+            "rebate_tax_amount": true,
+            "payment_frequency": true,
+            "status": true,
+            "payout_date": true,
+            "order_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_INVOICE_VENDOR_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_1134DD72E84D5902EF6515566A553FE0": true
+        }
+    },
+    "omnyfy_rebate_invoice_item": {
+        "column": {
+            "entity_id": true,
+            "vendor_rebate_id": true,
+            "invoice_rebate_id": true,
+            "rebate_total_amount": true,
+            "rebate_net_amount": true,
+            "rebate_tax_amount": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "OMNYFY_REBATE_INVOICE_ITEM_INVOICE_REBATE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_355DD4CF159DFDC2EEF112B816579CCB": true
+        }
+    },
+    "omnyfy_rebate_change_request": {
+        "column": {
+            "entity_id": true,
+            "vendor_rebate_id": true,
+            "percentage": true
+        },
+        "index": {
+            "OMNYFY_REBATE_CHANGE_REQUEST_VENDOR_REBATE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_BB5AA7A66F8064D36965D1E279F88133": true
+        }
+    }
+}
